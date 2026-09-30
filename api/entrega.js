@@ -56,9 +56,14 @@ module.exports = async function handler(req, res) {
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   res.send(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Seu produto está aqui</title></head>
 <body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b0b14;color:#fff;font-family:Arial,sans-serif;padding:24px">
-<div style="max-width:560px;text-align:center;background:#151524;border:1px solid #2a2a44;border-radius:16px;padding:40px 32px">
+<div style="max-width:560px;text-align:center;background:#151524;border:1px solid #2a2a44;border-radius:16px;padding:40px 32px;box-shadow:0 20px 40px rgba(0,0,0,0.6)">
 <h1 style="font-size:24px;margin:0 0 16px">${titles[status] || "🚀 Obrigado!"}</h1>
 <p style="color:#c9c9d6;font-size:16px;line-height:1.7">${messages[status] || "Obrigado pelo seu interesse."}</p>
-${SITE_URL ? `<p style="margin-top:24px"><a href="${SITE_URL}" style="color:#4f7cff;font-size:15px">← Voltar ao site</a></p>` : ""}
+<div style="margin-top:24px">
+  <a href="${WHATSAPP_URL}" target="_blank" style="display:inline-block;background:#25d366;color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:bold;font-size:15px;box-shadow:0 8px 20px rgba(37,211,102,0.3)">
+    💬 Chamar no WhatsApp para Suporte / Ativação
+  </a>
+</div>
+${SITE_URL ? `<p style="margin-top:24px"><a href="${SITE_URL}" style="color:#4f7cff;font-size:14px;text-decoration:none">← Voltar ao site da loja</a></p>` : ""}
 </div></body></html>`);
 };

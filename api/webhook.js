@@ -70,11 +70,15 @@ module.exports = async function handler(req, res) {
         return res.status(200).end();
       }
 
-      await sendEmail(
-        buyerEmail,
-        `🚀 Seu acesso à ${produto.short} foi liberado!`,
-        emailMuseIa({ login: account.login, senha: account.senha })
-      );
+      try {
+        await sendEmail(
+          buyerEmail,
+          `🚀 Seu acesso à ${produto.short} foi liberado!`,
+          emailMuseIa({ login: account.login, senha: account.senha })
+        );
+      } catch (errEmail) {
+        console.warn("Aviso envio de e-mail (MUSE IA):", errEmail.message);
+      }
 
       const remaining = await stockCount();
       if (remaining <= 3) {
@@ -85,7 +89,11 @@ module.exports = async function handler(req, res) {
       }
     } else {
       const emailHtml = order.produto === "flow-ai-pro" ? emailFlowAiPro() : emailSuperDuolingo();
-      await sendEmail(buyerEmail, `🎉 Pagamento confirmado — ative ${produto.short}!`, emailHtml);
+      try {
+        await sendEmail(buyerEmail, `🎉 Pagamento confirmado — ative ${produto.short}!`, emailHtml);
+      } catch (errEmail) {
+        console.warn("Aviso envio de e-mail:", errEmail.message);
+      }
     }
 
     await setOrderStatus(order_nsu, { status: "pago", transaction_nsu: String(transaction_nsu) });

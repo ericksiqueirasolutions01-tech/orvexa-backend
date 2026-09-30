@@ -1,12 +1,12 @@
 // Painel de estoque (protegido por ADMIN_TOKEN).
 // GET  /api/admin?token=XXX            → { stock_count, produtos }
 // POST /api/admin { token, accounts:[{login, senha}] } → cadastra contas no estoque
-const { PRODUCTS } = require("../lib/products");
+const { PRODUCTS, ADMIN_TOKEN } = require("../lib/products");
 const { pushStockAccounts, stockCount } = require("../lib/store");
 
 function authorized(req) {
   const token = req.query.token || (req.body || {}).token;
-  return Boolean(process.env.ADMIN_TOKEN) && token === process.env.ADMIN_TOKEN;
+  return Boolean(ADMIN_TOKEN) && token === ADMIN_TOKEN;
 }
 
 module.exports = async function handler(req, res) {
