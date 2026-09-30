@@ -63,7 +63,7 @@ module.exports = async function handler(req, res) {
           phone: buyerPhone || "",
           produto: produtoKey,
           produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
-          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 79.99 : 49.99),
+          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 59.99 : 49.99),
           conta_entregue: deliveredItem,
           data: new Date().toISOString(),
           status: "pago",
@@ -78,7 +78,7 @@ module.exports = async function handler(req, res) {
           phone: buyerPhone || "",
           produto: produtoKey,
           produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
-          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 79.99 : 49.99),
+          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 59.99 : 49.99),
           conta_entregue: "⚠️ Aguardando envio manual (estoque esgotado)",
           data: new Date().toISOString(),
           status: "pendente_envio",
@@ -101,7 +101,7 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  const produtoInfo = PRODUCTS[produtoKey] || { title: "Seu Acesso", short: "Acesso", priceBRL: 79.99 };
+  const produtoInfo = PRODUCTS[produtoKey] || { title: "Seu Acesso", short: "Acesso", priceBRL: 59.99 };
   let deliveryContentHtml = "";
 
   // 1. MUSE IA (Conta com 1 Bilhão de Tokens)
