@@ -428,13 +428,134 @@
       .detail-line { align-items: flex-start; flex-direction: column; }
       .detail-hero { min-height: 180px; }
     }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    /* Estilos para Modal de Consulta de Pedidos */
+    .purchase-card {
+      background: #0d0f1a;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 14px;
+      text-align: left;
+    }
+    .purchase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    .purchase-title {
+      font-weight: 800;
+      font-size: 15px;
+      color: #fff;
+      margin: 0 0 4px;
+    }
+    .purchase-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .badge-status {
+      display: inline-block;
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .credentials-box {
+      background: #141727;
+      border: 1px solid #282d49;
+      border-radius: 10px;
+      padding: 14px;
+      margin: 12px 0;
+    }
+    .cred-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .cred-row:last-child { margin-bottom: 0; }
+    .cred-input {
+      flex: 1;
+      background: #090a10;
+      border: 1px solid #282d49;
+      color: #38bdf8;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+    .btn-copy-cred {
+      background: #282d49;
+      color: #fff;
+      border: 0;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    .btn-copy-cred:hover { background: #39406b; }
+    .btn-action-main {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      color: #fff;
+      font-weight: bold;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      box-shadow: 0 8px 20px rgba(79,70,229,0.35);
+      margin: 8px 0;
+    }
+    .btn-whatsapp-order {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 12px;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+    }
+    .tutorial-box {
+      background: #090a10;
+      border: 1px solid #1f233b;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+    .tutorial-box ol {
+      margin: 6px 0 0;
+      padding-left: 18px;
     }
   </style>
 </head>
 <body>
+  <div class="top-announcement" style="background:rgba(79,70,229,0.18);border-bottom:1px solid rgba(79,70,229,0.35);padding:10px 16px;text-align:center;font-size:13px;color:#e0e7ff;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;">
+    <span>⚡ <b>Já realizou sua compra?</b></span>
+    <button type="button" id="btnOpenOrdersModal" style="background:#4f46e5;color:#fff;border:0;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(79,70,229,0.4);">
+      🔑 Consultar Meu Acesso
+    </button>
+  </div>
+
   <nav class="nav" aria-label="Navegação principal">
     <div class="container nav-inner">
       <div class="nav-status"><span class="status-dot" aria-hidden="true"></span><span>Catálogo disponível</span></div>
@@ -443,7 +564,7 @@
         <a href="#videos">Vídeos</a>
         <a href="#entrega">Entrega</a>
         <a href="#faq">FAQ</a>
-        <a href="/meus-pedidos.html" style="color:#38bdf8;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">🔍 Meus Acessos</a>
+        <button class="btn btn-outline" id="navMeusAcessosBtn" type="button" style="background:#151829;border:1px solid #3b4263;color:#38bdf8;padding:7px 12px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;">🔍 Meus Acessos</button>
         <a class="btn btn-primary nav-cta" href="#catalogo">Escolher acesso</a>
       </div>
     </div>
@@ -721,6 +842,36 @@
     </div>
   </div>
 
+  <div class="modal-backdrop" id="ordersModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="ordersModalTitle" style="width: min(100%, 640px); max-height: min(90svh, 820px);">
+      <div class="modal-head">
+        <div>
+          <p class="kicker">Área do Cliente</p>
+          <h2 id="ordersModalTitle" style="font-size:1.85rem;margin-bottom:4px;">Consultar Meus Acessos</h2>
+          <p style="color:var(--muted);font-size:13px;margin:0;">Digite o e-mail que você utilizou no pagamento para visualizar seus acessos e tutoriais.</p>
+        </div>
+        <button class="close-btn" id="closeOrdersModal" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <form id="ordersSearchForm" style="margin-top:16px;">
+        <div class="field">
+          <label for="ordersEmailInput">Seu E-mail da Compra</label>
+          <input id="ordersEmailInput" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="voce@exemplo.com">
+        </div>
+        <button class="btn btn-primary btn-full submit-btn" type="submit" id="btnOrdersSubmit">
+          🔍 Localizar Meus Acessos
+        </button>
+      </form>
+
+      <div id="ordersStatusMsg" style="margin-top:14px;display:none;"></div>
+      <div id="ordersResultsList" style="margin-top:14px;"></div>
+
+      <div style="margin-top:20px;padding-top:14px;border-top:1px solid var(--line);text-align:center;font-size:12px;color:var(--muted);">
+        Precisa de suporte imediato? <a href="https://wa.me/5521992936790" target="_blank" style="color:#38bdf8;font-weight:bold;text-decoration:none;">Falar no WhatsApp com o Erick</a>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ===== CONFIGURACAO DA LOJA =====
     // PASSO FINAL: cole abaixo a URL publica do backend (Vercel),
@@ -783,6 +934,16 @@
       var selectedProduct = "muse-ia";
       var detailModal = document.getElementById("detailModal");
       var checkoutModal = document.getElementById("checkoutModal");
+      var ordersModal = document.getElementById("ordersModal");
+      var btnOpenOrdersModal = document.getElementById("btnOpenOrdersModal");
+      var navMeusAcessosBtn = document.getElementById("navMeusAcessosBtn");
+      var closeOrdersModal = document.getElementById("closeOrdersModal");
+      var ordersSearchForm = document.getElementById("ordersSearchForm");
+      var ordersEmailInput = document.getElementById("ordersEmailInput");
+      var btnOrdersSubmit = document.getElementById("btnOrdersSubmit");
+      var ordersStatusMsg = document.getElementById("ordersStatusMsg");
+      var ordersResultsList = document.getElementById("ordersResultsList");
+
       var detailTitle = document.getElementById("detailTitle");
       var detailTag = document.getElementById("detailTag");
       var detailDescription = document.getElementById("detailDescription");
@@ -813,7 +974,7 @@
       }
 
       function setPageLock() {
-        document.body.classList.toggle("modal-open", !detailModal.hidden || !checkoutModal.hidden);
+        document.body.classList.toggle("modal-open", !detailModal.hidden || !checkoutModal.hidden || (ordersModal && !ordersModal.hidden));
       }
 
       function openDetail(button) {
@@ -863,6 +1024,27 @@
         if (lastTrigger) lastTrigger.focus();
       }
 
+      function openOrdersModal() {
+        closeDetail(false);
+        closeCheckout();
+        if (!ordersModal) return;
+        ordersModal.hidden = false;
+        setPageLock();
+        var savedEmail = localStorage.getItem("orvexa_buyer_email") || (email ? email.value.trim() : "");
+        if (savedEmail && ordersEmailInput) {
+          ordersEmailInput.value = savedEmail;
+          consultarAcessosModal(savedEmail);
+        }
+        window.setTimeout(function () { if (ordersEmailInput) ordersEmailInput.focus(); }, 50);
+      }
+
+      function closeOrdersModalFn() {
+        if (!ordersModal) return;
+        ordersModal.hidden = true;
+        setPageLock();
+        if (lastTrigger) lastTrigger.focus();
+      }
+
       document.querySelectorAll(".product-select").forEach(function (button) {
         button.addEventListener("click", function () { openDetail(button); });
       });
@@ -877,13 +1059,182 @@
       document.getElementById("closeDetail").addEventListener("click", function () { closeDetail(true); });
       document.getElementById("selectDetailProduct").addEventListener("click", openCheckout);
       document.getElementById("closeModal").addEventListener("click", closeCheckout);
+      if (btnOpenOrdersModal) btnOpenOrdersModal.addEventListener("click", openOrdersModal);
+      if (navMeusAcessosBtn) navMeusAcessosBtn.addEventListener("click", openOrdersModal);
+      if (closeOrdersModal) closeOrdersModal.addEventListener("click", closeOrdersModalFn);
+      if (ordersModal) ordersModal.addEventListener("click", function (event) { if (event.target === ordersModal) closeOrdersModalFn(); });
       detailModal.addEventListener("click", function (event) { if (event.target === detailModal) closeDetail(true); });
       checkoutModal.addEventListener("click", function (event) { if (event.target === checkoutModal) closeCheckout(); });
       document.addEventListener("keydown", function (event) {
         if (event.key !== "Escape") return;
-        if (!checkoutModal.hidden) closeCheckout();
+        if (ordersModal && !ordersModal.hidden) closeOrdersModalFn();
+        else if (!checkoutModal.hidden) closeCheckout();
         else if (!detailModal.hidden) closeDetail(true);
       });
+
+      if (ordersSearchForm) {
+        ordersSearchForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var em = ordersEmailInput ? ordersEmailInput.value.trim() : "";
+          if (!em) return;
+          consultarAcessosModal(em);
+        });
+      }
+
+      function consultarAcessosModal(userEmail) {
+        if (!userEmail) return;
+        if (btnOrdersSubmit) {
+          btnOrdersSubmit.disabled = true;
+          btnOrdersSubmit.innerHTML = "<span>⏳</span> Localizando seus acessos...";
+        }
+        if (ordersStatusMsg) ordersStatusMsg.style.display = "none";
+        if (ordersResultsList) ordersResultsList.innerHTML = "";
+
+        fetch((BACKEND_URL || "").replace(/\/$/, "") + "/api/meus-pedidos?email=" + encodeURIComponent(userEmail))
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (btnOrdersSubmit) {
+              btnOrdersSubmit.disabled = false;
+              btnOrdersSubmit.innerHTML = "🔍 Localizar Meus Acessos";
+            }
+
+            if (!data || !data.ok) {
+              if (ordersStatusMsg) {
+                ordersStatusMsg.style.display = "block";
+                ordersStatusMsg.innerHTML = '<div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);padding:14px;border-radius:10px;color:#fca5a5;font-size:13px;">' + (data && data.error ? data.error : "Não foi possível consultar os pedidos.") + '</div>';
+              }
+              return;
+            }
+
+            if (!data.compras || data.compras.length === 0) {
+              if (ordersStatusMsg) {
+                ordersStatusMsg.style.display = "block";
+                ordersStatusMsg.innerHTML = '<div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.3);padding:14px;border-radius:10px;color:#fef08a;font-size:13px;text-align:left;">' +
+                  '<p style="margin:0 0 6px;font-weight:bold;">Nenhuma compra encontrada para ' + userEmail + '</p>' +
+                  '<p style="margin:0 0 10px;font-size:12px;color:#cbd5e1;line-height:1.5;">Verifique se você digitou exatamente o mesmo e-mail informado no checkout da InfinitePay. Se tiver dúvidas, fale conosco:</p>' +
+                  '<a href="https://wa.me/5521992936790?text=' + encodeURIComponent('Olá Erick! Fiz um pagamento no site com o e-mail ' + userEmail + ' e gostaria de localizar meu acesso.') + '" target="_blank" style="display:inline-block;background:#25d366;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:bold;">💬 Falar no WhatsApp com o Erick</a>' +
+                '</div>';
+              }
+              return;
+            }
+
+            localStorage.setItem("orvexa_buyer_email", userEmail);
+
+            if (ordersStatusMsg) {
+              ordersStatusMsg.style.display = "block";
+              ordersStatusMsg.innerHTML = '<div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);padding:10px 14px;border-radius:8px;color:#4ade80;font-size:13px;font-weight:bold;">✅ Encontramos ' + data.compras.length + ' acesso(s) liberado(s) para sua conta!</div>';
+            }
+
+            if (ordersResultsList) {
+              ordersResultsList.innerHTML = data.compras.map(renderCompraModal).join("");
+            }
+          })
+          .catch(function (err) {
+            if (btnOrdersSubmit) {
+              btnOrdersSubmit.disabled = false;
+              btnOrdersSubmit.innerHTML = "🔍 Localizar Meus Acessos";
+            }
+            if (ordersStatusMsg) {
+              ordersStatusMsg.style.display = "block";
+              ordersStatusMsg.innerHTML = '<div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);padding:14px;border-radius:10px;color:#fca5a5;font-size:13px;">Erro de conexão. Verifique sua internet e tente novamente.</div>';
+            }
+          });
+      }
+
+      function renderCompraModal(c, idx) {
+        var dataFmt = new Date(c.data).toLocaleString("pt-BR");
+        var isMuse = c.produto === "muse-ia";
+        var isGemini = c.produto === "flow-ai-pro";
+        var contentHtml = "";
+
+        if (isMuse) {
+          var l = "", s = "";
+          if (c.conta_entregue && c.conta_entregue.indexOf(";") !== -1) {
+            var parts = c.conta_entregue.split(";");
+            l = parts[0].trim();
+            s = parts[1].trim();
+          } else {
+            l = c.conta_entregue || "";
+          }
+
+          contentHtml = '<div class="credentials-box">' +
+            '<div style="font-size:11px;color:#818cf8;font-weight:bold;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">DADOS DE LOGIN MUSE IA</div>' +
+            '<div class="cred-row">' +
+              '<span style="font-size:12px;color:#94a3b8;min-width:45px;">E-mail:</span>' +
+              '<input type="text" readonly value="' + l + '" id="m-l-' + idx + '" class="cred-input">' +
+              '<button type="button" class="btn-copy-cred" onclick="window.copiarAcessoModal(\'m-l-' + idx + '\', this)">Copiar</button>' +
+            '</div>' +
+            '<div class="cred-row">' +
+              '<span style="font-size:12px;color:#94a3b8;min-width:45px;">Senha:</span>' +
+              '<input type="text" readonly value="' + s + '" id="m-s-' + idx + '" class="cred-input">' +
+              '<button type="button" class="btn-copy-cred" onclick="window.copiarAcessoModal(\'m-s-' + idx + '\', this)">Copiar</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="tutorial-box">' +
+            '<b>🔐 Como Entrar na Conta:</b>' +
+            '<ol>' +
+              '<li>Abra uma <b>Janela Anônima</b> no seu navegador.</li>' +
+              '<li>Acesse <a href="https://muse.ai/" target="_blank" style="color:#38bdf8;">https://muse.ai/</a></li>' +
+              '<li>Clique em <b>Entrar com e-mail</b> (não clique em Google).</li>' +
+              '<li>Informe o e-mail e senha copiados acima.</li>' +
+              '<li>Pronto! Conta com <b>1 bilhão de tokens</b> ativa!</li>' +
+            '</ol>' +
+          '</div>';
+        } else if (isGemini) {
+          var link = c.conta_entregue || "";
+          contentHtml = '<div style="margin:12px 0;text-align:center;">' +
+            '<a href="' + link + '" target="_blank" class="btn-action-main">👉 CLIQUE AQUI PARA ATIVAR O GEMINI PRO (18 MESES)</a>' +
+            '<div class="credentials-box" style="margin-top:10px;">' +
+              '<div class="cred-row">' +
+                '<input type="text" readonly value="' + link + '" id="g-l-' + idx + '" class="cred-input" style="font-size:12px;">' +
+                '<button type="button" class="btn-copy-cred" onclick="window.copiarAcessoModal(\'g-l-' + idx + '\', this)">Copiar Link</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="tutorial-box">' +
+            '<b>📋 Passo a Passo de Ativação:</b>' +
+            '<ol>' +
+              '<li>Conecte-se na sua conta Gmail pessoal.</li>' +
+              '<li>Clique no botão acima ou abra o link exclusivo.</li>' +
+              '<li>No Google One, confirme a ativação do plano de 18 meses.</li>' +
+              '<li>O Gemini Advanced e o Google Flow já estarão liberados!</li>' +
+            '</ol>' +
+            '<p style="margin:6px 0 0;font-size:11px;">🎬 <a href="https://www.youtube.com/shorts/6yournVyUWI" target="_blank" style="color:#38bdf8;font-weight:bold;">Assista ao tutorial rápido em vídeo</a></p>' +
+          '</div>';
+        } else {
+          contentHtml = '<div class="credentials-box">' +
+            '<p style="margin:0 0 4px;font-size:12px;color:#94a3b8;">Acesso Entregue:</p>' +
+            '<p style="margin:0;font-family:monospace;word-break:break-all;color:#38bdf8;">' + (c.conta_entregue || "") + '</p>' +
+          '</div>';
+        }
+
+        var zapMsg = encodeURIComponent('Olá Erick! Preciso de suporte com o meu pedido ' + c.order_nsu + ' (' + c.produto_nome + ') comprado com o e-mail ' + c.email + '.');
+
+        return '<div class="purchase-card">' +
+          '<div class="purchase-header">' +
+            '<div>' +
+              '<h3 class="purchase-title">' + c.produto_nome + '</h3>' +
+              '<span class="purchase-date">Comprado em ' + dataFmt + ' &bull; Pedido: ' + c.order_nsu + '</span>' +
+            '</div>' +
+            '<span class="badge-status">✅ Acesso Liberado</span>' +
+          '</div>' +
+          contentHtml +
+          '<a href="https://wa.me/5521992936790?text=' + zapMsg + '" target="_blank" class="btn-whatsapp-order">' +
+            '💬 Dúvidas ou Suporte com este Pedido no WhatsApp' +
+          '</a>' +
+        '</div>';
+      }
+
+      window.copiarAcessoModal = function (id, btn) {
+        var input = document.getElementById(id);
+        if (!input) return;
+        input.select();
+        input.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(input.value);
+        var orig = btn.textContent;
+        btn.textContent = "✅ Copiado!";
+        setTimeout(function () { btn.textContent = orig; }, 2000);
+      };
 
       var phoneInputEl = document.getElementById("checkoutPhone");
       if (phoneInputEl) {
