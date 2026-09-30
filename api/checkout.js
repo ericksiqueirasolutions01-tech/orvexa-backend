@@ -22,7 +22,9 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Use POST." });
 
   try {
-    const { email, produto } = req.body || {};
+    const { email, phone, whatsapp, produto } = req.body || {};
+    const buyerPhone = String(phone || whatsapp || "").replace(/\D/g, "");
+
     if (!isValidEmail(email)) {
       return res.status(400).json({ error: "Informe um e-mail válido." });
     }
@@ -41,10 +43,16 @@ module.exports = async function handler(req, res) {
     // Salva o pedido antes de gerar o link (o webhook valida contra ele)
     await saveOrder(order_nsu, {
       email,
+      phone: buyerPhone,
       produto,
       created_at: new Date().toISOString(),
       status: "aguardando",
     });
+
+    const ipCustomer = { email };
+    if (buyerPhone && buyerPhone.length >= 10) {
+      ipCustomer.phone_number = buyerPhone.startsWith("55") ? `+${buyerPhone}` : `+55${buyerPhone}`;
+    }
 
     const ipRes = await fetch(`${INFINITEPAY_API}/links`, {
       method: "POST",
@@ -53,10 +61,10 @@ module.exports = async function handler(req, res) {
         handle: INFINITEPAY_HANDLE,
         items: [{ quantity: 1, price: item.priceCents, description: item.title }],
         order_nsu,
-        redirect_url: `${PUBLIC_URL}/api/entrega?pagamento=aprovado&produto=${produto}&order_nsu=${order_nsu}&email=${encodeURIComponent(email)}`,
+        redirect_url: `${PUBLIC_URL}/api/entrega?pagamento=aprovado&produto=${produto}&order_nsu=${order_nsu}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(buyerPhone)}`,
         webhook_url: `${PUBLIC_URL}/api/webhook`,
-        customer: { email },
-        metadata: { produto, email, order_nsu },
+        customer: ipCustomer,
+        metadata: { produto, email, phone: buyerPhone, order_nsu },
       }),
     });
 

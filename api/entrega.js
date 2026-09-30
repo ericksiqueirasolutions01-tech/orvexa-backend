@@ -1,4 +1,4 @@
-// GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...&email=...
+// GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...&email=...&phone=...
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
 const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
 const { getOrder, setOrderStatus, popStockAccount, recordSale } = require("../lib/store");
@@ -8,6 +8,7 @@ module.exports = async function handler(req, res) {
   let produtoKey = req.query.produto || "muse-ia";
   const orderNsu = req.query.order_nsu || "";
   let buyerEmail = req.query.email || "";
+  let buyerPhone = req.query.phone || "";
 
   let order = null;
   if (orderNsu) {
@@ -16,6 +17,7 @@ module.exports = async function handler(req, res) {
       if (order) {
         if (order.produto) produtoKey = order.produto;
         if (order.email && !buyerEmail) buyerEmail = order.email;
+        if (order.phone && !buyerPhone) buyerPhone = order.phone;
       }
     } catch (e) {
       console.warn("Erro ao buscar pedido em api/entrega:", e.message);
@@ -47,6 +49,7 @@ module.exports = async function handler(req, res) {
             status: "pago",
             delivered_item: deliveredItem,
             email: buyerEmail,
+            phone: buyerPhone,
             produto: produtoKey,
           });
         }
@@ -56,6 +59,7 @@ module.exports = async function handler(req, res) {
           order_nsu: orderNsu || `onscreen-${Date.now()}`,
           transaction_nsu: (order && order.transaction_nsu) || `tx-onscreen-${Date.now()}`,
           email: buyerEmail || "cliente@orvexa.digital",
+          phone: buyerPhone || "",
           produto: produtoKey,
           produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
           valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 79.99 : 49.99),
@@ -70,6 +74,7 @@ module.exports = async function handler(req, res) {
           order_nsu: orderNsu || `onscreen-pendente-${Date.now()}`,
           transaction_nsu: (order && order.transaction_nsu) || `tx-pendente-${Date.now()}`,
           email: buyerEmail || "cliente@orvexa.digital",
+          phone: buyerPhone || "",
           produto: produtoKey,
           produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
           valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 79.99 : 49.99),
@@ -96,6 +101,25 @@ module.exports = async function handler(req, res) {
       senhaStr = parts[1].trim();
     }
 
+    const zapMuseMsg = `🚀 *SEU ACESSO MUSE IA ESTÁ LIBERADO!*
+
+Olá Erick! Acabei de garantir o *MUSE IA (1 Bilhão de Tokens)* pelo site!
+📌 *Pedido:* ${orderNsu}
+👤 *E-mail:* ${buyerEmail}
+
+🔑 *Meus dados de acesso:*
+📧 *E-mail da Conta:* ${loginStr}
+🔑 *Senha:* ${senhaStr}
+
+📋 *Passo a Passo de Acesso:*
+1. Abrir o navegador em *Janela Anônima*.
+2. Acessar: https://muse.ai/
+3. Clicar em *Entrar com e-mail* (não clicar em Google).
+4. Informar o e-mail e senha acima.
+5. Pronto! Conta com 1 bilhão de tokens ativa!
+
+Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
+
     deliveryContentHtml = `
       ${loginStr ? `
       <div style="background:#090a10;border:1px solid #3b4263;border-radius:12px;padding:20px;margin:20px 0;text-align:left;">
@@ -116,6 +140,19 @@ module.exports = async function handler(req, res) {
             <button onclick="copiar('muse-senha', this)" style="background:#2a2a44;color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:13px;">Copiar</button>
           </div>
         </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#064e3b,#022c22);border:1px solid #059669;border-radius:12px;padding:18px 16px;margin:18px 0;text-align:center;">
+        <span style="display:inline-block;background:#10b981;color:#000;font-size:10px;font-weight:900;padding:2px 8px;border-radius:4px;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">
+          📲 RECEBER NO SEU WHATSAPP
+        </span>
+        <h4 style="color:#fff;font-size:15px;margin:0 0 6px;">Receber Procedimento e Acesso no WhatsApp</h4>
+        <p style="color:#a7f3d0;font-size:13px;line-height:1.5;margin:0 0 12px;">
+          Toque no botão abaixo para receber todos os dados da conta e o passo a passo direto no seu WhatsApp para não perder:
+        </p>
+        <a href="https://wa.me/5521992936790?text=${encodeURIComponent(zapMuseMsg)}" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;font-weight:bold;padding:12px 20px;border-radius:8px;text-decoration:none;font-size:14px;box-shadow:0 6px 18px rgba(37,211,102,0.35);width:100%;max-width:360px;">
+          <span>💬</span> RECEBER PROCEDIMENTO NO WHATSAPP
+        </a>
       </div>
       ` : `
       <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);border-radius:14px;padding:24px 20px;margin:20px 0;text-align:center;">
@@ -162,6 +199,24 @@ module.exports = async function handler(req, res) {
   else if (produtoKey === "flow-ai-pro") {
     const linkUrl = deliveredItem && deliveredItem.startsWith("http") ? deliveredItem : "";
 
+    const zapGeminiMsg = `⭐ *SEU GOOGLE AI PRO + FLOW (18 MESES) ESTÁ PRONTO!*
+
+Olá Erick! Acabei de garantir o *Gemini Pro (18 Meses)* pelo site!
+📌 *Pedido:* ${orderNsu}
+👤 *E-mail:* ${buyerEmail}
+
+👉 *Meu Link de Ativação:*
+${linkUrl}
+
+📋 *Passo a Passo de Ativação:*
+1. Conectar na sua conta Google / Gmail pessoal.
+2. Abrir o link de ativação exclusivo acima.
+3. No Google One, confirmar a ativação do plano de 18 meses.
+4. O Gemini Advanced e o Google Flow já estarão liberados!
+🎬 *Tutorial em vídeo:* https://www.youtube.com/shorts/6yournVyUWI
+
+Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
+
     deliveryContentHtml = `
       ${linkUrl ? `
       <div style="background:#090a10;border:1px solid #3b4263;border-radius:12px;padding:24px;margin:20px 0;text-align:center;">
@@ -174,6 +229,19 @@ module.exports = async function handler(req, res) {
         </div>
         
         <p style="color:#94a3b8;font-size:12px;word-break:break-all;margin-top:12px;">Link: <a href="${linkUrl}" target="_blank" style="color:#38bdf8;">${linkUrl}</a></p>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#064e3b,#022c22);border:1px solid #059669;border-radius:12px;padding:18px 16px;margin:18px 0;text-align:center;">
+        <span style="display:inline-block;background:#10b981;color:#000;font-size:10px;font-weight:900;padding:2px 8px;border-radius:4px;letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">
+          📲 RECEBER NO SEU WHATSAPP
+        </span>
+        <h4 style="color:#fff;font-size:15px;margin:0 0 6px;">Receber Procedimento e Link no WhatsApp</h4>
+        <p style="color:#a7f3d0;font-size:13px;line-height:1.5;margin:0 0 12px;">
+          Toque no botão abaixo para receber o link exclusivo e o tutorial de ativação direto no seu WhatsApp para não perder:
+        </p>
+        <a href="https://wa.me/5521992936790?text=${encodeURIComponent(zapGeminiMsg)}" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;font-weight:bold;padding:12px 20px;border-radius:8px;text-decoration:none;font-size:14px;box-shadow:0 6px 18px rgba(37,211,102,0.35);width:100%;max-width:360px;">
+          <span>💬</span> RECEBER PROCEDIMENTO NO WHATSAPP
+        </a>
       </div>
       ` : `
       <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);border-radius:14px;padding:24px 20px;margin:20px 0;text-align:center;">

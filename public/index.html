@@ -712,6 +712,7 @@
       </div>
       <form id="checkoutForm">
         <div class="field"><label for="checkoutEmail">E-mail para receber as orientações</label><input id="checkoutEmail" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="voce@exemplo.com"></div>
+        <div class="field"><label for="checkoutPhone">WhatsApp com DDD (para envio do procedimento no seu celular)</label><input id="checkoutPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(21) 99999-9999"></div>
         <button class="btn btn-primary btn-full submit-btn" type="submit">Ir para pagamento seguro</button>
         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
@@ -883,6 +884,20 @@
         else if (!detailModal.hidden) closeDetail(true);
       });
 
+      var phoneInputEl = document.getElementById("checkoutPhone");
+      if (phoneInputEl) {
+        phoneInputEl.addEventListener("input", function (e) {
+          var v = e.target.value.replace(/\D/g, "").slice(0, 11);
+          if (v.length > 6) {
+            e.target.value = "(" + v.slice(0, 2) + ") " + v.slice(2, 7) + "-" + v.slice(7);
+          } else if (v.length > 2) {
+            e.target.value = "(" + v.slice(0, 2) + ") " + v.slice(2);
+          } else if (v.length > 0) {
+            e.target.value = "(" + v;
+          }
+        });
+      }
+
       form.addEventListener("submit", function (event) {
         event.preventDefault();
         if (!form.reportValidity()) return;
@@ -896,10 +911,13 @@
         status.textContent = "Conectando com a InfinitePay…";
         status.className = "form-status";
 
+        var phoneInput = document.getElementById("checkoutPhone");
+        var phoneVal = phoneInput ? phoneInput.value.replace(/\D/g, "") : "";
+
         fetch(BACKEND_URL.replace(/\/$/, "") + "/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.value.trim(), produto: selectedProduct })
+          body: JSON.stringify({ email: email.value.trim(), phone: phoneVal, produto: selectedProduct })
         }).then(function (response) {
           if (!response.ok) throw new Error("checkout_unavailable");
           return response.json();

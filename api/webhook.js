@@ -58,6 +58,7 @@ module.exports = async function handler(req, res) {
     }
 
     const buyerEmail = (order && order.email) || (req.body.customer && req.body.customer.email) || (req.body.metadata && req.body.metadata.email) || "";
+    const buyerPhone = (order && order.phone) || (req.body.customer && (req.body.customer.phone || req.body.customer.phone_number)) || (req.body.metadata && req.body.metadata.phone) || "";
 
     let deliveredText = "";
 
@@ -169,6 +170,7 @@ module.exports = async function handler(req, res) {
       order_nsu,
       transaction_nsu: String(transaction_nsu),
       email: buyerEmail || "cliente@orvexa.digital",
+      phone: buyerPhone || "",
       produto: produtoKey,
       produto_nome: produto.title,
       valor: produto.priceBRL,
@@ -184,6 +186,7 @@ module.exports = async function handler(req, res) {
       transaction_nsu: String(transaction_nsu),
       delivered_item: deliveredText,
       email: buyerEmail,
+      phone: buyerPhone,
       produto: produtoKey,
       paid_at: new Date().toISOString(),
     });

@@ -1591,10 +1591,64 @@
 
     function formatSaleCard(v) {
       const dataFmt = new Date(v.data).toLocaleString("pt-BR");
-      const zapMsg = encodeURIComponent(`Olá! Confirmamos sua compra de ${v.produto_nome || v.produto} na Orvexa. Segue o suporte para o seu acesso!`);
       
       let badgeClass = "badge-purple";
       if (v.produto === "flow-ai-pro") badgeClass = "badge-blue";
+
+      let msgProcedimento = "";
+      if (v.produto === "muse-ia") {
+        let l = "", s = "";
+        if (v.conta_entregue && v.conta_entregue.includes(";")) {
+          const parts = v.conta_entregue.split(";");
+          l = parts[0].trim();
+          s = parts[1].trim();
+        } else {
+          l = v.conta_entregue || "";
+        }
+        msgProcedimento = `🚀 *SEU ACESSO MUSE IA ESTÁ LIBERADO!*
+
+Olá! Aqui é o Erick da Orvexa. Seguem os dados oficiais da sua conta com 1 Bilhão de Tokens:
+
+📧 *E-mail:* ${l}
+🔑 *Senha:* ${s}
+
+📋 *PASSO A PASSO PARA ACESSAR:*
+1. Abra o navegador em *Janela Anônima* (para não conflitar com sua conta Google).
+2. Acesse: https://muse.ai/
+3. Clique em *Entrar com e-mail* (⚠️ Não clique em Entrar com Google).
+4. Informe o e-mail acima.
+5. Clique em *Entrar com senha*, digite a senha e confirme.
+6. Pronto! Você já está conectado com 1 bilhão de tokens!
+
+🪙 *Sobre seus Tokens:*
+Sua conta possui 1 bilhão de tokens (demora muito para acabar). Quando precisar de mais recargas no futuro, é só me chamar aqui!
+
+Qualquer dúvida, estou à disposição aqui no suporte VIP!`;
+      } else {
+        msgProcedimento = `⭐ *SEU GOOGLE AI PRO + FLOW (18 MESES) ESTÁ PRONTO!*
+
+Olá! Aqui é o Erick da Orvexa. Segue seu link exclusivo de ativação:
+
+👉 *Link de Ativação:*
+${v.conta_entregue}
+
+📋 *PASSO A PASSO DE ATIVAÇÃO:*
+1. Certifique-se de estar conectado no seu Gmail / Conta Google pessoal no navegador.
+2. Abra o link de ativação exclusivo acima.
+3. Na página oficial do Google One, confirme a ativação do plano de 18 meses.
+4. Pronto! O Gemini Advanced e o Google Flow já estarão ativos na sua conta!
+
+🎬 *Vídeo tutorial rápido de ativação:*
+https://www.youtube.com/shorts/6yournVyUWI
+
+Qualquer dúvida com a ativação, pode me chamar aqui no suporte VIP!`;
+      }
+
+      const rawPhone = String(v.phone || "").replace(/\D/g, "");
+      const destPhone = rawPhone ? (rawPhone.startsWith("55") ? rawPhone : `55${rawPhone}`) : "";
+      const zapLink = destPhone
+        ? `https://wa.me/${destPhone}?text=${encodeURIComponent(msgProcedimento)}`
+        : `https://wa.me/?text=${encodeURIComponent(msgProcedimento)}`;
 
       return `
         <div class="sale-item">
@@ -1606,22 +1660,36 @@
             <span class="sale-price">R$ ${Number(v.valor).toFixed(2)}</span>
           </div>
 
-          <div class="sale-email">👤 <b>Cliente:</b> ${v.email}</div>
+          <div class="sale-email" style="margin-top:6px;">
+            👤 <b>Cliente:</b> ${v.email}
+            ${v.phone ? ` &bull; 📱 <b>WhatsApp:</b> <a href="https://wa.me/${destPhone}" target="_blank" style="color:#22c55e;text-decoration:none;font-weight:bold;">${v.phone}</a>` : ""}
+          </div>
 
-          <div class="delivered-box">
+          <div class="delivered-box" style="margin-top:8px;">
             <div class="delivered-text" title="${v.conta_entregue}">
               🔑 <b>Entregue:</b> ${v.conta_entregue || "Acesso liberado"}
             </div>
             ${v.conta_entregue ? `<button class="btn-copy" onclick="copiarTexto('${encodeURIComponent(v.conta_entregue)}')">Copiar</button>` : ""}
           </div>
 
-          <div class="sale-actions">
-            <a href="https://wa.me/5521992936790?text=${zapMsg}" target="_blank" class="btn-wa">
-              💬 Suporte WhatsApp
+          <div class="sale-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+            <a href="${zapLink}" target="_blank" class="btn-wa" style="flex:1;min-width:180px;text-align:center;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;">
+              <span>📲</span> Enviar Procedimento no WhatsApp ${v.phone ? `(${v.phone})` : ""}
             </a>
+            <button class="btn-copy" onclick="copiarProcedimentoAdmin('${encodeURIComponent(msgProcedimento)}', this)" style="background:#2a2a44;color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:12px;">
+              📋 Copiar Procedimento
+            </button>
           </div>
         </div>
       `;
+    }
+
+    function copiarProcedimentoAdmin(encoded, btn) {
+      const text = decodeURIComponent(encoded);
+      navigator.clipboard.writeText(text);
+      const orig = btn.textContent;
+      btn.textContent = "✅ Copiado!";
+      setTimeout(() => { btn.textContent = orig; }, 2000);
     }
 
     // Zerar histórico de vendas para começar limpo
