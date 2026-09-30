@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Orvexa Digital — Ferramentas Pro & IAs com Ativação Imediata</title>
+  <title>Orvexa Digital — MUSE AI & Ferramentas Pro com Ativação Imediata</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
       --card-hover: #292e4e;
       --primary: #6366f1;
       --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+      --muse-gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #d946ef 100%);
       --accent-green: #10b981;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
@@ -90,7 +91,7 @@
     /* Hero */
     .hero {
       text-align: center;
-      padding: 70px 0 50px;
+      padding: 60px 0 40px;
       position: relative;
     }
     .hero::before {
@@ -101,7 +102,7 @@
       transform: translateX(-50%);
       width: 600px;
       height: 350px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(9, 10, 16, 0) 70%);
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(9, 10, 16, 0) 70%);
       pointer-events: none;
       z-index: -1;
     }
@@ -126,35 +127,178 @@
       margin-bottom: 20px;
     }
     .hero h1 span {
-      background: var(--primary-gradient);
+      background: var(--muse-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .hero p {
       color: var(--text-muted);
       font-size: clamp(16px, 2vw, 19px);
-      max-width: 680px;
-      margin: 0 auto 32px;
+      max-width: 720px;
+      margin: 0 auto 28px;
       line-height: 1.6;
     }
-    .trust-badges {
+
+    /* Video Showcase Section */
+    .video-showcase {
+      margin: 20px auto 70px;
+      background: linear-gradient(180deg, #131628 0%, #0d0f19 100%);
+      border: 1px solid #282f50;
+      border-radius: 24px;
+      padding: 36px 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .video-showcase::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--muse-gradient);
+    }
+    .video-header {
+      margin-bottom: 28px;
+    }
+    .video-header h2 {
+      font-size: clamp(22px, 3.5vw, 34px);
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .video-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .video-container {
+      max-width: 860px;
+      margin: 0 auto 28px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      background: #000;
+    }
+    .video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 520px;
+      object-fit: contain;
+      background: #000;
+    }
+    .video-cta-bar {
       display: flex;
       justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      color: #cbd5e1;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .trust-badge-item {
-      display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .cta-btn-primary {
+      background: var(--muse-gradient);
+      color: #fff;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+      border: 0;
+      cursor: pointer;
+    }
+    .cta-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+    }
+
+    /* Muse AI Highlights Banner */
+    .muse-banner-section {
+      margin: 40px auto 80px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #232846;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+    .muse-banner-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 3D Gallery */
+    .gallery-section {
+      margin-bottom: 70px;
+      text-align: center;
+    }
+    .gallery-header {
+      margin-bottom: 30px;
+    }
+    .gallery-header h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .gallery-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .gallery-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      border-color: #4f46e5;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .gallery-item-info {
+      padding: 16px;
+      text-align: left;
+    }
+    .gallery-item-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
+    }
+    .gallery-item-desc {
+      font-size: 13px;
+      color: var(--text-muted);
     }
 
     /* Grid de Produtos */
     .products-section {
-      padding: 40px 0 80px;
+      padding: 20px 0 80px;
+    }
+    .section-title-wrapper {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-title-wrapper h2 {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
     }
     .products-grid {
       display: grid;
@@ -178,17 +322,17 @@
       border-color: var(--card-hover);
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
     }
-    .product-card.featured {
-      border: 2px solid #6366f1;
-      background: linear-gradient(180deg, #16182c 0%, #121422 100%);
-      box-shadow: 0 12px 35px rgba(99, 102, 241, 0.2);
+    .product-card.featured-muse {
+      border: 2px solid #0ea5e9;
+      background: linear-gradient(180deg, #131d33 0%, #121422 100%);
+      box-shadow: 0 14px 40px rgba(14, 165, 233, 0.25);
     }
     .card-ribbon {
       position: absolute;
       top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--primary-gradient);
+      background: var(--muse-gradient);
       color: #fff;
       font-size: 12px;
       font-weight: 700;
@@ -203,7 +347,7 @@
     .product-category {
       font-size: 12px;
       font-weight: 700;
-      color: #818cf8;
+      color: #38bdf8;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 8px;
@@ -272,7 +416,7 @@
       margin-top: 2px;
     }
 
-    /* Formulario de Checkout do Card */
+    /* Checkout Form */
     .checkout-form {
       display: flex;
       flex-direction: column;
@@ -311,94 +455,13 @@
       justify-content: center;
       gap: 8px;
     }
-    .buy-btn:hover {
-      opacity: 0.95;
+    .buy-btn-muse {
+      background: var(--muse-gradient);
+      box-shadow: 0 8px 25px rgba(14, 165, 233, 0.35);
     }
-    .buy-btn:active {
-      transform: scale(0.98);
-    }
-    .buy-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    /* Como Funciona */
-    .how-it-works {
-      background: #0d0f17;
-      padding: 70px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .section-header h2 {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-    }
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
-    }
-    .step-card {
-      background: #121422;
-      border: 1px solid #1f233b;
-      border-radius: 16px;
-      padding: 28px;
-      text-align: center;
-    }
-    .step-number {
-      width: 44px;
-      height: 44px;
-      background: var(--primary-gradient);
-      color: #fff;
-      font-weight: 800;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 18px;
-    }
-    .step-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .step-card p {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    /* FAQ */
-    .faq-section {
-      padding: 70px 0;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-    .faq-item {
-      background: #121422;
-      border: 1px solid #1f233b;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      padding: 20px;
-    }
-    .faq-item h4 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-    .faq-item p {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
+    .buy-btn:hover { opacity: 0.95; }
+    .buy-btn:active { transform: scale(0.98); }
+    .buy-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* Footer */
     footer {
@@ -408,13 +471,8 @@
       color: #64748b;
       font-size: 13px;
     }
-    footer a {
-      color: #94a3b8;
-      text-decoration: none;
-    }
-    footer a:hover {
-      color: #fff;
-    }
+    footer a { color: #94a3b8; text-decoration: none; }
+    footer a:hover { color: #fff; }
 
     /* Float WhatsApp */
     .float-wa {
@@ -434,9 +492,7 @@
       text-decoration: none;
       transition: transform 0.2s ease;
     }
-    .float-wa:hover {
-      transform: scale(1.1);
-    }
+    .float-wa:hover { transform: scale(1.1); }
   </style>
 </head>
 <body>
@@ -447,7 +503,7 @@
       <a href="/" class="brand">
         <span class="brand-badge">⚡ ORVEXA</span> DIGITAL
       </a>
-      <a href="https://wa.me/5521992936790?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Orvexa%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida" target="_blank" class="nav-btn">
+      <a href="https://wa.me/5521992936790?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20MUSE%20AI%20e%20as%20ferramentas" target="_blank" class="nav-btn">
         <span>Suporte WhatsApp</span>
       </a>
     </div>
@@ -455,41 +511,134 @@
 
   <!-- Hero Section -->
   <section class="hero container">
-    <div class="tag">⚡ ACESSO IMEDIATO · OFERTA LIMITADA</div>
-    <h1>Potencialize seus resultados com as <span>melhores IAs do mundo</span></h1>
-    <p>Acessos profissionais completos com entrega 100% automatizada por e-mail ou ativação direta. Seguro, confiável e com garantia total.</p>
-    
-    <div class="trust-badges">
-      <div class="trust-badge-item">
-        <span>🔒 Pagamento Seguro InfinitePay</span>
+    <div class="tag">🚀 NOVIDADE EXCLUSIVA NA PRIME DIGITAL</div>
+    <h1>Criação de Vídeos, Imagens e Sites com <span>MUSE AI</span></h1>
+    <p>A primeira IA Agente Pessoal do mundo com <b>1 a 2 Bilhões de Tokens</b>. Não é apenas para conversar: o MUSE executa tarefas completas por você!</p>
+  </section>
+
+  <!-- Video Showcase (O Vídeo da MUSE AI) -->
+  <section class="container">
+    <div class="video-showcase">
+      <div class="video-header">
+        <div class="tag" style="background: rgba(14, 165, 233, 0.2); border-color: rgba(14, 165, 233, 0.4); color: #38bdf8;">🎬 DEMONSTRAÇÃO EM VÍDEO</div>
+        <h2>Veja o que a MUSE AI é capaz de criar</h2>
+        <p>Animação, consistência de personagens, geração de vídeos em alta resolução e automações completas feitas com inteligência artificial.</p>
       </div>
-      <div class="trust-badge-item">
-        <span>⚡ Entrega Automática via Pix</span>
+
+      <div class="video-container">
+        <video controls autoplay muted loop playsinline poster="/muse-banner.jpg">
+          <source src="/muse-demo.mp4" type="video/mp4">
+          <source src="/muse-short.mp4" type="video/mp4">
+          Seu navegador não suporta a tag de vídeo.
+        </video>
       </div>
-      <div class="trust-badge-item">
-        <span>💬 Suporte Dedicado via WhatsApp</span>
+
+      <div class="video-cta-bar">
+        <a href="#comprar" class="cta-btn-primary">
+          <span>⚡ Quero Minha Conta MUSE AI — R$ 79,99</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Product Catalog -->
-  <section class="products-section container">
+  <!-- Banner Oficial Prime Digital / Muse AI -->
+  <section class="container">
+    <div class="muse-banner-section">
+      <img src="/muse-banner.jpg" alt="Muse AI - A Primeira IA Agente Pessoal do Mundo" class="muse-banner-img">
+    </div>
+  </section>
+
+  <!-- Galeria de Criações 3D -->
+  <section class="container gallery-section">
+    <div class="gallery-header">
+      <h3>🎨 Consistência de Personagens & Produção 3D</h3>
+      <p>Exemplos de character sheets profissionais e modelagem 3D criados com inteligência artificial</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="/rick-3d.jpg" alt="Rick Sanchez 3D Character Sheet">
+        <div class="gallery-item-info">
+          <div class="gallery-item-title">Rick Sanchez — Modelo 3D & Vistas Gerais</div>
+          <div class="gallery-item-desc">Expressões, poses, paleta de cores e iluminação cinematográfica.</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="/morty-3d.jpg" alt="Morty Smith 3D Character Sheet">
+        <div class="gallery-item-info">
+          <div class="gallery-item-title">Morty Smith — Modelo 3D & Anatomia</div>
+          <div class="gallery-item-desc">Consistência de estilo para animação e jogos em alta fidelidade.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catálogo de Produtos e Compra -->
+  <section class="products-section container" id="comprar">
+    <div class="section-title-wrapper">
+      <h2>Escolha seu Acesso com Entrega Imediata</h2>
+      <p style="color: var(--text-muted)">Pagamento instantâneo no Pix ou Cartão com checkout oficial InfinitePay</p>
+    </div>
+
     <div class="products-grid">
 
-      <!-- Card 1: Google Flow + AI Pro -->
-      <div class="product-card featured">
-        <div class="card-ribbon">🔥 MAIS VENDIDO</div>
+      <!-- Card 1: MUSE IA Pro -->
+      <div class="product-card featured-muse">
+        <div class="card-ribbon">⭐ DESTAQUE EXCLUSIVO</div>
+        <div>
+          <div class="card-header">
+            <div class="product-category">INTELIGÊNCIA ARTIFICIAL & VÍDEO</div>
+            <h2 class="product-title">MUSE IA Pro</h2>
+            <p class="product-desc">Acesso completo à plataforma de IA que cria vídeos, imagens e executa tarefas com 1 a 2 bilhões de tokens.</p>
+          </div>
+
+          <div class="pricing">
+            <div class="old-price">De R$ 249,00</div>
+            <div class="price-value">R$ 79,99 <small>/ acesso total</small></div>
+            <div class="billing-tag">✓ Login + senha entregues na hora por e-mail</div>
+          </div>
+
+          <ul class="features-list">
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span><b>Conta exclusiva individual:</b> login e senha únicos</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Criação ilimitada de vídeos e artes com IA</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Estoque atômico: garantia de envio imediato</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Suporte humano via WhatsApp para primeiro acesso</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="checkout-form" onsubmit="iniciarCheckout(event, 'muse-ia')">
+          <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
+          <button type="submit" class="buy-btn buy-btn-muse">
+            <span>Comprar MUSE IA — R$ 79,99</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Card 2: Google Flow + AI Pro -->
+      <div class="product-card">
         <div>
           <div class="card-header">
             <div class="product-category">GOOGLE WORKSPACE & IA</div>
             <h2 class="product-title">Google Flow + AI Pro</h2>
-            <p class="product-desc">Acesso completo de 18 meses com IA de ponta para automação e produtividade.</p>
+            <p class="product-desc">Acesso completo de 18 meses com IA de ponta para automação e produtividade na sua conta Google.</p>
           </div>
 
           <div class="pricing">
             <div class="old-price">De R$ 197,00</div>
             <div class="price-value">R$ 49,99 <small>/ 18 meses</small></div>
-            <div class="billing-tag">✓ Pagamento único sem recorrência</div>
+            <div class="billing-tag">✓ Pagamento único sem renovação</div>
           </div>
 
           <ul class="features-list">
@@ -499,7 +648,7 @@
             </li>
             <li>
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><b>100% Seguro:</b> sem compartilhar senha</span>
+              <span><b>100% Seguro:</b> sem compartilhar sua senha</span>
             </li>
             <li>
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -515,50 +664,7 @@
         <form class="checkout-form" onsubmit="iniciarCheckout(event, 'flow-ai-pro')">
           <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
           <button type="submit" class="buy-btn">
-            <span>Comprar Acesso — R$ 49,99</span>
-          </button>
-        </form>
-      </div>
-
-      <!-- Card 2: MUSE IA -->
-      <div class="product-card">
-        <div>
-          <div class="card-header">
-            <div class="product-category">CRIAÇÃO DE VÍDEOS COM IA</div>
-            <h2 class="product-title">MUSE IA Pro</h2>
-            <p class="product-desc">Plataforma profissional para geração de vídeos e imagens com inteligência artificial.</p>
-          </div>
-
-          <div class="pricing">
-            <div class="old-price">De R$ 249,00</div>
-            <div class="price-value">R$ 79,99 <small>/ acesso total</small></div>
-            <div class="billing-tag">✓ Pagamento único</div>
-          </div>
-
-          <ul class="features-list">
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span>Conta individual e exclusiva</span>
-            </li>
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span>Login e senha entregues <b>na hora por e-mail</b></span>
-            </li>
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span>Estoque automático com garantia de entrega</span>
-            </li>
-            <li>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span>Suporte para primeiro acesso via WhatsApp</span>
-            </li>
-          </ul>
-        </div>
-
-        <form class="checkout-form" onsubmit="iniciarCheckout(event, 'muse-ia')">
-          <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
-          <button type="submit" class="buy-btn">
-            <span>Comprar Acesso — R$ 79,99</span>
+            <span>Comprar Flow + AI Pro — R$ 49,99</span>
           </button>
         </form>
       </div>
@@ -581,7 +687,7 @@
           <ul class="features-list">
             <li>
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span><b>Vidas infinitas:</b> pratique sem interrupções</span>
+              <span><b>Vidas infinitas:</b> pratique sem parar</span>
             </li>
             <li>
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -601,7 +707,7 @@
         <form class="checkout-form" onsubmit="iniciarCheckout(event, 'super-duolingo')">
           <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
           <button type="submit" class="buy-btn">
-            <span>Comprar Acesso — R$ 37,00</span>
+            <span>Comprar Duolingo — R$ 37,00</span>
           </button>
         </form>
       </div>
@@ -609,60 +715,10 @@
     </div>
   </section>
 
-  <!-- Como Funciona -->
-  <section class="how-it-works">
-    <div class="container">
-      <div class="section-header">
-        <h2>Como Funciona a Entrega?</h2>
-        <p style="color: var(--text-muted)">Processo 100% transparente em 3 etapas simples</p>
-      </div>
-
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h3>Escolha seu Produto</h3>
-          <p>Selecione a ferramenta ideal, digite o e-mail onde deseja receber o acesso e clique no botão.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h3>Pague com Segurança</h3>
-          <p>Você será levado ao checkout oficial da InfinitePay para pagar via Pix instantâneo ou cartão.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h3>Receba na Hora</h3>
-          <p>O sistema confirma o pagamento no mesmo instante e envia o acesso e tutoriais diretamente para você.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq-section container">
-    <div class="section-header">
-      <h2>Dúvidas Frequentes</h2>
-    </div>
-
-    <div class="faq-item">
-      <h4>Quanto tempo demora para receber o acesso?</h4>
-      <p>A entrega é imediata assim que o Pix é compensado pelo sistema da InfinitePay. Você receberá o acesso no seu e-mail e na tela de confirmação.</p>
-    </div>
-
-    <div class="faq-item">
-      <h4>Preciso fornecer a senha da minha conta?</h4>
-      <p>Não! Produtos como o Google Flow e Duolingo são ativados por convite/link oficial na sua conta existente, sem que você precise fornecer nenhuma senha pessoal.</p>
-    </div>
-
-    <div class="faq-item">
-      <h4>E se eu precisar de ajuda ou suporte?</h4>
-      <p>Nossa equipe está disponível via WhatsApp para tirar dúvidas e ajudar na ativação de qualquer produto sempre que precisar.</p>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p style="margin-bottom: 8px;"><b>ORVEXA DIGITAL</b> — Soluções Inteligentes em IA e Produtividade</p>
+      <p style="margin-bottom: 8px;"><b>ORVEXA DIGITAL & PRIME DIGITAL</b> — Tecnologia, Inovação e Inteligência Artificial</p>
       <p style="margin-bottom: 16px;">Pagamentos processados de forma segura pela InfinitePay</p>
       <p>
         <a href="/admin.html">Painel de Estoque (Admin)</a> · 
