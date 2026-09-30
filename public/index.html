@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orvexa Backend — Status & Documentação</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #0b0b14;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+  .box {
+    width: 100%;
+    max-width: 600px;
+    background: #151524;
+    border: 1px solid #2a2a44;
+    border-radius: 16px;
+    padding: 36px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2a2a44;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #22c55e;
+  }
+  h1 { font-size: 22px; margin: 0; }
+  p { color: #9a9ab0; font-size: 14px; line-height: 1.6; margin: 0 0 24px; }
+  .section-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #6366f1;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .endpoints {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .endpoint-item {
+    background: #0b0b14;
+    border: 1px solid #2a2a44;
+    padding: 12px 16px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: monospace;
+    font-size: 13px;
+  }
+  .method {
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .post { background: #3b82f6; color: #fff; }
+  .get { background: #10b981; color: #fff; }
+  .btn-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  a.btn {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    background: linear-gradient(90deg,#4f7cff,#a855f7);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  }
+  a.btn:hover { opacity: 0.9; }
+  a.btn-secondary {
+    background: #2a2a44;
+  }
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="header">
+    <div>
+      <h1>⚡ Orvexa Backend</h1>
+      <span style="color:#818cf8; font-size:13px;">Gateway InfinitePay & Entrega Automática</span>
+    </div>
+    <div class="badge">
+      <span class="dot"></span> Online
+    </div>
+  </div>
+
+  <p>Serviço de geração de links de checkout via InfinitePay, confirmação por webhook e entrega instantânea de licenças e acessos por e-mail.</p>
+
+  <div class="section-title">Endpoints Principais</div>
+  <div class="endpoints">
+    <div class="endpoint-item">
+      <span><strong class="method post">POST</strong> /api/checkout</span>
+      <span style="color:#9a9ab0">Gera link Pix/Cartão</span>
+    </div>
+    <div class="endpoint-item">
+      <span><strong class="method post">POST</strong> /api/webhook</span>
+      <span style="color:#9a9ab0">Processa pagamento</span>
+    </div>
+    <div class="endpoint-item">
+      <span><strong class="method get">GET</strong> /api/entrega</span>
+      <span style="color:#9a9ab0">Pós-venda e instruções</span>
+    </div>
+    <div class="endpoint-item">
+      <span><strong class="method get">GET</strong> /api/health</span>
+      <span style="color:#9a9ab0">Verificação de saúde</span>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <a href="/admin.html" class="btn">📦 Painel de Estoque (Admin)</a>
+    <a href="/api/health" target="_blank" class="btn btn-secondary">🔍 Testar /api/health</a>
+  </div>
+</div>
+</body>
+</html>
