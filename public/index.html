@@ -1,154 +1,721 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Orvexa Backend — Status & Documentação</title>
-<style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: #0b0b14;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 24px;
-  }
-  .box {
-    width: 100%;
-    max-width: 600px;
-    background: #151524;
-    border: 1px solid #2a2a44;
-    border-radius: 16px;
-    padding: 36px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  }
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #2a2a44;
-  }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    padding: 6px 12px;
-    border-radius: 9999px;
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .dot {
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #22c55e;
-  }
-  h1 { font-size: 22px; margin: 0; }
-  p { color: #9a9ab0; font-size: 14px; line-height: 1.6; margin: 0 0 24px; }
-  .section-title {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #6366f1;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .endpoints {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .endpoint-item {
-    background: #0b0b14;
-    border: 1px solid #2a2a44;
-    padding: 12px 16px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: monospace;
-    font-size: 13px;
-  }
-  .method {
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-  }
-  .post { background: #3b82f6; color: #fff; }
-  .get { background: #10b981; color: #fff; }
-  .btn-group {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-  }
-  a.btn {
-    flex: 1;
-    text-align: center;
-    text-decoration: none;
-    background: linear-gradient(90deg,#4f7cff,#a855f7);
-    color: #fff;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 14px;
-    font-size: 14px;
-    transition: opacity 0.2s;
-  }
-  a.btn:hover { opacity: 0.9; }
-  a.btn-secondary {
-    background: #2a2a44;
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orvexa Digital — Ferramentas Pro & IAs com Ativação Imediata</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090a10;
+      --card-bg: #121422;
+      --card-border: #1f233b;
+      --card-hover: #292e4e;
+      --primary: #6366f1;
+      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 10, 16, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 16px 0;
+    }
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .brand-badge {
+      background: var(--primary-gradient);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .nav-btn {
+      background: #1e2238;
+      color: #fff;
+      border: 1px solid #32385c;
+      padding: 10px 18px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: #282e4e;
+      border-color: #4f46e5;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 70px 0 50px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(9, 10, 16, 0) 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: clamp(16px, 2vw, 19px);
+      max-width: 680px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .trust-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Grid de Produtos */
+    .products-section {
+      padding: 40px 0 80px;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      align-items: stretch;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-hover);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+    .product-card.featured {
+      border: 2px solid #6366f1;
+      background: linear-gradient(180deg, #16182c 0%, #121422 100%);
+      box-shadow: 0 12px 35px rgba(99, 102, 241, 0.2);
+    }
+    .card-ribbon {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary-gradient);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-header {
+      margin-bottom: 20px;
+    }
+    .product-category {
+      font-size: 12px;
+      font-weight: 700;
+      color: #818cf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .product-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .product-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      min-height: 42px;
+    }
+
+    .pricing {
+      margin: 20px 0;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .old-price {
+      font-size: 14px;
+      color: #64748b;
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .price-value {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #fff;
+    }
+    .price-value small {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .billing-tag {
+      font-size: 12px;
+      color: var(--accent-green);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 20px 0 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .features-list li {
+      font-size: 14px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .features-list li svg {
+      width: 18px;
+      height: 18px;
+      color: #10b981;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Formulario de Checkout do Card */
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .email-input {
+      width: 100%;
+      background: #090a10;
+      border: 1px solid #282d49;
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .email-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    .buy-btn {
+      width: 100%;
+      background: var(--primary-gradient);
+      color: #fff;
+      border: 0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .buy-btn:hover {
+      opacity: 0.95;
+    }
+    .buy-btn:active {
+      transform: scale(0.98);
+    }
+    .buy-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Como Funciona */
+    .how-it-works {
+      background: #0d0f17;
+      padding: 70px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-header h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    .step-card {
+      background: #121422;
+      border: 1px solid #1f233b;
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+    }
+    .step-number {
+      width: 44px;
+      height: 44px;
+      background: var(--primary-gradient);
+      color: #fff;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 18px;
+    }
+    .step-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 70px 0;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: #121422;
+      border: 1px solid #1f233b;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      padding: 20px;
+    }
+    .faq-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .faq-item p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+    }
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+
+    /* Float WhatsApp */
+    .float-wa {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+      z-index: 100;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .float-wa:hover {
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
-<div class="box">
-  <div class="header">
-    <div>
-      <h1>⚡ Orvexa Backend</h1>
-      <span style="color:#818cf8; font-size:13px;">Gateway InfinitePay & Entrega Automática</span>
-    </div>
-    <div class="badge">
-      <span class="dot"></span> Online
-    </div>
-  </div>
 
-  <p>Serviço de geração de links de checkout via InfinitePay, confirmação por webhook e entrega instantânea de licenças e acessos por e-mail.</p>
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="/" class="brand">
+        <span class="brand-badge">⚡ ORVEXA</span> DIGITAL
+      </a>
+      <a href="https://wa.me/5521992936790?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Orvexa%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida" target="_blank" class="nav-btn">
+        <span>Suporte WhatsApp</span>
+      </a>
+    </div>
+  </header>
 
-  <div class="section-title">Endpoints Principais</div>
-  <div class="endpoints">
-    <div class="endpoint-item">
-      <span><strong class="method post">POST</strong> /api/checkout</span>
-      <span style="color:#9a9ab0">Gera link Pix/Cartão</span>
+  <!-- Hero Section -->
+  <section class="hero container">
+    <div class="tag">⚡ ACESSO IMEDIATO · OFERTA LIMITADA</div>
+    <h1>Potencialize seus resultados com as <span>melhores IAs do mundo</span></h1>
+    <p>Acessos profissionais completos com entrega 100% automatizada por e-mail ou ativação direta. Seguro, confiável e com garantia total.</p>
+    
+    <div class="trust-badges">
+      <div class="trust-badge-item">
+        <span>🔒 Pagamento Seguro InfinitePay</span>
+      </div>
+      <div class="trust-badge-item">
+        <span>⚡ Entrega Automática via Pix</span>
+      </div>
+      <div class="trust-badge-item">
+        <span>💬 Suporte Dedicado via WhatsApp</span>
+      </div>
     </div>
-    <div class="endpoint-item">
-      <span><strong class="method post">POST</strong> /api/webhook</span>
-      <span style="color:#9a9ab0">Processa pagamento</span>
-    </div>
-    <div class="endpoint-item">
-      <span><strong class="method get">GET</strong> /api/entrega</span>
-      <span style="color:#9a9ab0">Pós-venda e instruções</span>
-    </div>
-    <div class="endpoint-item">
-      <span><strong class="method get">GET</strong> /api/health</span>
-      <span style="color:#9a9ab0">Verificação de saúde</span>
-    </div>
-  </div>
+  </section>
 
-  <div class="btn-group">
-    <a href="/admin.html" class="btn">📦 Painel de Estoque (Admin)</a>
-    <a href="/api/health" target="_blank" class="btn btn-secondary">🔍 Testar /api/health</a>
-  </div>
-</div>
+  <!-- Product Catalog -->
+  <section class="products-section container">
+    <div class="products-grid">
+
+      <!-- Card 1: Google Flow + AI Pro -->
+      <div class="product-card featured">
+        <div class="card-ribbon">🔥 MAIS VENDIDO</div>
+        <div>
+          <div class="card-header">
+            <div class="product-category">GOOGLE WORKSPACE & IA</div>
+            <h2 class="product-title">Google Flow + AI Pro</h2>
+            <p class="product-desc">Acesso completo de 18 meses com IA de ponta para automação e produtividade.</p>
+          </div>
+
+          <div class="pricing">
+            <div class="old-price">De R$ 197,00</div>
+            <div class="price-value">R$ 49,99 <small>/ 18 meses</small></div>
+            <div class="billing-tag">✓ Pagamento único sem recorrência</div>
+          </div>
+
+          <ul class="features-list">
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Ativação direta na <b>sua própria conta Google</b></span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span><b>100% Seguro:</b> sem compartilhar senha</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Acesso ao Gemini Advanced e Google Flow</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Vídeo tutorial passo a passo de ativação</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="checkout-form" onsubmit="iniciarCheckout(event, 'flow-ai-pro')">
+          <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
+          <button type="submit" class="buy-btn">
+            <span>Comprar Acesso — R$ 49,99</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Card 2: MUSE IA -->
+      <div class="product-card">
+        <div>
+          <div class="card-header">
+            <div class="product-category">CRIAÇÃO DE VÍDEOS COM IA</div>
+            <h2 class="product-title">MUSE IA Pro</h2>
+            <p class="product-desc">Plataforma profissional para geração de vídeos e imagens com inteligência artificial.</p>
+          </div>
+
+          <div class="pricing">
+            <div class="old-price">De R$ 249,00</div>
+            <div class="price-value">R$ 79,99 <small>/ acesso total</small></div>
+            <div class="billing-tag">✓ Pagamento único</div>
+          </div>
+
+          <ul class="features-list">
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Conta individual e exclusiva</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Login e senha entregues <b>na hora por e-mail</b></span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Estoque automático com garantia de entrega</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Suporte para primeiro acesso via WhatsApp</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="checkout-form" onsubmit="iniciarCheckout(event, 'muse-ia')">
+          <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
+          <button type="submit" class="buy-btn">
+            <span>Comprar Acesso — R$ 79,99</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Card 3: Super Duolingo -->
+      <div class="product-card">
+        <div>
+          <div class="card-header">
+            <div class="product-category">APRENDA IDIOMAS</div>
+            <h2 class="product-title">Super Duolingo</h2>
+            <p class="product-desc">Assinatura de 1 ano completo para aprender idiomas sem limitações ou anúncios.</p>
+          </div>
+
+          <div class="pricing">
+            <div class="old-price">De R$ 149,00</div>
+            <div class="price-value">R$ 37,00 <small>/ 1 ano</small></div>
+            <div class="billing-tag">✓ Pagamento único sem renovação forçada</div>
+          </div>
+
+          <ul class="features-list">
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span><b>Vidas infinitas:</b> pratique sem interrupções</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Zero propagandas ou anúncios</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Testes de nível ilimitados</span>
+            </li>
+            <li>
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Ativação simples por link de convite</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="checkout-form" onsubmit="iniciarCheckout(event, 'super-duolingo')">
+          <input type="email" class="email-input" placeholder="Digite seu melhor e-mail..." required>
+          <button type="submit" class="buy-btn">
+            <span>Comprar Acesso — R$ 37,00</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Como Funciona -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>Como Funciona a Entrega?</h2>
+        <p style="color: var(--text-muted)">Processo 100% transparente em 3 etapas simples</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Escolha seu Produto</h3>
+          <p>Selecione a ferramenta ideal, digite o e-mail onde deseja receber o acesso e clique no botão.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Pague com Segurança</h3>
+          <p>Você será levado ao checkout oficial da InfinitePay para pagar via Pix instantâneo ou cartão.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Receba na Hora</h3>
+          <p>O sistema confirma o pagamento no mesmo instante e envia o acesso e tutoriais diretamente para você.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section container">
+    <div class="section-header">
+      <h2>Dúvidas Frequentes</h2>
+    </div>
+
+    <div class="faq-item">
+      <h4>Quanto tempo demora para receber o acesso?</h4>
+      <p>A entrega é imediata assim que o Pix é compensado pelo sistema da InfinitePay. Você receberá o acesso no seu e-mail e na tela de confirmação.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>Preciso fornecer a senha da minha conta?</h4>
+      <p>Não! Produtos como o Google Flow e Duolingo são ativados por convite/link oficial na sua conta existente, sem que você precise fornecer nenhuma senha pessoal.</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>E se eu precisar de ajuda ou suporte?</h4>
+      <p>Nossa equipe está disponível via WhatsApp para tirar dúvidas e ajudar na ativação de qualquer produto sempre que precisar.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p style="margin-bottom: 8px;"><b>ORVEXA DIGITAL</b> — Soluções Inteligentes em IA e Produtividade</p>
+      <p style="margin-bottom: 16px;">Pagamentos processados de forma segura pela InfinitePay</p>
+      <p>
+        <a href="/admin.html">Painel de Estoque (Admin)</a> · 
+        <a href="https://wa.me/5521992936790" target="_blank">Atendimento WhatsApp</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/5521992936790?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Orvexa%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida" target="_blank" class="float-wa" title="Falar no WhatsApp">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.54 2.016.828 3.237.828 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.765-5.768-5.765zm0-2.172c4.418 0 8 3.582 8 8 0 4.418-3.582 8-8 8-1.408 0-2.735-.364-3.896-1.001l-4.135 1.083 1.101-4.024c-.694-1.189-1.07-2.553-1.07-3.958 0-4.418 3.582-8 8-8z"/>
+    </svg>
+  </a>
+
+  <!-- Script de Checkout -->
+  <script>
+    async function iniciarCheckout(event, produto) {
+      event.preventDefault();
+      const form = event.target;
+      const input = form.querySelector('.email-input');
+      const btn = form.querySelector('.buy-btn');
+      const email = input.value.trim();
+
+      if (!email) return;
+
+      const btnOriginalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span>⚡ Gerando pagamento...</span>';
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, produto })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.checkout_url) {
+          window.location.href = data.checkout_url;
+        } else {
+          alert('Erro ao gerar link de pagamento: ' + (data.error || 'Tente novamente em instantes.'));
+          btn.disabled = false;
+          btn.innerHTML = btnOriginalText;
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Falha na conexão com o checkout. Por favor, chame no WhatsApp para atendimento direto.');
+        btn.disabled = false;
+        btn.innerHTML = btnOriginalText;
+      }
+    }
+  </script>
 </body>
 </html>
