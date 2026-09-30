@@ -483,12 +483,236 @@
       border-radius: 10px;
       margin-left: 2px;
     }
+
+    /* User pill */
+    .user-pill {
+      font-size: 11px;
+      color: #cbd5e1;
+      background: #171a2e;
+      border: 1px solid var(--border);
+      padding: 5px 9px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .user-pill { display: none; }
+    }
+
+    /* Login Screen Mobile & Desktop */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: radial-gradient(circle at 50% 20%, #171a35 0%, #090a10 75%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .login-box {
+      width: 100%;
+      max-width: 410px;
+      background: rgba(18, 20, 34, 0.96);
+      border: 1px solid var(--border-accent);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(79, 70, 229, 0.25);
+      border-radius: 24px;
+      padding: 32px 24px;
+      backdrop-filter: blur(18px);
+      text-align: center;
+    }
+    .login-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      margin: 0 auto 16px;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.45);
+    }
+    .login-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+    .login-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 22px;
+    }
+    .login-field {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+    .login-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .login-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .login-input-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 16px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .login-input {
+      width: 100%;
+      background: #0d0f1a;
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 15px;
+      padding: 13px 44px 13px 40px;
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .login-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+      background: #111324;
+    }
+    .login-toggle-eye {
+      position: absolute;
+      right: 10px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .login-remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 14px 0 20px;
+      cursor: pointer;
+      user-select: none;
+      text-align: left;
+    }
+    .login-remember input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-login:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-login:active {
+      transform: scale(0.98);
+    }
+    .login-error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+      text-align: left;
+    }
+    .app-install-badge {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
 
+  <!-- TELA DE LOGIN (Aparece se deslogado) -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">⚡</div>
+      <h1 class="login-title">Orvexa Admin</h1>
+      <p class="login-subtitle">Gestão de Estoques & Notificações de Vendas</p>
+
+      <div id="login-error" class="login-error"></div>
+
+      <form id="login-form" onsubmit="realizarLogin(event)">
+        <div class="login-field">
+          <label for="login-email">E-mail de Acesso</label>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">✉️</span>
+            <input type="email" id="login-email" class="login-input" value="ericksiqueiraa@gmail.com" required autocomplete="username" placeholder="ericksiqueiraa@gmail.com">
+          </div>
+        </div>
+
+        <div class="login-field">
+          <label for="login-password">Senha de Segurança</label>
+          <div class="login-input-wrap">
+            <span class="login-input-icon">🔒</span>
+            <input type="password" id="login-password" class="login-input" required autocomplete="current-password" placeholder="••••••••">
+            <button type="button" class="login-toggle-eye" onclick="toggleShowPassword()" title="Mostrar/ocultar senha">👁️</button>
+          </div>
+        </div>
+
+        <label class="login-remember">
+          <input type="checkbox" id="login-remember" checked>
+          <span>Manter conectado neste celular / aparelho</span>
+        </label>
+
+        <button type="submit" class="btn-login" id="btn-submit-login">
+          <span>Entrar no Painel</span> <span>→</span>
+        </button>
+      </form>
+
+      <div class="app-install-badge">
+        📲 <b>App Mobile Orvexa:</b> O painel foi otimizado para celulares. Você pode adicioná-lo à tela inicial para receber notificações em tempo real!
+      </div>
+    </div>
+  </div>
+
   <!-- Top App Bar -->
-  <header>
+  <header id="app-header" style="display:none;">
     <div class="brand">
       <div class="brand-icon">⚡</div>
       <div>
@@ -497,16 +721,20 @@
       </div>
     </div>
     <div class="top-actions">
+      <span class="user-pill" id="user-pill-email" title="Usuário conectado">👤 erick...</span>
       <button class="icon-btn active" id="btn-sound" onclick="toggleAudio()" title="Ativar/Desativar Ka-ching">
         <span id="sound-icon">🔊</span> <span style="font-size:12px;">Som</span>
       </button>
       <button class="icon-btn" id="btn-notify" onclick="toggleNotifications()" title="Ativar Notificações no Celular">
         <span>🔔</span> <span id="notify-label" style="font-size:12px;">Notificar</span>
       </button>
+      <button class="icon-btn" onclick="fazerLogout()" title="Sair da Conta">
+        <span>🚪</span> <span style="font-size:12px;">Sair</span>
+      </button>
     </div>
   </header>
 
-  <div class="container">
+  <div class="container" id="app-container" style="display:none;">
 
     <!-- Live Sale Banner Alert -->
     <div id="sale-alert-banner">
@@ -758,6 +986,67 @@
     <!-- TAB 4: AJUSTES, CONFIGS E TESTES           -->
     <!-- ========================================== -->
     <div id="tab-config" class="tab-content">
+      <!-- Conta Conectada -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#4f46e5,#8b5cf6);display:grid;place-items:center;font-weight:900;font-size:18px;color:#fff;">
+              ES
+            </div>
+            <div>
+              <div style="font-size:16px;font-weight:800;color:#fff;" id="profile-name">Erick Siqueira</div>
+              <div style="font-size:13px;color:#818cf8;" id="profile-email">ericksiqueiraa@gmail.com</div>
+              <div style="font-size:11px;color:#22c55e;font-weight:700;margin-top:2px;">● Sessão Ativa · Administrador Oficial</div>
+            </div>
+          </div>
+          <button class="btn btn-danger" style="padding:8px 14px;font-size:13px;" onclick="fazerLogout()">
+            <span>🚪</span> Sair / Desconectar
+          </button>
+        </div>
+      </div>
+
+      <!-- Instalação do App no Celular (PWA) -->
+      <div class="card" style="border:1px solid rgba(79, 70, 229, 0.4);background:linear-gradient(180deg,#121426,#10121f);">
+        <div class="card-head">
+          <h2 class="card-title" style="display:flex;align-items:center;gap:8px;">
+            <span>📲</span> Instalar como App no Celular
+          </h2>
+          <span class="stock-chip-badge badge-purple">PWA Mobile</span>
+        </div>
+        <p style="color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px;">
+          Instale o <b>Orvexa Admin</b> diretamente na tela inicial do seu celular (Android ou iPhone) para acessar com 1 toque, receber notificações de vendas e controlar os estoques como um aplicativo nativo.
+        </p>
+
+        <button id="btn-pwa-install" class="btn btn-green" style="width:100%;margin-bottom:14px;display:none;padding:12px;font-size:14px;" onclick="acionarInstalacaoPwa()">
+          <span>⬇️</span> Instalar Aplicativo Agora
+        </button>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;">
+          <div style="background:#0d0f1c;border:1px solid var(--border);border-radius:12px;padding:14px;">
+            <div style="font-weight:800;font-size:14px;color:#38bdf8;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+              <span>🍎</span> No iPhone / iPad (Safari)
+            </div>
+            <ol style="margin:0;padding-left:18px;font-size:12px;color:#cbd5e1;line-height:1.7;">
+              <li>Abra esta página no <b>Safari</b>.</li>
+              <li>Toque no botão de <b>Compartilhar</b> (ícone de quadrado com seta para cima na barra inferior).</li>
+              <li>Role para baixo e selecione <b>"Adicionar à Tela de Início"</b>.</li>
+              <li>Toque em <b>Adicionar</b> no canto superior. Pronto!</li>
+            </ol>
+          </div>
+
+          <div style="background:#0d0f1c;border:1px solid var(--border);border-radius:12px;padding:14px;">
+            <div style="font-weight:800;font-size:14px;color:#4ade80;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+              <span>🤖</span> No Android (Chrome)
+            </div>
+            <ol style="margin:0;padding-left:18px;font-size:12px;color:#cbd5e1;line-height:1.7;">
+              <li>Toque nos <b>3 pontinhos (⋮)</b> no canto superior direito do Chrome.</li>
+              <li>Toque em <b>"Instalar aplicativo"</b> ou <b>"Adicionar à tela inicial"</b>.</li>
+              <li>Confirme a instalação. O app abrirá em tela cheia sem barra de navegador!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <h2 class="card-title" style="margin-bottom:12px;">🔔 Alertas & Som de Venda (Ka-ching!)</h2>
         <p style="color:var(--muted);font-size:13px;line-height:1.6;">
@@ -778,13 +1067,6 @@
       </div>
 
       <div class="card">
-        <h2 class="card-title" style="margin-bottom:12px;">🔑 Chave de Acesso Admin</h2>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:10px;">Token configurado para controle de estoque:</p>
-        <input type="password" id="input-token" value="17062b95c8693938bb1e10799b4b6fc5">
-        <button class="btn btn-outline" style="margin-top:10px;" onclick="salvarToken()">Salvar Token no Aparelho</button>
-      </div>
-
-      <div class="card">
         <h2 class="card-title" style="margin-bottom:12px;">💬 Suporte VIP WhatsApp</h2>
         <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">Número oficial de atendimento conectado:</p>
         <a href="https://wa.me/5521992936790" target="_blank" class="btn-wa" style="display:inline-flex;padding:10px 16px;font-size:14px;">
@@ -796,7 +1078,7 @@
   </div>
 
   <!-- Bottom Navigation Bar for Mobile -->
-  <nav class="bottom-nav">
+  <nav class="bottom-nav" id="app-bottom-nav" style="display:none;">
     <button class="nav-tab active" id="bnav-dashboard" onclick="switchNav('dashboard')">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       <span>Dash</span>
@@ -830,19 +1112,131 @@
       });
     }
 
-    function getToken() {
-      const stored = localStorage.getItem("orvexa_admin_token");
-      if (stored) return stored;
-      const el = document.getElementById("input-token");
-      return (el && el.value.trim()) || "17062b95c8693938bb1e10799b4b6fc5";
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const btn = document.getElementById("btn-pwa-install");
+      if (btn) btn.style.display = "block";
+    });
+
+    function acionarInstalacaoPwa() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+          deferredInstallPrompt = null;
+          const btn = document.getElementById("btn-pwa-install");
+          if (btn) btn.style.display = "none";
+        });
+      } else {
+        alert("📱 Para instalar no celular:\n\n• No iPhone: toque em Compartilhar (no Safari) e 'Adicionar à Tela de Início'.\n• No Android: toque nos 3 pontinhos do Chrome e 'Instalar aplicativo'.");
+      }
     }
 
-    function salvarToken() {
-      const el = document.getElementById("input-token");
-      const val = (el && el.value.trim()) || "";
-      localStorage.setItem("orvexa_admin_token", val);
-      alert("✅ Token salvo no seu navegador!");
-      carregarDados();
+    function toggleShowPassword() {
+      const pass = document.getElementById("login-password");
+      if (pass.type === "password") {
+        pass.type = "text";
+      } else {
+        pass.type = "password";
+      }
+    }
+
+    function atualizarPerfilUsuario(email) {
+      const userEmail = email || localStorage.getItem("orvexa_admin_email") || "ericksiqueiraa@gmail.com";
+      const pill = document.getElementById("user-pill-email");
+      if (pill) pill.textContent = `👤 ${userEmail.split('@')[0]}`;
+      const profEmail = document.getElementById("profile-email");
+      if (profEmail) profEmail.textContent = userEmail;
+    }
+
+    async function realizarLogin(event) {
+      if (event) event.preventDefault();
+      const emailInput = document.getElementById("login-email");
+      const passInput = document.getElementById("login-password");
+      const errBox = document.getElementById("login-error");
+      const btn = document.getElementById("btn-submit-login");
+
+      const email = (emailInput.value || "").trim();
+      const password = passInput.value || "";
+
+      if (!email || !password) {
+        errBox.textContent = "Preencha o e-mail e a senha de acesso.";
+        errBox.style.display = "block";
+        return;
+      }
+
+      errBox.style.display = "none";
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳ Autenticando...</span>`;
+
+      try {
+        const res = await fetch(`${BASE_URL}/api/admin`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "login", email, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          localStorage.setItem("orvexa_admin_token", data.token);
+          localStorage.setItem("orvexa_admin_email", data.user?.email || email);
+
+          document.getElementById("login-screen").style.display = "none";
+          document.getElementById("app-header").style.display = "flex";
+          document.getElementById("app-container").style.display = "block";
+          document.getElementById("app-bottom-nav").style.display = "flex";
+
+          atualizarPerfilUsuario(data.user?.email || email);
+          carregarDados();
+          if (!pollingInterval) {
+            pollingInterval = setInterval(carregarDados, 6000);
+          }
+        } else {
+          errBox.textContent = data.error || "E-mail ou senha incorretos.";
+          errBox.style.display = "block";
+          if ("vibrate" in navigator) navigator.vibrate([100, 50, 100]);
+        }
+      } catch (e) {
+        errBox.textContent = "Falha de conexão com o servidor: " + e.message;
+        errBox.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Entrar no Painel</span> <span>→</span>`;
+      }
+    }
+
+    function fazerLogout() {
+      if (!confirm("Deseja realmente sair da sua conta no painel?")) return;
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+      }
+      localStorage.removeItem("orvexa_admin_token");
+      localStorage.removeItem("orvexa_admin_email");
+
+      document.getElementById("login-screen").style.display = "flex";
+      document.getElementById("app-header").style.display = "none";
+      document.getElementById("app-container").style.display = "none";
+      document.getElementById("app-bottom-nav").style.display = "none";
+      const passInput = document.getElementById("login-password");
+      if (passInput) passInput.value = "";
+    }
+
+    function fazerLogoutSilencioso() {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+        pollingInterval = null;
+      }
+      localStorage.removeItem("orvexa_admin_token");
+      document.getElementById("login-screen").style.display = "flex";
+      document.getElementById("app-header").style.display = "none";
+      document.getElementById("app-container").style.display = "none";
+      document.getElementById("app-bottom-nav").style.display = "none";
+    }
+
+    function getToken() {
+      return localStorage.getItem("orvexa_admin_token") || "";
     }
 
     // Navegação entre abas principais
@@ -968,8 +1362,18 @@
     // Carregar dados gerais e atualizar Dashboard
     async function carregarDados() {
       const token = getToken();
+      if (!token) return;
       try {
         const res = await fetch(`${BASE_URL}/api/admin?token=${encodeURIComponent(token)}`);
+        if (res.status === 401) {
+          fazerLogoutSilencioso();
+          const errBox = document.getElementById("login-error");
+          if (errBox) {
+            errBox.textContent = "Sessão expirada. Faça login com suas credenciais.";
+            errBox.style.display = "block";
+          }
+          return;
+        }
         if (!res.ok) return;
 
         const data = await res.json();
@@ -1272,21 +1676,31 @@
     // Inicialização
     window.addEventListener("DOMContentLoaded", () => {
       const savedToken = localStorage.getItem("orvexa_admin_token");
+      const savedEmail = localStorage.getItem("orvexa_admin_email") || "ericksiqueiraa@gmail.com";
+
       if (savedToken) {
-        document.getElementById("input-token").value = savedToken;
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("app-header").style.display = "flex";
+        document.getElementById("app-container").style.display = "block";
+        document.getElementById("app-bottom-nav").style.display = "flex";
+        atualizarPerfilUsuario(savedEmail);
+        carregarDados();
+        pollingInterval = setInterval(carregarDados, 6000);
+      } else {
+        document.getElementById("login-screen").style.display = "flex";
+        document.getElementById("app-header").style.display = "none";
+        document.getElementById("app-container").style.display = "none";
+        document.getElementById("app-bottom-nav").style.display = "none";
       }
-      
+
       if ("Notification" in window && Notification.permission === "granted") {
         const btn = document.getElementById("btn-notify");
         const lbl = document.getElementById("notify-label");
-        btn.classList.add("active");
-        lbl.textContent = "Ativo";
+        if (btn && lbl) {
+          btn.classList.add("active");
+          lbl.textContent = "Ativo";
+        }
       }
-
-      carregarDados();
-
-      // Polling a cada 6 segundos para escutar novas vendas em tempo real
-      pollingInterval = setInterval(carregarDados, 6000);
     });
   </script>
 </body>

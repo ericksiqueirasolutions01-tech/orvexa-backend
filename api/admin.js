@@ -1,5 +1,5 @@
-// Painel de controle de estoque e vendas — Protegido por ADMIN_TOKEN
-const { PRODUCTS, ADMIN_TOKEN } = require("../lib/products");
+// Painel de controle de estoque e vendas — Protegido por ADMIN_TOKEN e credenciais
+const { PRODUCTS, ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD } = require("../lib/products");
 const {
   pushStockAccounts,
   stockCount,
@@ -18,12 +18,41 @@ function authorized(req) {
   const query = req.query || {};
   const body = req.body || {};
   const token = query.token || body.token || bearerToken;
-  return Boolean(ADMIN_TOKEN) && token === ADMIN_TOKEN;
+  if (Boolean(ADMIN_TOKEN) && token === ADMIN_TOKEN) {
+    return true;
+  }
+  if (body.email && body.password) {
+    return (
+      String(body.email).trim().toLowerCase() === ADMIN_EMAIL.toLowerCase() &&
+      String(body.password) === ADMIN_PASSWORD
+    );
+  }
+  return false;
 }
 
 module.exports = async function handler(req, res) {
+  // Tratar ação de login direto com email e senha
+  if (req.method === "POST" && req.body && req.body.action === "login") {
+    const { email, password } = req.body;
+    const emailMatch = String(email || "").trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    const passMatch = String(password || "") === ADMIN_PASSWORD;
+    if (emailMatch && passMatch) {
+      return res.status(200).json({
+        ok: true,
+        message: "Login realizado com sucesso!",
+        token: ADMIN_TOKEN,
+        user: {
+          email: ADMIN_EMAIL,
+          name: "Erick Siqueira",
+          role: "Administrador Geral"
+        }
+      });
+    }
+    return res.status(401).json({ ok: false, error: "E-mail ou senha incorretos. Verifique suas credenciais." });
+  }
+
   if (!authorized(req)) {
-    return res.status(401).json({ error: "Acesso não autorizado. Informe o ADMIN_TOKEN correto." });
+    return res.status(401).json({ ok: false, error: "Acesso não autorizado. Faça login com suas credenciais." });
   }
 
   try {
@@ -70,7 +99,18 @@ module.exports = async function handler(req, res) {
       const action = body.action || "add_stock";
       const produto = body.produto || "muse-ia";
 
-      if (!PRODUCTS[produto] && action !== "config" && action !== "test_sale") {
+      if (action === "check_auth") {
+        return res.status(200).json({
+          ok: true,
+          user: {
+            email: ADMIN_EMAIL,
+            name: "Erick Siqueira",
+            role: "Administrador Geral"
+          }
+        });
+      }
+
+      if (!PRODUCTS[produto] && action !== "config" && action !== "test_sale" && action !== "clear_sales" && action !== "check_auth") {
         return res.status(400).json({ error: `Produto inválido: ${produto}` });
       }
 
