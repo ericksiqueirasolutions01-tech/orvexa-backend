@@ -98,8 +98,12 @@ module.exports = async function handler(req, res) {
           <li>Informe o <b>e-mail fornecido acima</b>.</li>
           <li>Clique em <b>Entrar com senha</b>.</li>
           <li>Digite a <b>senha fornecida acima</b> e confirme.</li>
-          <li>Pronto! Você já está logado com 1 bilhão de tokens para gerar imagens, vídeos e agentes!</li>
+          <li>Pronto! Você já está logado com <b>1 bilhão de tokens</b> prontos para gerar imagens, vídeos e agentes!</li>
         </ol>
+        <div style="background:rgba(79,70,229,0.15);border:1px solid #4f46e5;border-radius:10px;padding:14px;margin-top:14px;">
+          <p style="color:#e0e7ff;font-size:13px;margin:0 0 6px;font-weight:bold;">🪙 Sobre seus 1 Bilhão de Tokens:</p>
+          <p style="color:#cbd5e1;font-size:13px;margin:0;line-height:1.6;">Sua conta contém 1 bilhão de tokens, uma quantia imensa que demora muito para acabar. Quando você precisar de mais tokens no futuro, é só entrar em contato com a nossa equipe de suporte pelo WhatsApp para fazer a recarga da sua conta!</p>
+        </div>
         <p style="color:#f59e0b;font-size:12px;margin:12px 0 0;line-height:1.5;">⚠️ <b>Atenção:</b> Não clique em "Entrar com Google". Use estritamente o e-mail e senha fornecidos.</p>
       </div>
     `;
