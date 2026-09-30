@@ -8,6 +8,7 @@ const {
   markDelivered,
   popStockAccount,
   stockCount,
+  recordSale,
 } = require("../lib/store");
 const { sendEmail, emailMuseIa, emailFlowAiPro, emailSuperDuolingo } = require("../lib/email");
 
@@ -58,9 +59,11 @@ module.exports = async function handler(req, res) {
       return res.status(200).end();
     }
 
+    let account = null;
+
     // ---- Entrega conforme o tipo do produto ----
     if (produto.delivery === "stock") {
-      const account = await popStockAccount(); // atômico: nunca entrega a mesma conta 2x
+      account = await popStockAccount(); // atômico: nunca entrega a mesma conta 2x
       if (!account) {
         console.error("⚠️ ESTOQUE ESGOTADO! Pagamento aprovado sem conta para entregar.");
         await notifyAdmin(
@@ -98,6 +101,18 @@ module.exports = async function handler(req, res) {
 
     await setOrderStatus(order_nsu, { status: "pago", transaction_nsu: String(transaction_nsu) });
     await markDelivered(transaction_nsu);
+    await recordSale({
+      id: `sale-${Date.now()}`,
+      order_nsu,
+      transaction_nsu: String(transaction_nsu),
+      email: buyerEmail,
+      produto: order.produto,
+      produto_nome: produto.title,
+      valor: produto.priceBRL,
+      conta_entregue: account ? `${account.login} (senha: ${account.senha})` : "Instruções WhatsApp / Link",
+      data: new Date().toISOString(),
+      status: "pago"
+    });
     console.log(`✅ ${produto.title} entregue para ${buyerEmail} (pedido ${order_nsu})`);
     return res.status(200).end();
   } catch (e) {
