@@ -3,7 +3,7 @@
 Backend do site de vendas da Orvexa / Prime Digital. Gera links de pagamento na
 **InfinitePay**, confirma via webhook e entrega o produto automaticamente por e-mail.
 
-**Produtos:** Google Flow + Google AI Pro 18 meses (R$ 49,99) · MUSE IA (R$ 59,99) ·
+**Produtos:** Google Flow + Google AI Pro 18 meses (R$ 37,00) · MUSE IA (R$ 59,99) ·
 Super Duolingo 1 ano (R$ 37,00)
 
 ## Como funciona
