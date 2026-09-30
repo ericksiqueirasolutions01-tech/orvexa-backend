@@ -469,17 +469,9 @@
         </div>
         <span class="stock-chip-badge badge-blue" id="chip-count-gemini">0 links</span>
       </div>
-
-      <div class="stock-chip" id="chip-duo" onclick="switchStockTab('super-duolingo')">
-        <div>
-          <div class="stock-chip-title">💚 Super Duolingo</div>
-          <span style="font-size:11px;color:var(--muted);">Links Convite</span>
-        </div>
-        <span class="stock-chip-badge badge-green" id="chip-count-duo">0 links</span>
-      </div>
     </div>
 
-    <!-- TAB 1: GESTÃO DE ESTOQUE (MUSE IA / GEMINI PRO / DUOLINGO) -->
+    <!-- TAB 1: GESTÃO DE ESTOQUE (MUSE IA / GEMINI PRO 18M) -->
     <div id="tab-estoque" class="tab-content active">
       
       <!-- FORM DE CADASTRO -->
@@ -763,9 +755,10 @@
 
         // Atualizar chips
         const st = data.stocks || {};
-        document.getElementById("chip-count-muse").textContent = (st["muse-ia"] || 0) + " contas";
-        document.getElementById("chip-count-gemini").textContent = (st["flow-ai-pro"] || 0) + " links";
-        document.getElementById("chip-count-duo").textContent = (st["super-duolingo"] || 0) + " links";
+        const museEl = document.getElementById("chip-count-muse");
+        if (museEl) museEl.textContent = (st["muse-ia"] || 0) + " contas";
+        const geminiEl = document.getElementById("chip-count-gemini");
+        if (geminiEl) geminiEl.textContent = (st["flow-ai-pro"] || 0) + " links";
 
         const currentCount = st[currentProduct] || 0;
         document.getElementById("current-badge-count").textContent = "Estoque: " + currentCount;
