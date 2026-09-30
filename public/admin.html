@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Estoque MUSE IA</title>
+<style>
+  body{margin:0;background:#0b0b14;color:#fff;font-family:Arial,sans-serif;display:flex;justify-content:center;padding:24px;min-height:100vh}
+  .box{width:100%;max-width:520px;background:#151524;border:1px solid #2a2a44;border-radius:16px;padding:32px}
+  h1{font-size:20px;margin:0 0 8px}
+  p{color:#9a9ab0;font-size:14px}
+  input,textarea{width:100%;box-sizing:border-box;background:#0b0b14;border:1px solid #2a2a44;color:#fff;border-radius:8px;padding:12px;font-size:14px;margin:8px 0}
+  textarea{min-height:120px;font-family:monospace}
+  button{background:linear-gradient(90deg,#4f7cff,#a855f7);border:0;color:#fff;font-weight:bold;border-radius:8px;padding:14px;width:100%;font-size:15px;cursor:pointer;margin-top:8px}
+  #status{margin-top:12px;font-size:14px;color:#c9c9d6;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>📦 Estoque — MUSE IA</h1>
+  <p>Cadastre contas (login e senha) para entrega automática. Uma conta por linha, no formato <b>login;senha</b>.</p>
+  <input id="token" type="password" placeholder="Token de admin (ADMIN_TOKEN)">
+  <textarea id="contas" placeholder="exemplo:&#10;cliente1@email.com;senha123&#10;cliente2@email.com;senha456"></textarea>
+  <button onclick="enviar()">Cadastrar contas</button>
+  <button onclick="ver()" style="background:#2a2a44">Ver estoque atual</button>
+  <div id="status"></div>
+</div>
+<script>
+const base = location.origin;
+async function ver(){
+  const token = document.getElementById('token').value;
+  const r = await fetch(base + '/api/admin?token=' + encodeURIComponent(token));
+  const j = await r.json();
+  document.getElementById('status').textContent = r.ok
+    ? 'Estoque atual: ' + j.stock_muse_ia + ' conta(s)'
+    : 'Erro: ' + (j.error || r.status);
+}
+async function enviar(){
+  const token = document.getElementById('token').value;
+  const linhas = document.getElementById('contas').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  const accounts = linhas.map(l=>{ const [login,senha]=l.split(';'); return {login:(login||'').trim(), senha:(senha||'').trim()}; });
+  const r = await fetch(base + '/api/admin', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({token, accounts})});
+  const j = await r.json();
+  document.getElementById('status').textContent = r.ok
+    ? '✅ ' + j.adicionadas + ' conta(s) cadastradas. Estoque atual: ' + j.estoque_atual
+    : 'Erro: ' + (j.error || r.status);
+}
+</script>
+</body>
+</html>

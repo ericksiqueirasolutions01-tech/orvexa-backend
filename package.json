@@ -1,0 +1,1 @@
+{"dependencies":{"@vercel/kv":"^1.0.0"},"description":"Backend de checkout da Orvexa/Prime Digital — InfinitePay + entrega automática (Vercel)","name":"orvexa-backend","private":true,"scripts":{"dev":"vercel dev"},"version":"1.0.0"}
