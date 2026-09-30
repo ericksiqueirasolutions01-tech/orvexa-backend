@@ -7,6 +7,7 @@ const {
   getStockAccounts,
   removeStockAccount,
   getSalesHistory,
+  clearSalesHistory,
   recordSale,
 } = require("../lib/store");
 
@@ -39,6 +40,12 @@ module.exports = async function handler(req, res) {
       const faturamentoTotal = vendas.reduce((sum, v) => sum + (Number(v.valor) || 0), 0);
       const estoqueTotal = Object.values(stocks).reduce((sum, c) => sum + (Number(c) || 0), 0);
 
+      const vendasMuse = vendas.filter((v) => v.produto === "muse-ia");
+      const vendasGemini = vendas.filter((v) => v.produto === "flow-ai-pro");
+      const faturamentoMuse = vendasMuse.reduce((sum, v) => sum + (Number(v.valor) || 0), 0);
+      const faturamentoGemini = vendasGemini.reduce((sum, v) => sum + (Number(v.valor) || 0), 0);
+      const ticketMedio = vendas.length ? faturamentoTotal / vendas.length : 0;
+
       return res.status(200).json({
         ok: true,
         stocks,
@@ -48,6 +55,11 @@ module.exports = async function handler(req, res) {
           total_vendas: vendas.length,
           faturamento_total: faturamentoTotal,
           estoque_total: estoqueTotal,
+          ticket_medio: ticketMedio,
+          vendas_muse: vendasMuse.length,
+          faturamento_muse: faturamentoMuse,
+          vendas_gemini: vendasGemini.length,
+          faturamento_gemini: faturamentoGemini,
         },
       });
     }
@@ -153,6 +165,11 @@ module.exports = async function handler(req, res) {
 
         await recordSale(testSale);
         return res.status(200).json({ ok: true, message: "Venda de teste simulada com sucesso!", sale: testSale });
+      }
+
+      if (action === "clear_sales") {
+        await clearSalesHistory();
+        return res.status(200).json({ ok: true, message: "Histórico de vendas zerado com sucesso!" });
       }
 
       return res.status(400).json({ error: `Ação desconhecida: ${action}` });

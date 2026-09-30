@@ -1,23 +1,55 @@
 // GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
 const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
-const { getOrder } = require("../lib/store");
+const { getOrder, setOrderStatus, popStockAccount, recordSale } = require("../lib/store");
 
 module.exports = async function handler(req, res) {
   const status = req.query.pagamento || "aprovado";
-  const produtoKey = req.query.produto || "muse-ia";
+  let produtoKey = req.query.produto || "flow-ai-pro";
   const orderNsu = req.query.order_nsu || "";
 
   let order = null;
   if (orderNsu) {
     try {
       order = await getOrder(orderNsu);
+      if (order && order.produto) produtoKey = order.produto;
     } catch (e) {
       console.warn("Erro ao buscar pedido em api/entrega:", e.message);
     }
   }
 
-  const deliveredItem = (order && order.delivered_item) || "";
+  let deliveredItem = (order && order.delivered_item) || "";
+
+  // Se o pagamento foi aprovado e a conta ainda não foi descarregada pelo webhook, entrega imediatamente na tela
+  if (status === "aprovado" && order && !deliveredItem) {
+    try {
+      const item = await popStockAccount(produtoKey);
+      if (item) {
+        if (produtoKey === "muse-ia") {
+          deliveredItem = `${item.login};${item.senha}`;
+        } else {
+          deliveredItem = String(item.link || item.activation_link || item.url || item);
+        }
+        order.delivered_item = deliveredItem;
+        await setOrderStatus(orderNsu, { status: "pago", delivered_item: deliveredItem });
+        await recordSale({
+          id: `sale-${Date.now()}`,
+          order_nsu: orderNsu,
+          transaction_nsu: order.transaction_nsu || `tx-onscreen-${Date.now()}`,
+          email: order.email || "cliente@orvexa.com",
+          produto: produtoKey,
+          produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
+          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || 49.99,
+          conta_entregue: deliveredItem,
+          data: new Date().toISOString(),
+          status: "pago",
+        });
+      }
+    } catch (ePop) {
+      console.error("Erro na entrega imediata em api/entrega:", ePop.message);
+    }
+  }
+
   const produtoInfo = PRODUCTS[produtoKey] || { title: "Seu Acesso", short: "Acesso" };
 
   let deliveryContentHtml = "";

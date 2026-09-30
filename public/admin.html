@@ -10,7 +10,7 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="/icon-192.png">
   <link rel="icon" href="/icon-192.png">
-  <title>Orvexa Admin — Gestão & Notificações</title>
+  <title>Orvexa Admin — Dashboard & Gestão</title>
   <style>
     :root {
       --bg: #090a10;
@@ -33,7 +33,7 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
       margin: 0;
-      padding: 0 0 85px 0; /* padding for mobile bottom bar */
+      padding: 0 0 90px 0; /* padding for mobile bottom bar */
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -45,8 +45,8 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(9, 10, 16, 0.88);
-      backdrop-filter: blur(12px);
+      background: rgba(9, 10, 16, 0.92);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       padding: 12px 18px;
       display: flex;
@@ -106,6 +106,7 @@
       align-items: center;
       gap: 5px;
       font-weight: 600;
+      transition: all 0.2s;
     }
     .icon-btn.active {
       background: rgba(34, 197, 94, 0.15);
@@ -140,18 +141,22 @@
     /* Metric Cards */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       margin-bottom: 20px;
+    }
+    @media (min-width: 640px) {
+      .metrics-grid { grid-template-columns: repeat(4, 1fr); }
     }
 
     .metric-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 16px 14px;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
 
     .metric-label {
@@ -164,7 +169,7 @@
     }
 
     .metric-value {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 800;
       color: #fff;
     }
@@ -173,12 +178,89 @@
       font-size: 11px;
       color: #38bdf8;
       margin-top: 4px;
+      font-weight: 600;
     }
 
-    /* Product Stock Overview Cards */
+    /* Product Performance Cards in Dashboard */
+    .product-dash-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 680px) {
+      .product-dash-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .prod-dash-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .prod-dash-card.muse { border-left: 4px solid var(--purple); }
+    .prod-dash-card.gemini { border-left: 4px solid var(--blue); }
+
+    .prod-dash-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .prod-dash-name {
+      font-weight: 800;
+      font-size: 15px;
+      color: #fff;
+    }
+
+    .prod-dash-tag {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .prod-dash-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+      background: #090a10;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+    .stat-val { font-size: 14px; font-weight: 800; color: #fff; margin-top: 2px; }
+
+    /* Pipeline Status Card */
+    .status-check-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 13px;
+    }
+    .status-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px rgba(34, 197, 94, 0.7); flex-shrink: 0; }
+
+    /* Stock Switcher Chips */
     .stocks-summary {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 20px;
     }
@@ -186,8 +268,8 @@
     .stock-chip {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 14px 16px;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
@@ -220,8 +302,6 @@
     .badge-purple { background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
     .badge-blue { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
     .badge-green { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-    .badge-amber { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-red { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
     /* Sections */
     .tab-content { display: none; }
@@ -272,10 +352,10 @@
       background: var(--primary);
       color: #fff;
       border: 0;
-      padding: 12px 20px;
+      padding: 11px 18px;
       border-radius: 10px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -288,10 +368,10 @@
     .btn-green:hover { background: var(--green-dark); }
     .btn-outline { background: transparent; border: 1px solid var(--border-accent); color: var(--text); }
     .btn-outline:hover { background: #181c30; }
-    .btn-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 10px; border-radius: 6px; font-size: 12px; }
+    .btn-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
     .btn-copy { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 5px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; }
 
-    /* Sales Table & Mobile Cards */
+    /* Sales Items */
     .sale-item {
       background: #0c0e18;
       border: 1px solid var(--border);
@@ -417,7 +497,7 @@
       </div>
     </div>
     <div class="top-actions">
-      <button class="icon-btn" id="btn-sound" onclick="toggleAudio()" title="Ativar/Desativar Ka-ching">
+      <button class="icon-btn active" id="btn-sound" onclick="toggleAudio()" title="Ativar/Desativar Ka-ching">
         <span id="sound-icon">🔊</span> <span style="font-size:12px;">Som</span>
       </button>
       <button class="icon-btn" id="btn-notify" onclick="toggleNotifications()" title="Ativar Notificações no Celular">
@@ -428,52 +508,197 @@
 
   <div class="container">
 
-    <!-- Alert Banner when a sale happens -->
+    <!-- Live Sale Banner Alert -->
     <div id="sale-alert-banner">
       🎉 <span id="sale-alert-text">NOVA VENDA CONFIRMADA!</span>
     </div>
 
-    <!-- Quick Metrics -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <span class="metric-label">Faturamento</span>
-        <span class="metric-value" id="m-revenue">R$ 0,00</span>
-        <span class="metric-sub">Total aprovado</span>
+    <!-- ========================================== -->
+    <!-- TAB 1: DASHBOARD DE VENDAS (PRINCIPAL)    -->
+    <!-- ========================================== -->
+    <div id="tab-dashboard" class="tab-content active">
+
+      <!-- KPI Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">Faturamento Total</span>
+          <span class="metric-value" id="dash-revenue">R$ 0,00</span>
+          <span class="metric-sub">Vendas aprovadas</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Vendas Concluídas</span>
+          <span class="metric-value" id="dash-sales">0</span>
+          <span class="metric-sub" id="dash-new-sales">0 novas</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Ticket Médio</span>
+          <span class="metric-value" id="dash-ticket">R$ 0,00</span>
+          <span class="metric-sub">Por pedido</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">Estoque Total</span>
+          <span class="metric-value" id="dash-stock">0</span>
+          <span class="metric-sub">Prontos p/ entrega</span>
+        </div>
       </div>
-      <div class="metric-card">
-        <span class="metric-label">Vendas</span>
-        <span class="metric-value" id="m-sales">0</span>
-        <span class="metric-sub" id="m-today">0 novas</span>
+
+      <!-- Comparativo por Produto -->
+      <div class="product-dash-grid">
+        <!-- MUSE IA -->
+        <div class="prod-dash-card muse">
+          <div>
+            <div class="prod-dash-top">
+              <div>
+                <div class="prod-dash-name">💜 MUSE IA</div>
+                <div class="prod-dash-tag">Acesso Completo · R$ 79,99</div>
+              </div>
+              <span class="stock-chip-badge badge-purple" id="dash-stock-muse">0 em estoque</span>
+            </div>
+
+            <div class="prod-dash-stats">
+              <div>
+                <div class="stat-label">Vendas</div>
+                <div class="stat-val" id="dash-vendas-muse">0 un</div>
+              </div>
+              <div>
+                <div class="stat-label">Total</div>
+                <div class="stat-val" id="dash-fat-muse" style="color:#c084fc;">R$ 0,00</div>
+              </div>
+              <div>
+                <div class="stat-label">Entrega</div>
+                <div class="stat-val" style="color:#4ade80;">Login;Senha</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-outline" style="width:100%;margin-top:6px;font-size:12px;padding:8px;" onclick="switchStockTab('muse-ia')">
+            📦 Gerenciar Estoque MUSE IA →
+          </button>
+        </div>
+
+        <!-- GEMINI PRO 18M -->
+        <div class="prod-dash-card gemini">
+          <div>
+            <div class="prod-dash-top">
+              <div>
+                <div class="prod-dash-name">💙 Google Gemini Pro + Flow</div>
+                <div class="prod-dash-tag">Plano 18 Meses · R$ 49,99</div>
+              </div>
+              <span class="stock-chip-badge badge-blue" id="dash-stock-gemini">0 em estoque</span>
+            </div>
+
+            <div class="prod-dash-stats">
+              <div>
+                <div class="stat-label">Vendas</div>
+                <div class="stat-val" id="dash-vendas-gemini">0 un</div>
+              </div>
+              <div>
+                <div class="stat-label">Total</div>
+                <div class="stat-val" id="dash-fat-gemini" style="color:#38bdf8;">R$ 0,00</div>
+              </div>
+              <div>
+                <div class="stat-label">Entrega</div>
+                <div class="stat-val" style="color:#4ade80;">Link Direto</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-outline" style="width:100%;margin-top:6px;font-size:12px;padding:8px;" onclick="switchStockTab('flow-ai-pro')">
+            ⚡ Gerenciar Links Gemini Pro →
+          </button>
+        </div>
       </div>
-      <div class="metric-card">
-        <span class="metric-label">Estoque Total</span>
-        <span class="metric-value" id="m-stock">0</span>
-        <span class="metric-sub">Prontos p/ entrega</span>
+
+      <!-- Status do Pipeline de Entrega Automática -->
+      <div class="status-check-card">
+        <h3 style="font-size:14px;font-weight:800;margin:0 0 12px;color:#fff;display:flex;align-items:center;gap:8px;">
+          <span>⚡</span> Saúde do Sistema de Entrega ao Cliente
+        </h3>
+        
+        <div class="status-item">
+          <div class="status-dot"></div>
+          <div style="flex:1;">
+            <b>Checkout InfinitePay:</b> Conectado ao identificador oficial <code style="color:#38bdf8;">erick-siqueira-bg2</code>
+          </div>
+        </div>
+
+        <div class="status-item">
+          <div class="status-dot"></div>
+          <div style="flex:1;">
+            <b>Entrega Instantânea On-Screen:</b> Ativa em <code style="color:#38bdf8;">/api/entrega</code> com botões de cópia e tutoriais
+          </div>
+        </div>
+
+        <div class="status-item">
+          <div class="status-dot"></div>
+          <div style="flex:1;">
+            <b>Entrega Atômica Garantida:</b> Nunca entrega o mesmo link ou conta duas vezes
+          </div>
+        </div>
+
+        <div class="status-item">
+          <div class="status-dot"></div>
+          <div style="flex:1;">
+            <b>Notificações no Celular & Som Ka-ching:</b> Ativo no navegador
+          </div>
+        </div>
       </div>
+
+      <!-- Quick Actions Bar -->
+      <div class="card" style="padding:16px;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-green" onclick="switchNav('estoque')">
+              <span>➕</span> Cadastrar Estoque
+            </button>
+            <button class="btn" style="background:#8b5cf6;" onclick="simularVendaTeste()">
+              <span>🧪</span> Simular Venda Teste
+            </button>
+          </div>
+          <button class="btn btn-danger" onclick="zerarHistoricoVendas()" title="Zerar faturamento e vendas para começar limpo">
+            <span>🧹</span> Zerar Histórico
+          </button>
+        </div>
+      </div>
+
+      <!-- Feed Rápido de Últimas Vendas -->
+      <div class="card">
+        <div class="card-head">
+          <h2 class="card-title">🛒 Últimas Vendas</h2>
+          <button class="btn btn-outline" style="padding:4px 10px;font-size:12px;" onclick="carregarDados()">🔄 Atualizar</button>
+        </div>
+        <div id="dash-recent-sales">
+          <!-- Renderizado via JS -->
+        </div>
+      </div>
+
     </div>
 
-    <!-- Stock Switcher Chips -->
-    <div class="stocks-summary">
-      <div class="stock-chip selected" id="chip-muse" onclick="switchStockTab('muse-ia')">
-        <div>
-          <div class="stock-chip-title">💜 MUSE IA</div>
-          <span style="font-size:11px;color:var(--muted);">Login & Senha</span>
-        </div>
-        <span class="stock-chip-badge badge-purple" id="chip-count-muse">0 contas</span>
-      </div>
 
-      <div class="stock-chip" id="chip-gemini" onclick="switchStockTab('flow-ai-pro')">
-        <div>
-          <div class="stock-chip-title">💙 Gemini Pro 18m</div>
-          <span style="font-size:11px;color:var(--muted);">Links Ativação</span>
-        </div>
-        <span class="stock-chip-badge badge-blue" id="chip-count-gemini">0 links</span>
-      </div>
-    </div>
-
-    <!-- TAB 1: GESTÃO DE ESTOQUE (MUSE IA / GEMINI PRO 18M) -->
-    <div id="tab-estoque" class="tab-content active">
+    <!-- ========================================== -->
+    <!-- TAB 2: GESTÃO DE ESTOQUE (MUSE & GEMINI)  -->
+    <!-- ========================================== -->
+    <div id="tab-estoque" class="tab-content">
       
+      <!-- Seletor de Estoque -->
+      <div class="stocks-summary">
+        <div class="stock-chip selected" id="chip-muse" onclick="switchStockTab('muse-ia')">
+          <div>
+            <div class="stock-chip-title">💜 MUSE IA</div>
+            <span style="font-size:11px;color:var(--muted);">Contas Login & Senha</span>
+          </div>
+          <span class="stock-chip-badge badge-purple" id="chip-count-muse">0 contas</span>
+        </div>
+
+        <div class="stock-chip" id="chip-gemini" onclick="switchStockTab('flow-ai-pro')">
+          <div>
+            <div class="stock-chip-title">💙 Gemini Pro 18m</div>
+            <span style="font-size:11px;color:var(--muted);">Links de Ativação</span>
+          </div>
+          <span class="stock-chip-badge badge-blue" id="chip-count-gemini">0 links</span>
+        </div>
+      </div>
+
       <!-- FORM DE CADASTRO -->
       <div class="card">
         <div class="card-head">
@@ -511,7 +736,10 @@
 
     </div>
 
-    <!-- TAB 2: HISTÓRICO DE VENDAS -->
+
+    <!-- ========================================== -->
+    <!-- TAB 3: HISTÓRICO COMPLETO DE VENDAS        -->
+    <!-- ========================================== -->
     <div id="tab-vendas" class="tab-content">
       <div class="card">
         <div class="card-head">
@@ -525,12 +753,15 @@
       </div>
     </div>
 
-    <!-- TAB 3: CONFIGURAÇÕES, NOTIFICAÇÕES & TESTES -->
+
+    <!-- ========================================== -->
+    <!-- TAB 4: AJUSTES, CONFIGS E TESTES           -->
+    <!-- ========================================== -->
     <div id="tab-config" class="tab-content">
       <div class="card">
-        <h2 class="card-title" style="margin-bottom:12px;">🔔 Notificações & Áudio no Celular</h2>
+        <h2 class="card-title" style="margin-bottom:12px;">🔔 Alertas & Som de Venda (Ka-ching!)</h2>
         <p style="color:var(--muted);font-size:13px;line-height:1.6;">
-          Receba um alerta com som de caixa registradora <b>(Ka-ching!)</b> e notificação no celular a cada venda realizada!
+          Toca o som clássico de caixa registradora e envia notificação com vibração no celular no momento exato em que a venda for paga na InfinitePay!
         </p>
 
         <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
@@ -541,7 +772,7 @@
             <span>🔔</span> Permissão de Notificação
           </button>
           <button class="btn" style="background:#8b5cf6;" onclick="simularVendaTeste()">
-            <span>🧪</span> Simular Venda de Teste
+            <span>🧪</span> Simular Venda Teste
           </button>
         </div>
       </div>
@@ -566,7 +797,11 @@
 
   <!-- Bottom Navigation Bar for Mobile -->
   <nav class="bottom-nav">
-    <button class="nav-tab active" id="bnav-estoque" onclick="switchNav('estoque')">
+    <button class="nav-tab active" id="bnav-dashboard" onclick="switchNav('dashboard')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Dash</span>
+    </button>
+    <button class="nav-tab" id="bnav-estoque" onclick="switchNav('estoque')">
       <svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
       <span>Estoque</span>
     </button>
@@ -583,7 +818,7 @@
   <script>
     // Configurações globais
     const BASE_URL = window.location.origin;
-    let currentProduct = "muse-ia";
+    let currentProduct = "flow-ai-pro";
     let lastSalesCount = 0;
     let isSoundEnabled = true;
     let pollingInterval = null;
@@ -620,14 +855,18 @@
       if (tabEl) tabEl.classList.add("active");
       if (navEl) navEl.classList.add("active");
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (tabName === "estoque") {
+        carregarItensEstoque();
+      }
     }
 
-    // Seletor de Estoque (MUSE IA / Gemini Pro / Duolingo)
+    // Seletor de Estoque (MUSE IA / Gemini Pro)
     function switchStockTab(prodKey) {
       currentProduct = prodKey;
       document.querySelectorAll(".stock-chip").forEach(c => c.classList.remove("selected"));
       
-      const chipMap = { "muse-ia": "chip-muse", "flow-ai-pro": "chip-gemini", "super-duolingo": "chip-duo" };
+      const chipMap = { "muse-ia": "chip-muse", "flow-ai-pro": "chip-gemini" };
       const selectedChip = document.getElementById(chipMap[prodKey]);
       if (selectedChip) selectedChip.classList.add("selected");
 
@@ -643,10 +882,6 @@
         titleEl.textContent = "⚡ Cadastrar Links — Google Gemini Pro (18m)";
         hintEl.innerHTML = "Cole um <b>link de ativação</b> por linha (ex: https://one.google.com/promo/claim?token=...)";
         textEl.placeholder = "https://one.google.com/promo/claim?token=XYZ-18M-01\nhttps://one.google.com/promo/claim?token=XYZ-18M-02";
-      } else if (prodKey === "super-duolingo") {
-        titleEl.textContent = "🦉 Cadastrar Convites — Super Duolingo (1 ano)";
-        hintEl.innerHTML = "Cole um <b>link de convite</b> por linha (ex: https://www.duolingo.com/super/redeem?token=...)";
-        textEl.placeholder = "https://www.duolingo.com/super/redeem?token=DUO-1Y-01\nhttps://www.duolingo.com/super/redeem?token=DUO-1Y-02";
       }
 
       switchNav("estoque");
@@ -661,7 +896,6 @@
         const ctx = new AudioCtx();
         const now = ctx.currentTime;
         
-        // Frequências ricas e metálicas de sino de caixa registradora
         const notes = [987.77, 1318.51, 1567.98, 2093.00];
         notes.forEach((freq, i) => {
           const osc = ctx.createOscillator();
@@ -731,34 +965,45 @@
       });
     }
 
-    // Carregar dados gerais e verificar novas vendas
+    // Carregar dados gerais e atualizar Dashboard
     async function carregarDados() {
       const token = getToken();
       try {
         const res = await fetch(`${BASE_URL}/api/admin?token=${encodeURIComponent(token)}`);
-        if (!res.ok) {
-          if (res.status === 401) {
-            console.warn("Token não autorizado.");
-          }
-          return;
-        }
+        if (!res.ok) return;
 
         const data = await res.json();
         if (!data.ok) return;
 
-        // Atualizar métricas
-        const rev = Number(data.resumo.faturamento_total || 0);
-        document.getElementById("m-revenue").textContent = "R$ " + rev.toLocaleString("pt-BR", { minimumFractionDigits: 2 });
-        document.getElementById("m-sales").textContent = data.vendas.length;
-        document.getElementById("m-stock").textContent = data.resumo.estoque_total;
+        const r = data.resumo || {};
+        const rev = Number(r.faturamento_total || 0);
+        const ticket = Number(r.ticket_medio || 0);
+
+        // Atualizar Dashboard KPIs
+        document.getElementById("dash-revenue").textContent = "R$ " + rev.toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+        document.getElementById("dash-sales").textContent = data.vendas.length;
+        document.getElementById("dash-ticket").textContent = "R$ " + ticket.toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+        document.getElementById("dash-stock").textContent = r.estoque_total || 0;
         document.getElementById("bnav-sales-count").textContent = data.vendas.length;
 
-        // Atualizar chips
+        // Atualizar comparativo por produto
         const st = data.stocks || {};
+        const stockMuse = st["muse-ia"] || 0;
+        const stockGemini = st["flow-ai-pro"] || 0;
+
+        document.getElementById("dash-stock-muse").textContent = stockMuse + " em estoque";
+        document.getElementById("dash-vendas-muse").textContent = (r.vendas_muse || 0) + " un";
+        document.getElementById("dash-fat-muse").textContent = "R$ " + Number(r.faturamento_muse || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+
+        document.getElementById("dash-stock-gemini").textContent = stockGemini + " em estoque";
+        document.getElementById("dash-vendas-gemini").textContent = (r.vendas_gemini || 0) + " un";
+        document.getElementById("dash-fat-gemini").textContent = "R$ " + Number(r.faturamento_gemini || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+
+        // Atualizar chips na aba Estoque
         const museEl = document.getElementById("chip-count-muse");
-        if (museEl) museEl.textContent = (st["muse-ia"] || 0) + " contas";
+        if (museEl) museEl.textContent = stockMuse + " contas";
         const geminiEl = document.getElementById("chip-count-gemini");
-        if (geminiEl) geminiEl.textContent = (st["flow-ai-pro"] || 0) + " links";
+        if (geminiEl) geminiEl.textContent = stockGemini + " links";
 
         const currentCount = st[currentProduct] || 0;
         document.getElementById("current-badge-count").textContent = "Estoque: " + currentCount;
@@ -771,8 +1016,9 @@
         }
         lastSalesCount = data.vendas.length;
 
-        // Renderizar vendas
+        // Renderizar vendas no feed e na aba completa
         renderizarVendas(data.vendas);
+        renderizarRecentSalesDash(data.vendas);
 
       } catch (e) {
         console.error("Erro ao carregar dados:", e);
@@ -809,7 +1055,7 @@
         const container = document.getElementById("stock-items-container");
 
         if (!res.ok || !data.ok || !data.items || !data.items.length) {
-          container.innerHTML = `<p style="text-align:center;color:var(--muted);padding:24px 0;margin:0;">Estoque zerado para este produto. Adicione itens acima para entrega automática!</p>`;
+          container.innerHTML = `<p style="text-align:center;color:var(--muted);padding:24px 0;margin:0;">Nenhum item cadastrado no momento. Cole suas contas ou links acima e clique em Cadastrar!</p>`;
           return;
         }
 
@@ -855,7 +1101,6 @@
       }
 
       const linhas = raw.split("\n").map(l => l.trim()).filter(Boolean);
-
       let payload = { token, action: "add_stock", produto: currentProduct };
 
       if (currentProduct === "muse-ia") {
@@ -871,7 +1116,7 @@
       } else {
         payload.links = linhas.filter(l => l.startsWith("http"));
         if (!payload.links.length) {
-          alert("Informe links válidos iniciando com http ou https.");
+          alert("Informe links de ativação válidos iniciando com http ou https.");
           return;
         }
       }
@@ -919,7 +1164,7 @@
       }
     }
 
-    // Renderizar Vendas Confirmadas
+    // Renderizar Vendas Confirmadas (Aba Completa)
     function renderizarVendas(vendas) {
       const container = document.getElementById("sales-container");
       if (!vendas || !vendas.length) {
@@ -927,41 +1172,75 @@
         return;
       }
 
-      container.innerHTML = vendas.map(v => {
-        const dataFmt = new Date(v.data).toLocaleString("pt-BR");
-        const zapMsg = encodeURIComponent(`Olá! Confirmamos sua compra de ${v.produto_nome || v.produto} na Orvexa. Segue o suporte para o seu acesso!`);
-        
-        let badgeClass = "badge-purple";
-        if (v.produto === "flow-ai-pro") badgeClass = "badge-blue";
-        if (v.produto === "super-duolingo") badgeClass = "badge-green";
+      container.innerHTML = vendas.map(v => formatSaleCard(v)).join("");
+    }
 
-        return `
-          <div class="sale-item">
-            <div class="sale-row-top">
-              <div>
-                <span class="stock-chip-badge ${badgeClass}" style="margin-right:6px;font-size:10px;">${v.produto_nome || v.produto}</span>
-                <span style="font-size:11px;color:var(--muted);">${dataFmt}</span>
-              </div>
-              <span class="sale-price">R$ ${Number(v.valor).toFixed(2)}</span>
+    // Renderizar feed compacto no Dashboard
+    function renderizarRecentSalesDash(vendas) {
+      const container = document.getElementById("dash-recent-sales");
+      if (!vendas || !vendas.length) {
+        container.innerHTML = `<p style="text-align:center;color:var(--muted);padding:20px 0;margin:0;font-size:13px;">Nenhuma venda realizada ainda. Pronto para receber novos pedidos!</p>`;
+        return;
+      }
+      container.innerHTML = vendas.slice(0, 5).map(v => formatSaleCard(v)).join("");
+    }
+
+    function formatSaleCard(v) {
+      const dataFmt = new Date(v.data).toLocaleString("pt-BR");
+      const zapMsg = encodeURIComponent(`Olá! Confirmamos sua compra de ${v.produto_nome || v.produto} na Orvexa. Segue o suporte para o seu acesso!`);
+      
+      let badgeClass = "badge-purple";
+      if (v.produto === "flow-ai-pro") badgeClass = "badge-blue";
+
+      return `
+        <div class="sale-item">
+          <div class="sale-row-top">
+            <div>
+              <span class="stock-chip-badge ${badgeClass}" style="margin-right:6px;font-size:10px;">${v.produto_nome || v.produto}</span>
+              <span style="font-size:11px;color:var(--muted);">${dataFmt}</span>
             </div>
-
-            <div class="sale-email">👤 <b>Cliente:</b> ${v.email}</div>
-
-            <div class="delivered-box">
-              <div class="delivered-text" title="${v.conta_entregue}">
-                🔑 <b>Entregue:</b> ${v.conta_entregue || "Acesso enviado por e-mail"}
-              </div>
-              ${v.conta_entregue ? `<button class="btn-copy" onclick="copiarTexto('${encodeURIComponent(v.conta_entregue)}')">Copiar</button>` : ""}
-            </div>
-
-            <div class="sale-actions">
-              <a href="https://wa.me/5521992936790?text=${zapMsg}" target="_blank" class="btn-wa">
-                💬 Suporte WhatsApp
-              </a>
-            </div>
+            <span class="sale-price">R$ ${Number(v.valor).toFixed(2)}</span>
           </div>
-        `;
-      }).join("");
+
+          <div class="sale-email">👤 <b>Cliente:</b> ${v.email}</div>
+
+          <div class="delivered-box">
+            <div class="delivered-text" title="${v.conta_entregue}">
+              🔑 <b>Entregue:</b> ${v.conta_entregue || "Acesso liberado"}
+            </div>
+            ${v.conta_entregue ? `<button class="btn-copy" onclick="copiarTexto('${encodeURIComponent(v.conta_entregue)}')">Copiar</button>` : ""}
+          </div>
+
+          <div class="sale-actions">
+            <a href="https://wa.me/5521992936790?text=${zapMsg}" target="_blank" class="btn-wa">
+              💬 Suporte WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    // Zerar histórico de vendas para começar limpo
+    async function zerarHistoricoVendas() {
+      if (!confirm("Deseja realmente zerar todo o faturamento e vendas de teste para começar do zero?")) return;
+      const token = getToken();
+      try {
+        const res = await fetch(`${BASE_URL}/api/admin`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, action: "clear_sales" })
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          lastSalesCount = 0;
+          alert("✅ Histórico de vendas zerado com sucesso! Faturamento: R$ 0,00.");
+          carregarDados();
+        } else {
+          alert("Erro: " + (data.error || "Não foi possível zerar."));
+        }
+      } catch (e) {
+        alert("Erro na conexão: " + e.message);
+      }
     }
 
     // Simulação de venda para teste
@@ -1005,7 +1284,6 @@
       }
 
       carregarDados();
-      carregarItensEstoque();
 
       // Polling a cada 6 segundos para escutar novas vendas em tempo real
       pollingInterval = setInterval(carregarDados, 6000);
