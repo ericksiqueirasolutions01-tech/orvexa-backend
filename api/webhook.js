@@ -34,34 +34,51 @@ module.exports = async function handler(req, res) {
     if (await alreadyDelivered(transaction_nsu)) return res.status(200).end();
 
     const order = await getOrder(order_nsu);
-    if (!order) {
-      console.error(`Webhook: order_nsu desconhecido (${order_nsu}).`);
-      return res.status(200).end();
+    let produtoKey = order && order.produto;
+    if (!produtoKey) {
+      if (order_nsu.startsWith("muse-ia")) produtoKey = "muse-ia";
+      else if (order_nsu.startsWith("flow-ai-pro")) produtoKey = "flow-ai-pro";
+      else if (order_nsu.startsWith("super-duolingo")) produtoKey = "super-duolingo";
+      else produtoKey = "muse-ia";
     }
 
-    const produtoKey = order.produto;
     const produto = PRODUCTS[produtoKey];
     if (!produto) {
       console.error(`Webhook: produto desconhecido (${produtoKey}).`);
       return res.status(200).end();
     }
 
-    // Valida valor pago (paid_amount ou amount >= preço em centavos)
-    if (Number(paid_amount) < produto.priceCents || Number(amount) < produto.priceCents) {
+    // Valida valor pago (se fornecido pela InfinitePay)
+    const paidValue = Number(paid_amount || amount || 0);
+    if (paidValue > 0 && paidValue < produto.priceCents) {
       console.error(
-        `Webhook: valor divergente no pedido ${order_nsu} (paid=${paid_amount || amount}, esperado=${produto.priceCents}).`
+        `Webhook: valor divergente no pedido ${order_nsu} (paid=${paidValue}, esperado=${produto.priceCents}).`
       );
       return res.status(200).end();
     }
 
-    const buyerEmail = order.email;
-    if (!isValidEmail(buyerEmail)) {
-      console.error(`Webhook: e-mail inválido no pedido ${order_nsu}.`);
+    const buyerEmail = (order && order.email) || (req.body.customer && req.body.customer.email) || (req.body.metadata && req.body.metadata.email) || "";
+
+    let deliveredText = "";
+
+    // Se já foi entregue na tela em /api/entrega, reutiliza o mesmo item para não gastar outro do estoque
+    if (order && order.delivered_item) {
+      deliveredText = order.delivered_item;
+      if (isValidEmail(buyerEmail)) {
+        try {
+          if (produtoKey === "muse-ia" && deliveredText.includes(";")) {
+            const [l, s] = deliveredText.split(";");
+            await sendEmail(buyerEmail, `🚀 Seu acesso à ${produto.short} foi liberado!`, emailMuseIa({ login: l, senha: s }));
+          } else if (produtoKey === "flow-ai-pro") {
+            await sendEmail(buyerEmail, `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`, emailFlowAiPro({ link: deliveredText }));
+          }
+        } catch (errEmail) {
+          console.warn("Aviso envio de e-mail (reentrega):", errEmail.message);
+        }
+      }
+      await markDelivered(transaction_nsu);
       return res.status(200).end();
     }
-
-    let deliveredItem = null;
-    let deliveredText = "";
 
     // ---- 1. MUSE IA: Estoque de login e senha + procedimento ----
     if (produtoKey === "muse-ia") {
@@ -71,19 +88,20 @@ module.exports = async function handler(req, res) {
         deliveredText = "⚠️ Estoque esgotado — reposição manual necessária";
         await notifyAdmin(
           "⚠️ Estoque de MUSE IA esgotado",
-          `<p>Pagamento aprovado para <b>${buyerEmail}</b> (pedido ${order_nsu}), mas <b>não havia contas de MUSE IA no estoque</b>. Cadastre novas contas no painel admin para envio ao cliente.</p>`
+          `<p>Pagamento aprovado para <b>${buyerEmail}</b> (pedido ${order_nsu}), mas <b>não havia contas de MUSE IA no estoque</b>. Envie pelo WhatsApp ou cadastre novas contas no painel admin.</p>`
         );
       } else {
-        deliveredItem = account;
         deliveredText = `${account.login};${account.senha}`;
-        try {
-          await sendEmail(
-            buyerEmail,
-            `🚀 Seu acesso à ${produto.short} foi liberado!`,
-            emailMuseIa({ login: account.login, senha: account.senha })
-          );
-        } catch (errEmail) {
-          console.warn("Aviso envio de e-mail (MUSE IA):", errEmail.message);
+        if (isValidEmail(buyerEmail)) {
+          try {
+            await sendEmail(
+              buyerEmail,
+              `🚀 Seu acesso à ${produto.short} foi liberado!`,
+              emailMuseIa({ login: account.login, senha: account.senha })
+            );
+          } catch (errEmail) {
+            console.warn("Aviso envio de e-mail (MUSE IA):", errEmail.message);
+          }
         }
       }
     }
@@ -101,16 +119,17 @@ module.exports = async function handler(req, res) {
           `<p>Pagamento aprovado para <b>${buyerEmail}</b> (${produto.title}, pedido ${order_nsu}), mas <b>não havia links de ativação no estoque</b>. Cadastre novos links no painel admin.</p>`
         );
       } else {
-        deliveredItem = linkObj;
         deliveredText = String(linkUrl);
-        try {
-          await sendEmail(
-            buyerEmail,
-            `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`,
-            emailFlowAiPro({ link: linkUrl })
-          );
-        } catch (errEmail) {
-          console.warn("Aviso envio de e-mail (Flow AI Pro):", errEmail.message);
+        if (isValidEmail(buyerEmail)) {
+          try {
+            await sendEmail(
+              buyerEmail,
+              `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`,
+              emailFlowAiPro({ link: linkUrl })
+            );
+          } catch (errEmail) {
+            console.warn("Aviso envio de e-mail (Flow AI Pro):", errEmail.message);
+          }
         }
       }
     }
@@ -128,40 +147,44 @@ module.exports = async function handler(req, res) {
           `<p>Pagamento aprovado para <b>${buyerEmail}</b> (${produto.title}, pedido ${order_nsu}), mas <b>não havia convites no estoque</b>.</p>`
         );
       } else {
-        deliveredItem = duoObj;
         deliveredText = String(duoLink);
-        try {
-          await sendEmail(
-            buyerEmail,
-            `🦉 Seu Super Duolingo (1 Ano) Está Liberado!`,
-            emailSuperDuolingo({ link: duoLink })
-          );
-        } catch (errEmail) {
-          console.warn("Aviso envio de e-mail (Duolingo):", errEmail.message);
+        if (isValidEmail(buyerEmail)) {
+          try {
+            await sendEmail(
+              buyerEmail,
+              `🦉 Seu Super Duolingo (1 Ano) Está Liberado!`,
+              emailSuperDuolingo({ link: duoLink })
+            );
+          } catch (errEmail) {
+            console.warn("Aviso envio de e-mail (Duolingo):", errEmail.message);
+          }
         }
       }
     }
 
     // Registra a venda no histórico do painel e envia notificações (WhatsApp/Webhook)
+    const hasItem = deliveredText && !deliveredText.startsWith("⚠️");
     const saleRecord = {
       id: `sale-${Date.now()}`,
       order_nsu,
       transaction_nsu: String(transaction_nsu),
-      email: buyerEmail,
+      email: buyerEmail || "cliente@orvexa.digital",
       produto: produtoKey,
       produto_nome: produto.title,
       valor: produto.priceBRL,
       conta_entregue: deliveredText,
       data: new Date().toISOString(),
-      status: "pago",
+      status: hasItem ? "pago" : "pendente_envio",
     };
     await recordSale(saleRecord);
 
     // Atualiza status do pedido com o item entregue para exibir em /api/entrega
     await setOrderStatus(order_nsu, {
-      status: "pago",
+      status: hasItem ? "pago" : "pendente_envio",
       transaction_nsu: String(transaction_nsu),
       delivered_item: deliveredText,
+      email: buyerEmail,
+      produto: produtoKey,
       paid_at: new Date().toISOString(),
     });
 
@@ -176,7 +199,7 @@ module.exports = async function handler(req, res) {
       );
     }
 
-    console.log(`✅ [VENDA CONFIRMADA] ${produto.title} entregue para ${buyerEmail} (pedido ${order_nsu})`);
+    console.log(`✅ [VENDA PROCESSADA] ${produto.title} para ${buyerEmail} (pedido ${order_nsu})`);
     return res.status(200).end();
   } catch (e) {
     console.error("Erro no webhook:", e.message);

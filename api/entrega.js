@@ -1,27 +1,38 @@
-// GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...
+// GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...&email=...
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
 const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
 const { getOrder, setOrderStatus, popStockAccount, recordSale } = require("../lib/store");
 
 module.exports = async function handler(req, res) {
   const status = req.query.pagamento || "aprovado";
-  let produtoKey = req.query.produto || "flow-ai-pro";
+  let produtoKey = req.query.produto || "muse-ia";
   const orderNsu = req.query.order_nsu || "";
+  let buyerEmail = req.query.email || "";
 
   let order = null;
   if (orderNsu) {
     try {
       order = await getOrder(orderNsu);
-      if (order && order.produto) produtoKey = order.produto;
+      if (order) {
+        if (order.produto) produtoKey = order.produto;
+        if (order.email && !buyerEmail) buyerEmail = order.email;
+      }
     } catch (e) {
       console.warn("Erro ao buscar pedido em api/entrega:", e.message);
     }
   }
 
+  // Se produtoKey ainda não for reconhecido, deduz pelo orderNsu
+  if (!produtoKey || !PRODUCTS[produtoKey]) {
+    if (orderNsu.startsWith("muse-ia")) produtoKey = "muse-ia";
+    else if (orderNsu.startsWith("flow-ai-pro")) produtoKey = "flow-ai-pro";
+    else produtoKey = "muse-ia";
+  }
+
   let deliveredItem = (order && order.delivered_item) || "";
 
-  // Se o pagamento foi aprovado e a conta ainda não foi descarregada pelo webhook, entrega imediatamente na tela
-  if (status === "aprovado" && order && !deliveredItem) {
+  // Se o pagamento foi aprovado e a conta ainda não foi entregue, retira do estoque persistente
+  if (status === "aprovado" && !deliveredItem) {
     try {
       const item = await popStockAccount(produtoKey);
       if (item) {
@@ -30,19 +41,41 @@ module.exports = async function handler(req, res) {
         } else {
           deliveredItem = String(item.link || item.activation_link || item.url || item);
         }
-        order.delivered_item = deliveredItem;
-        await setOrderStatus(orderNsu, { status: "pago", delivered_item: deliveredItem });
+
+        if (orderNsu) {
+          await setOrderStatus(orderNsu, {
+            status: "pago",
+            delivered_item: deliveredItem,
+            email: buyerEmail,
+            produto: produtoKey,
+          });
+        }
+
         await recordSale({
           id: `sale-${Date.now()}`,
-          order_nsu: orderNsu,
-          transaction_nsu: order.transaction_nsu || `tx-onscreen-${Date.now()}`,
-          email: order.email || "cliente@orvexa.com",
+          order_nsu: orderNsu || `onscreen-${Date.now()}`,
+          transaction_nsu: (order && order.transaction_nsu) || `tx-onscreen-${Date.now()}`,
+          email: buyerEmail || "cliente@orvexa.digital",
           produto: produtoKey,
           produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
-          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || 49.99,
+          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 79.99 : 49.99),
           conta_entregue: deliveredItem,
           data: new Date().toISOString(),
           status: "pago",
+        });
+      } else {
+        // Estoque vazio: registra venda como pendente de envio manual para acompanhamento
+        await recordSale({
+          id: `sale-${Date.now()}`,
+          order_nsu: orderNsu || `onscreen-pendente-${Date.now()}`,
+          transaction_nsu: (order && order.transaction_nsu) || `tx-pendente-${Date.now()}`,
+          email: buyerEmail || "cliente@orvexa.digital",
+          produto: produtoKey,
+          produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
+          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 79.99 : 49.99),
+          conta_entregue: "⚠️ Aguardando envio manual (estoque esgotado)",
+          data: new Date().toISOString(),
+          status: "pendente_envio",
         });
       }
     } catch (ePop) {
@@ -50,11 +83,10 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  const produtoInfo = PRODUCTS[produtoKey] || { title: "Seu Acesso", short: "Acesso" };
-
+  const produtoInfo = PRODUCTS[produtoKey] || { title: "Seu Acesso", short: "Acesso", priceBRL: 79.99 };
   let deliveryContentHtml = "";
 
-  // 1. MUSE IA
+  // 1. MUSE IA (Conta com 1 Bilhão de Tokens)
   if (produtoKey === "muse-ia") {
     let loginStr = "";
     let senhaStr = "";
@@ -86,7 +118,24 @@ module.exports = async function handler(req, res) {
         </div>
       </div>
       ` : `
-      <p style="color:#cbd5e1;font-size:15px;line-height:1.7;">Seu login e senha foram enviados com sucesso para o seu e-mail! (Verifique a caixa de entrada e spam).</p>
+      <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);border-radius:14px;padding:24px 20px;margin:20px 0;text-align:center;">
+        <span style="display:inline-block;background:#eab308;color:#000;font-size:11px;font-weight:900;padding:3px 10px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;">
+          PAGAMENTO CONFIRMADO • ATIVAÇÃO IMEDIATA
+        </span>
+        <h2 style="color:#fff;font-size:18px;margin:0 0 10px;font-weight:800;">Seu Acesso Está Liberado!</h2>
+        <p style="color:#cbd5e1;font-size:14px;line-height:1.6;margin:0 0 16px;">
+          Confirmamos com sucesso seu pagamento do <b>${produtoInfo.title}</b>.<br>
+          Para receber seu login e senha imediatamente, toque no botão abaixo e fale com o Erick no WhatsApp:
+        </p>
+        <a href="https://wa.me/5521992936790?text=${encodeURIComponent(`Olá Erick! Acabei de pagar pelo ${produtoInfo.title} (Pedido: ${orderNsu || 'Confirmado'}, E-mail: ${buyerEmail}) e gostaria de receber meu login e senha agora!`)}"
+           target="_blank"
+           style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;font-weight:bold;padding:16px 24px;border-radius:10px;text-decoration:none;font-size:15px;box-shadow:0 8px 24px rgba(37,211,102,0.4);width:100%;max-width:390px;">
+          <span>💬</span> RECEBER MEU LOGIN NO WHATSAPP AGORA
+        </a>
+        <p style="color:#94a3b8;font-size:12px;margin:12px 0 0;">
+          Atendimento direto com o Erick • Envio em minutos!
+        </p>
+      </div>
       `}
 
       <div style="text-align:left;background:#121422;border:1px solid #1f233b;border-radius:12px;padding:20px;margin-top:16px;">
@@ -95,9 +144,9 @@ module.exports = async function handler(req, res) {
           <li>Abra o navegador em <b>Janela Anônima</b> (para evitar conflito com sua conta Google existente).</li>
           <li>Acesse o site oficial: <a href="https://muse.ai/" target="_blank" style="color:#38bdf8;font-weight:bold;text-decoration:underline;">https://muse.ai/</a></li>
           <li>Clique em <b>Entrar com e-mail</b>.</li>
-          <li>Informe o <b>e-mail fornecido acima</b>.</li>
+          <li>Informe o <b>e-mail fornecido</b>.</li>
           <li>Clique em <b>Entrar com senha</b>.</li>
-          <li>Digite a <b>senha fornecida acima</b> e confirme.</li>
+          <li>Digite a <b>senha fornecida</b> e confirme.</li>
           <li>Pronto! Você já está logado com <b>1 bilhão de tokens</b> prontos para gerar imagens, vídeos e agentes!</li>
         </ol>
         <div style="background:rgba(79,70,229,0.15);border:1px solid #4f46e5;border-radius:10px;padding:14px;margin-top:14px;">
@@ -127,7 +176,24 @@ module.exports = async function handler(req, res) {
         <p style="color:#94a3b8;font-size:12px;word-break:break-all;margin-top:12px;">Link: <a href="${linkUrl}" target="_blank" style="color:#38bdf8;">${linkUrl}</a></p>
       </div>
       ` : `
-      <p style="color:#cbd5e1;font-size:15px;line-height:1.7;">Seu link exclusivo de ativação foi enviado para o seu e-mail! Você também pode ativá-lo diretamente pelo suporte no WhatsApp.</p>
+      <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);border-radius:14px;padding:24px 20px;margin:20px 0;text-align:center;">
+        <span style="display:inline-block;background:#eab308;color:#000;font-size:11px;font-weight:900;padding:3px 10px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;">
+          PAGAMENTO CONFIRMADO • ATIVAÇÃO IMEDIATA
+        </span>
+        <h2 style="color:#fff;font-size:18px;margin:0 0 10px;font-weight:800;">Seu Acesso Está Liberado!</h2>
+        <p style="color:#cbd5e1;font-size:14px;line-height:1.6;margin:0 0 16px;">
+          Confirmamos com sucesso seu pagamento do <b>${produtoInfo.title}</b>.<br>
+          Para receber seu link de ativação exclusivo agora mesmo, toque no botão abaixo e fale com o Erick no WhatsApp:
+        </p>
+        <a href="https://wa.me/5521992936790?text=${encodeURIComponent(`Olá Erick! Acabei de pagar pelo ${produtoInfo.title} (Pedido: ${orderNsu || 'Confirmado'}, E-mail: ${buyerEmail}) e gostaria de receber meu link de ativação agora!`)}"
+           target="_blank"
+           style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;font-weight:bold;padding:16px 24px;border-radius:10px;text-decoration:none;font-size:15px;box-shadow:0 8px 24px rgba(37,211,102,0.4);width:100%;max-width:390px;">
+          <span>💬</span> RECEBER MEU LINK NO WHATSAPP AGORA
+        </a>
+        <p style="color:#94a3b8;font-size:12px;margin:12px 0 0;">
+          Atendimento direto com o Erick • Envio em minutos!
+        </p>
+      </div>
       `}
 
       <div style="text-align:left;background:#121422;border:1px solid #1f233b;border-radius:12px;padding:20px;margin-top:16px;">
@@ -163,7 +229,21 @@ module.exports = async function handler(req, res) {
         <p style="color:#94a3b8;font-size:12px;word-break:break-all;margin-top:12px;">Link: <a href="${duoUrl}" target="_blank" style="color:#38bdf8;">${duoUrl}</a></p>
       </div>
       ` : `
-      <p style="color:#cbd5e1;font-size:15px;line-height:1.7;">Seu convite exclusivo do Super Duolingo foi enviado para o seu e-mail!</p>
+      <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);border-radius:14px;padding:24px 20px;margin:20px 0;text-align:center;">
+        <span style="display:inline-block;background:#eab308;color:#000;font-size:11px;font-weight:900;padding:3px 10px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;">
+          PAGAMENTO CONFIRMADO • ATIVAÇÃO IMEDIATA
+        </span>
+        <h2 style="color:#fff;font-size:18px;margin:0 0 10px;font-weight:800;">Seu Convite Está Pronto!</h2>
+        <p style="color:#cbd5e1;font-size:14px;line-height:1.6;margin:0 0 16px;">
+          Confirmamos seu pagamento do Super Duolingo 1 ano.<br>
+          Toque no botão abaixo para receber seu link de ativação imediata no WhatsApp:
+        </p>
+        <a href="https://wa.me/5521992936790?text=${encodeURIComponent(`Olá Erick! Acabei de pagar pelo Super Duolingo (Pedido: ${orderNsu || 'Confirmado'}, E-mail: ${buyerEmail}) e quero receber meu convite agora!`)}"
+           target="_blank"
+           style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;font-weight:bold;padding:16px 24px;border-radius:10px;text-decoration:none;font-size:15px;box-shadow:0 8px 24px rgba(37,211,102,0.4);width:100%;max-width:390px;">
+          <span>💬</span> RECEBER CONVITE NO WHATSAPP AGORA
+        </a>
+      </div>
       `}
 
       <div style="text-align:left;background:#121422;border:1px solid #1f233b;border-radius:12px;padding:20px;margin-top:16px;">

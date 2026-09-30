@@ -53,9 +53,10 @@ module.exports = async function handler(req, res) {
         handle: INFINITEPAY_HANDLE,
         items: [{ quantity: 1, price: item.priceCents, description: item.title }],
         order_nsu,
-        redirect_url: `${PUBLIC_URL}/api/entrega?pagamento=aprovado&produto=${produto}&order_nsu=${order_nsu}`,
+        redirect_url: `${PUBLIC_URL}/api/entrega?pagamento=aprovado&produto=${produto}&order_nsu=${order_nsu}&email=${encodeURIComponent(email)}`,
         webhook_url: `${PUBLIC_URL}/api/webhook`,
         customer: { email },
+        metadata: { produto, email, order_nsu },
       }),
     });
 
