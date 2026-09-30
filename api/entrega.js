@@ -2,6 +2,7 @@
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
 const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
 const { getOrder, setOrderStatus, popStockAccount, recordSale } = require("../lib/store");
+const { sendEmail, emailMuseIa, emailFlowAiPro } = require("../lib/email");
 
 module.exports = async function handler(req, res) {
   const status = req.query.pagamento || "aprovado";
@@ -85,6 +86,18 @@ module.exports = async function handler(req, res) {
       }
     } catch (ePop) {
       console.error("Erro na entrega imediata em api/entrega:", ePop.message);
+    }
+
+    // Dispara envio de e-mail complementar caso Resend esteja configurado
+    if (buyerEmail && deliveredItem && !deliveredItem.startsWith("⚠️")) {
+      try {
+        if (produtoKey === "muse-ia" && deliveredItem.includes(";")) {
+          const [l, s] = deliveredItem.split(";");
+          sendEmail(buyerEmail, "🚀 Seu acesso à MUSE IA foi liberado!", emailMuseIa({ login: l, senha: s })).catch(() => {});
+        } else if (produtoKey === "flow-ai-pro") {
+          sendEmail(buyerEmail, "⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!", emailFlowAiPro({ link: deliveredItem })).catch(() => {});
+        }
+      } catch (errM) {}
     }
   }
 
@@ -384,6 +397,10 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
       </a>
     </div>
 
+    <div style="margin-top:20px;background:rgba(79,70,229,0.12);border:1px solid rgba(79,70,229,0.3);border-radius:10px;padding:14px;font-size:13px;color:#cbd5e1;line-height:1.6;">
+      💡 <b>Dica Importante:</b> Se fechar esta página, você pode consultar seus acessos e links a qualquer momento na página <a href="/meus-pedidos.html?email=${encodeURIComponent(buyerEmail)}" style="color:#38bdf8;font-weight:bold;text-decoration:underline;">Meus Acessos</a> usando seu e-mail.
+    </div>
+
     ${SITE_URL ? `
       <p style="margin-top:20px;font-size:13px;">
         <a href="${SITE_URL}" style="color:#38bdf8;text-decoration:none;">← Voltar à loja principal</a>
@@ -392,6 +409,12 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
   </div>
 
   <script>
+    try {
+      if ('${buyerEmail}') {
+        localStorage.setItem('orvexa_buyer_email', '${buyerEmail}');
+      }
+    } catch(e) {}
+
     function copiar(id, btn) {
       var input = document.getElementById(id);
       if (!input) return;

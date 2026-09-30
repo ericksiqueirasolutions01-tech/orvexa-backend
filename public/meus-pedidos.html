@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Meus Acessos & Pedidos — Orvexa Digital</title>
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="/icon-192.png">
+  <style>
+    :root {
+      --bg: #090a10;
+      --card: #121422;
+      --border: #1f233b;
+      --primary: #4f46e5;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --blue: #38bdf8;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 30px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wrapper {
+      width: 100%;
+      max-width: 620px;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 16px;
+    }
+    .brand-title {
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #fff; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0 0 8px;
+      color: #fff;
+    }
+    p.sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 20px;
+      line-height: 1.5;
+    }
+    .field {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    input[type="email"] {
+      width: 100%;
+      background: #090a10;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="email"]:focus {
+      border-color: var(--primary);
+    }
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), #9333ea);
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Resultados das Compras */
+    .purchase-card {
+      background: #0d0f1a;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 18px;
+      text-align: left;
+    }
+    .purchase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    .purchase-title {
+      font-weight: 800;
+      font-size: 16px;
+      color: #fff;
+      margin: 0 0 4px;
+    }
+    .purchase-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .badge-status {
+      display: inline-block;
+      background: rgba(34,197,94,0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34,197,94,0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .credentials-box {
+      background: #141727;
+      border: 1px solid #282d49;
+      border-radius: 10px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+    .cred-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .cred-row:last-child { margin-bottom: 0; }
+    .cred-input {
+      flex: 1;
+      background: #090a10;
+      border: 1px solid #282d49;
+      color: #38bdf8;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .btn-copy-cred {
+      background: #282d49;
+      color: #fff;
+      border: 0;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .btn-action-main {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, #4f46e5, #9333ea);
+      color: #fff;
+      font-weight: bold;
+      padding: 14px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 15px;
+      box-shadow: 0 8px 20px rgba(79,70,229,0.35);
+      margin: 10px 0;
+    }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      font-weight: bold;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+    }
+    .tutorial-box {
+      background: #090a10;
+      border: 1px solid #1f233b;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+    .tutorial-box ol {
+      margin: 6px 0 0;
+      padding-left: 18px;
+    }
+    .support-footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 24px;
+    }
+    .support-footer a { color: #38bdf8; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="top-bar">
+      <a href="/" class="brand">
+        <div class="brand-icon">O</div>
+        <span class="brand-title">Orvexa Digital</span>
+      </a>
+      <a href="/" class="back-link">← Voltar à Loja</a>
+    </div>
+
+    <div class="card">
+      <div style="margin-bottom:12px;">
+        <span style="background:rgba(79,70,229,0.15);color:#818cf8;border:1px solid rgba(79,70,229,0.3);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:bold;letter-spacing:0.5px;">CONSULTA INSTANTÂNEA</span>
+      </div>
+      <h1>Meus Acessos & Compras</h1>
+      <p class="sub">Comprou na Orvexa e precisa ver seu login, senha ou link de ativação novamente? Digite o mesmo e-mail que você usou na compra.</p>
+
+      <form id="searchForm">
+        <div class="field">
+          <label for="emailInput">Seu E-mail da Compra:</label>
+          <input type="email" id="emailInput" required placeholder="exemplo: seuemail@gmail.com" autocomplete="email">
+        </div>
+        <button type="submit" class="btn-submit" id="btnSearch">
+          <span>🔍</span> Consultar Meus Acessos
+        </button>
+      </form>
+
+      <div id="statusMsg" style="margin-top:16px;display:none;"></div>
+      <div id="resultsList" style="margin-top:20px;"></div>
+    </div>
+
+    <div class="support-footer">
+      <p>Precisa de suporte imediato ou ajuda para ativar? <a href="https://wa.me/5521992936790" target="_blank">Fale com o Erick no WhatsApp</a></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("searchForm");
+    const emailInput = document.getElementById("emailInput");
+    const btnSearch = document.getElementById("btnSearch");
+    const statusMsg = document.getElementById("statusMsg");
+    const resultsList = document.getElementById("resultsList");
+
+    // Preenche automaticamente caso salvo no navegador ou vindo por parâmetro
+    window.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramEmail = urlParams.get("email");
+      const storedEmail = localStorage.getItem("orvexa_buyer_email");
+      const emailToUse = paramEmail || storedEmail || "";
+      if (emailToUse) {
+        emailInput.value = emailToUse;
+        consultarAcessos(emailToUse);
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      if (!email) return;
+      consultarAcessos(email);
+    });
+
+    async function consultarAcessos(email) {
+      btnSearch.disabled = true;
+      btnSearch.innerHTML = "<span>⏳</span> Localizando seus acessos...";
+      statusMsg.style.display = "none";
+      resultsList.innerHTML = "";
+
+      try {
+        const res = await fetch(`/api/meus-pedidos?email=${encodeURIComponent(email)}`);
+        const data = await res.json();
+
+        btnSearch.disabled = false;
+        btnSearch.innerHTML = "<span>🔍</span> Consultar Meus Acessos";
+
+        if (!res.ok || !data.ok) {
+          statusMsg.style.display = "block";
+          statusMsg.innerHTML = `<div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);padding:14px;border-radius:10px;color:#fca5a5;font-size:14px;">${data.error || "Não foi possível consultar os pedidos."}</div>`;
+          return;
+        }
+
+        if (!data.compras || data.compras.length === 0) {
+          statusMsg.style.display = "block";
+          statusMsg.innerHTML = `
+            <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.3);padding:16px;border-radius:10px;color:#fef08a;font-size:14px;text-align:left;">
+              <p style="margin:0 0 8px;font-weight:bold;">Nenhuma compra encontrada para ${email}</p>
+              <p style="margin:0 0 12px;font-size:13px;color:#cbd5e1;line-height:1.5;">Verifique se você digitou exatamente o mesmo e-mail informado no checkout da InfinitePay. Se tiver dúvidas, clique abaixo:</p>
+              <a href="https://wa.me/5521992936790?text=${encodeURIComponent(`Olá Erick! Fiz um pagamento no site com o e-mail ${email} e gostaria de localizar meu acesso.`)}" target="_blank" style="display:inline-block;background:#25d366;color:#fff;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:bold;">
+                💬 Falar com Suporte no WhatsApp
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        // Salva no localStorage para consultas futuras
+        localStorage.setItem("orvexa_buyer_email", email);
+
+        statusMsg.style.display = "block";
+        statusMsg.innerHTML = `<div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);padding:10px 14px;border-radius:8px;color:#4ade80;font-size:13px;font-weight:bold;">✅ Encontramos ${data.compras.length} acesso(s) liberado(s) para sua conta!</div>`;
+
+        resultsList.innerHTML = data.compras.map(renderCompra).join("");
+      } catch (err) {
+        btnSearch.disabled = false;
+        btnSearch.innerHTML = "<span>🔍</span> Consultar Meus Acessos";
+        statusMsg.style.display = "block";
+        statusMsg.innerHTML = `<div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);padding:14px;border-radius:10px;color:#fca5a5;font-size:14px;">Erro de conexão. Verifique sua internet e tente novamente.</div>`;
+      }
+    }
+
+    function renderCompra(c, idx) {
+      const dataFmt = new Date(c.data).toLocaleString("pt-BR");
+      const isMuse = c.produto === "muse-ia";
+      const isGemini = c.produto === "flow-ai-pro";
+
+      let contentHtml = "";
+
+      if (isMuse) {
+        let l = "", s = "";
+        if (c.conta_entregue && c.conta_entregue.includes(";")) {
+          const parts = c.conta_entregue.split(";");
+          l = parts[0].trim();
+          s = parts[1].trim();
+        } else {
+          l = c.conta_entregue || "";
+        }
+
+        contentHtml = `
+          <div class="credentials-box">
+            <div style="font-size:11px;color:#818cf8;font-weight:bold;margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;">DADOS DE LOGIN MUSE IA</div>
+            <div class="cred-row">
+              <span style="font-size:12px;color:#94a3b8;min-width:50px;">E-mail:</span>
+              <input type="text" readonly value="${l}" id="muse-l-${idx}" class="cred-input">
+              <button class="btn-copy-cred" onclick="copiar('muse-l-${idx}', this)">Copiar</button>
+            </div>
+            <div class="cred-row">
+              <span style="font-size:12px;color:#94a3b8;min-width:50px;">Senha:</span>
+              <input type="text" readonly value="${s}" id="muse-s-${idx}" class="cred-input">
+              <button class="btn-copy-cred" onclick="copiar('muse-s-${idx}', this)">Copiar</button>
+            </div>
+          </div>
+          <div class="tutorial-box">
+            <b>🔐 Como Entrar na Conta:</b>
+            <ol>
+              <li>Abra uma <b>Janela Anônima</b> no seu navegador.</li>
+              <li>Acesse <a href="https://muse.ai/" target="_blank" style="color:#38bdf8;">https://muse.ai/</a></li>
+              <li>Clique em <b>Entrar com e-mail</b> (não clique em Google).</li>
+              <li>Informe o e-mail e senha copiados acima.</li>
+              <li>Pronto! Conta com <b>1 bilhão de tokens</b> ativa!</li>
+            </ol>
+          </div>
+        `;
+      } else if (isGemini) {
+        const link = c.conta_entregue || "";
+        contentHtml = `
+          <div style="margin:14px 0;text-align:center;">
+            <a href="${link}" target="_blank" class="btn-action-main">
+              👉 CLIQUE AQUI PARA ATIVAR O GEMINI PRO (18 MESES)
+            </a>
+            <div class="credentials-box" style="margin-top:10px;">
+              <div class="cred-row">
+                <input type="text" readonly value="${link}" id="gemini-l-${idx}" class="cred-input" style="font-size:12px;">
+                <button class="btn-copy-cred" onclick="copiar('gemini-l-${idx}', this)">Copiar Link</button>
+              </div>
+            </div>
+          </div>
+          <div class="tutorial-box">
+            <b>📋 Passo a Passo de Ativação:</b>
+            <ol>
+              <li>Conecte-se na sua conta Gmail pessoal.</li>
+              <li>Clique no botão acima ou abra o link exclusivo.</li>
+              <li>No Google One, confirme a ativação do plano de 18 meses.</li>
+              <li>O Gemini Advanced e o Google Flow já estarão liberados!</li>
+            </ol>
+            <p style="margin:8px 0 0;font-size:12px;">🎬 <a href="https://www.youtube.com/shorts/6yournVyUWI" target="_blank" style="color:#38bdf8;font-weight:bold;">Assista ao tutorial rápido em vídeo</a></p>
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="credentials-box">
+            <p style="margin:0 0 4px;font-size:12px;color:#94a3b8;">Acesso Entregue:</p>
+            <p style="margin:0;font-family:monospace;word-break:break-all;color:#38bdf8;">${c.conta_entregue}</p>
+          </div>
+        `;
+      }
+
+      const zapMsg = encodeURIComponent(`Olá Erick! Preciso de suporte com o meu pedido ${c.order_nsu} (${c.produto_nome}) comprado com o e-mail ${c.email}.`);
+
+      return `
+        <div class="purchase-card">
+          <div class="purchase-header">
+            <div>
+              <h3 class="purchase-title">${c.produto_nome}</h3>
+              <span class="purchase-date">Comprado em ${dataFmt} &bull; Pedido: ${c.order_nsu}</span>
+            </div>
+            <span class="badge-status">✅ Acesso Liberado</span>
+          </div>
+
+          ${contentHtml}
+
+          <a href="https://wa.me/5521992936790?text=${zapMsg}" target="_blank" class="btn-whatsapp">
+            💬 Dúvidas ou Suporte com este Pedido no WhatsApp
+          </a>
+        </div>
+      `;
+    }
+
+    function copiar(id, btn) {
+      const input = document.getElementById(id);
+      if (!input) return;
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value);
+      const orig = btn.textContent;
+      btn.textContent = "✅ Copiado!";
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    }
+  </script>
+</body>
+</html>
