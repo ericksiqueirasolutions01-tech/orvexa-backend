@@ -1,559 +1,3186 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prime Digital — Catálogo de IAs</title>
-<meta name="description" content="MUSE IA (1 bilhão de tokens) e Google Flow + AI Pro (18 meses). Pagamento único, acesso imediato, suporte no WhatsApp.">
-<meta property="og:title" content="Prime Digital — Catálogo de IAs">
-<meta property="og:description" content="MUSE IA e Google Flow + AI Pro. Pagamento único, acesso imediato.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="assets/og-image.jpg">
-<link rel="icon" href="assets/logo-prime.png">
-<style>
-:root{--red:#e50914;--bg:#141414;--bg2:#181818;--txt:#fff;--mut:#b3b3b3}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-x:hidden}
-img{display:block;max-width:100%}
-a{color:inherit}
-/* ---------- NAV ---------- */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 4%;background:linear-gradient(180deg,rgba(0,0,0,.75),transparent);transition:background .3s}
-.nav.scrolled{background:#141414}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;letter-spacing:2px;font-size:17px}
-.brand img{width:38px;height:38px;border-radius:50%}
-.nav-links{display:flex;gap:20px;font-size:14px}
-.nav-links a{text-decoration:none;color:#e5e5e5}
-.nav-links a:hover{color:#fff}
-.nav-wa{margin-left:auto;background:var(--red);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:9px 18px;border-radius:6px;white-space:nowrap}
-/* ---------- BILLBOARD ---------- */
-.billboard{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:url("assets/muse-card-bg.jpg") center/cover no-repeat}
-.billboard::before{content:"";position:absolute;inset:0;background:linear-gradient(77deg,rgba(0,0,0,.9) 25%,rgba(0,0,0,.4) 55%,transparent 78%)}
-.billboard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.3) 0%,transparent 30%,transparent 55%,var(--bg) 100%)}
-.bb-content{position:relative;z-index:2;padding:0 4% 10vh;max-width:660px}
-.eyebrow{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:3px;font-size:14px;margin-bottom:16px}
-.eyebrow .n{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--red);border-radius:4px;font-size:18px;letter-spacing:0}
-.bb-logo{width:min(320px,58vw);filter:drop-shadow(0 8px 24px rgba(0,0,0,.75));margin-bottom:16px}
-.bb-tag{font-size:clamp(16px,2.4vw,22px);color:#f2f2f2;margin-bottom:12px;line-height:1.45;text-shadow:0 2px 12px rgba(0,0,0,.8)}
-.bb-meta{display:flex;gap:14px;align-items:center;font-size:14px;color:#d8d8d8;margin-bottom:24px;flex-wrap:wrap;text-shadow:0 2px 10px rgba(0,0,0,.8)}
-.bb-meta .top10{color:#ff6b6b;font-weight:800}
-.bb-actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font-weight:800;font-size:16px;padding:13px 30px;border-radius:6px;text-decoration:none;color:#fff}
-.btn-red{background:var(--red)}
-.btn-red:hover{background:#f6121d}
-.btn-gray{background:rgba(109,109,110,.7)}
-.btn-gray:hover{background:rgba(109,109,110,.45)}
-.btn-wa{background:#25d366}
-/* ---------- ROWS ---------- */
-.row{position:relative;margin:30px 0}
-.row>h2{font-size:clamp(17px,2.4vw,22px);font-weight:700;margin:0 4% 4px}
-.track{display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;padding:16px 4%;margin:0;scrollbar-width:none}
-.track::-webkit-scrollbar{display:none}
-.card{position:relative;flex:0 0 clamp(230px,27vw,330px);aspect-ratio:16/9;border-radius:8px;overflow:hidden;cursor:pointer;background:#222;transition:transform .25s}
-.card>img.bg{width:100%;height:100%;object-fit:cover}
-.card-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20%}
-.card-logo img{max-height:72%;filter:drop-shadow(0 6px 18px rgba(0,0,0,.85))}
-.card-hover{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.94));opacity:0;transition:opacity .25s}
-.card:hover{transform:scale(1.07);z-index:5}
-.card:hover .card-hover{opacity:1}
-.ch-actions{display:flex;gap:8px;margin-bottom:8px}
-.ch-btn{width:36px;height:36px;border-radius:50%;border:2px solid #fff;background:#fff;color:#000;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ch-btn.ghost{background:rgba(0,0,0,.4);color:#fff}
-.ch-meta b{display:block;font-size:14px}
-.ch-meta span{font-size:12px;color:var(--mut)}
-.play-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.play-big span{width:64px;height:64px;border-radius:50%;background:rgba(229,9,20,.92);display:flex;align-items:center;justify-content:center;font-size:24px;padding-left:4px}
-.row-arrow{position:absolute;top:34px;bottom:16px;width:4%;min-width:34px;z-index:6;border:0;background:rgba(20,20,20,.55);color:#fff;font-size:34px;cursor:pointer;opacity:0;transition:opacity .2s;padding:0}
-.row:hover .row-arrow{opacity:1}
-.row-arrow.left{left:0;border-radius:0 8px 8px 0}
-.row-arrow.right{right:0;border-radius:8px 0 0 8px}
-/* ---------- PROOFS ---------- */
-.pcard{flex:0 0 188px;border-radius:8px;overflow:hidden;background:var(--bg2)}
-.pcard img{width:100%;aspect-ratio:9/12;object-fit:cover;object-position:top}
-.pcard p{font-size:12px;color:var(--mut);padding:10px;min-height:54px;line-height:1.4}
-/* ---------- FAQ ---------- */
-.faq{padding:44px 4%;max-width:900px;margin:0 auto}
-.faq h2{text-align:center;margin-bottom:24px;font-size:clamp(22px,4vw,32px)}
-.faq-item{background:#2d2d2d;margin-bottom:8px;border-radius:6px;overflow:hidden}
-.faq-q{width:100%;text-align:left;background:none;border:0;color:#fff;font-size:17px;padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.faq-q .pm{font-size:26px;color:var(--mut);flex:0 0 auto}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.faq-a p{padding:0 24px 20px;color:#d8d8d8;font-size:15px;line-height:1.6}
-.faq-item.open .faq-a{max-height:260px}
-/* ---------- FINAL ---------- */
-.final{text-align:center;padding:70px 4%;border-top:8px solid #222}
-.final h2{font-size:clamp(24px,5vw,40px);margin-bottom:12px}
-.final>p{color:var(--mut);margin-bottom:26px}
-.final .bb-actions{justify-content:center}
-.lookup{max-width:520px;margin:36px auto 0;background:var(--bg2);padding:26px;border-radius:8px;text-align:left}
-.lookup h3{margin-bottom:6px}
-.lookup>p{color:var(--mut);font-size:14px;margin-bottom:14px}
-.lookup input{width:100%;padding:13px;border-radius:6px;border:1px solid #444;background:#0f0f0f;color:#fff;font-size:15px;margin-bottom:12px}
-.lookup .btn{width:100%;justify-content:center}
-#lookupResult{font-size:14px;color:#d8d8d8;margin-top:6px}
-/* ---------- FOOTER ---------- */
-footer{padding:30px 4%;color:#757575;font-size:13px;line-height:1.7}
-/* ---------- MODALS ---------- */
-.mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:4vh 12px;overflow-y:auto}
-.mbg.open{display:flex}
-.modal{background:var(--bg2);border-radius:10px;max-width:860px;width:100%;overflow:hidden;position:relative;animation:pop .25s}
-@keyframes pop{from{transform:scale(.96);opacity:0}}
-.m-hero{position:relative;aspect-ratio:16/8;background-size:cover;background-position:center;min-height:280px}
-.m-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,var(--bg2))}
-.m-hero img.mlogo{position:absolute;left:5%;bottom:10%;z-index:2;width:min(300px,52%);filter:drop-shadow(0 8px 22px rgba(0,0,0,.8))}
-.m-close{position:absolute;top:14px;right:14px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:#181818;color:#fff;font-size:18px;cursor:pointer}
-.m-body{padding:6px 5% 34px}
-.m-body h3{font-size:26px;margin-bottom:6px}
-.m-tag{color:#d5d5d5;margin-bottom:6px;line-height:1.5}
-.m-price{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px}
-.m-price b{font-size:30px}
-.m-price span{color:var(--mut);font-size:14px}
-.m-bens{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:18px 0;list-style:none}
-.m-bens li{font-size:14px;color:#e8e8e8;padding-left:22px;position:relative;line-height:1.45}
-.m-bens li::before{content:"✔";position:absolute;left:0;color:var(--red);font-weight:800}
-.m-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-.m-tut{color:var(--mut);font-size:13px;margin-top:16px;line-height:1.6}
-.m-tut a{color:#fff}
-/* checkout */
-.co{max-width:460px;padding:34px 30px}
-.co h3{font-size:22px;margin-bottom:6px}
-.co .sub{color:var(--mut);font-size:14px;margin-bottom:8px}
-.co label{display:block;font-size:13px;color:var(--mut);margin:14px 0 6px}
-.co input{width:100%;padding:13px;border-radius:6px;border:1px solid #444;background:#0f0f0f;color:#fff;font-size:15px}
-.co .btn{width:100%;justify-content:center;margin-top:22px}
-.err{display:none;background:#5c1114;color:#ffb4a9;padding:10px 14px;border-radius:6px;font-size:14px;margin-top:14px}
-.spin{display:none;text-align:center;color:var(--mut);margin-top:14px;font-size:14px}
-.okmsg{display:none;text-align:center;padding:20px 0;font-size:15px}
-.secure{margin-top:14px;font-size:12px;color:var(--mut);text-align:center}
-.order{background:#0f0f0f;border:1px solid #333;border-radius:6px;padding:10px 14px;margin-top:8px;font-size:14px}
-/* video modal */
-.vmodal{max-width:920px;background:#000}
-.vmodal video{width:100%;aspect-ratio:16/9;display:block;background:#000}
-@media(max-width:700px){
-  .nav-links{display:none}
-  .m-bens{grid-template-columns:1fr}
-  .row-arrow{display:none}
-  .billboard{min-height:80vh}
-  .brand{font-size:14px}
-}
-</style>
-</head>
-<body>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORVEXA PRIME — Ferramentas Profissionais de Inteligência Artificial</title>
+  <meta name="description" content="Tenha acesso às principais IAs sem complicação. MUSE IA com 1 bilhão de tokens e Google Flow + AI Pro por 18 meses. Pagamento único, acesso imediato e suporte humanizado no WhatsApp.">
+  <meta property="og:title" content="ORVEXA PRIME — Ferramentas Profissionais de Inteligência Artificial">
+  <meta property="og:description" content="MUSE IA e Google Flow + AI Pro. Pagamento único, liberação imediata e suporte brasileiro via WhatsApp.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/og-image.jpg">
+  <meta name="theme-color" content="#07090D">
+  <link rel="icon" type="image/png" href="assets/logo-prime.png">
+  <link rel="apple-touch-icon" href="assets/logo-prime.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
-<nav class="nav" id="nav">
-  <a class="brand" href="#topo"><img src="assets/logo-prime.png" alt="Prime Digital">PRIME DIGITAL</a>
-  <div class="nav-links">
-    <a href="#topo">Início</a>
-    <a href="#catalogo">Catálogo</a>
-    <a href="#provas">Prova social</a>
-    <a href="#duvidas">Dúvidas</a>
-  </div>
-  <a class="nav-wa" id="navWa" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
-</nav>
-
-<header class="billboard" id="topo">
-  <div class="bb-content">
-    <div class="eyebrow"><span class="n">P</span>ORIGINAL PRIME DIGITAL</div>
-    <img class="bb-logo" src="assets/logo-muse.png" alt="MUSE IA">
-    <p class="bb-tag">A IA da Meta que chegou para revolucionar. 1 bilhão de tokens para criar imagens, vídeos, textos e muito mais.</p>
-    <div class="bb-meta"><span class="top10">#1 em IAs hoje</span><span>2026</span><span>Pagamento único</span><span>Acesso imediato</span></div>
-    <div class="bb-actions">
-      <button class="btn btn-red" data-checkout="muse-ia" data-name="MUSE IA">▶ Quero agora</button>
-      <button class="btn btn-gray" data-detail="muse-ia">ⓘ Mais informações</button>
-    </div>
-  </div>
-</header>
-
-<main>
-  <!-- CATÁLOGO -->
-  <section class="row" id="catalogo">
-    <h2>Catálogo</h2>
-    <button class="row-arrow left" data-scroll="-1" aria-label="Anterior">‹</button>
-    <div class="track">
-      <div class="card" data-detail="muse-ia">
-        <img class="bg" src="assets/muse-card-bg.jpg" alt="MUSE IA" loading="lazy">
-        <div class="card-logo"><img src="assets/logo-muse.png" alt="MUSE IA" loading="lazy"></div>
-        <div class="card-hover">
-          <div class="ch-actions">
-            <button class="ch-btn" data-checkout="muse-ia" data-name="MUSE IA" title="Quero esse">▶</button>
-            <button class="ch-btn ghost" data-detail="muse-ia" title="Detalhes">ⓘ</button>
-          </div>
-          <div class="ch-meta"><b>MUSE IA</b><span>R$ 59,99 • pagamento único</span></div>
-        </div>
-      </div>
-      <div class="card" data-detail="flow-ai-pro">
-        <img class="bg" src="assets/google-card-bg.jpg" alt="Google Flow + AI Pro" loading="lazy">
-        <div class="card-logo"><img src="assets/logo-gemini.png" alt="Google Flow + AI Pro" loading="lazy"></div>
-        <div class="card-hover">
-          <div class="ch-actions">
-            <button class="ch-btn" data-checkout="flow-ai-pro" data-name="Google Flow + AI Pro" title="Quero esse">▶</button>
-            <button class="ch-btn ghost" data-detail="flow-ai-pro" title="Detalhes">ⓘ</button>
-          </div>
-          <div class="ch-meta"><b>Google Flow + AI Pro</b><span>R$ 37,00 • pagamento único</span></div>
-        </div>
-      </div>
-    </div>
-    <button class="row-arrow right" data-scroll="1" aria-label="Próximo">›</button>
-  </section>
-
-  <!-- VÍDEO -->
-  <section class="row">
-    <h2>🎬 Criado pela MUSE IA</h2>
-    <div class="track">
-      <div class="card" data-video>
-        <img class="bg" src="assets/demo-muse-ia-poster.jpg" alt="Vídeo criado pela MUSE IA" loading="lazy">
-        <div class="play-big"><span>▶</span></div>
-        <div class="card-hover">
-          <div class="ch-meta"><b>Vídeo cinematográfico</b><span>Gerado 100% por inteligência artificial</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROVA SOCIAL -->
-  <section class="row" id="provas">
-    <h2>⭐ Quem comprou, aprovou</h2>
-    <button class="row-arrow left" data-scroll="-1" aria-label="Anterior">‹</button>
-    <div class="track">
-      <div class="pcard"><img src="assets/prova-grupo-1.jpg" alt="Prova 1" loading="lazy"><p>Grupo CLUBE PRIME — clientes trocando resultados</p></div>
-      <div class="pcard"><img src="assets/prova-entrega-2.jpg" alt="Prova 2" loading="lazy"><p>Entrega feita no WhatsApp, cliente ativado</p></div>
-      <div class="pcard"><img src="assets/prova-entrega-3.jpg" alt="Prova 3" loading="lazy"><p>Acesso liberado e cliente usando na hora</p></div>
-      <div class="pcard"><img src="assets/prova-whats-1.jpg" alt="Prova 4" loading="lazy"><p>Conversa real: dúvida respondida, venda fechada</p></div>
-      <div class="pcard"><img src="assets/prova-whats-2.jpg" alt="Prova 5" loading="lazy"><p>Atendimento e entrega pelo WhatsApp</p></div>
-      <div class="pcard"><img src="assets/prova-whats-3.jpg" alt="Prova 6" loading="lazy"><p>Suporte pós-venda com a equipe</p></div>
-    </div>
-    <button class="row-arrow right" data-scroll="1" aria-label="Próximo">›</button>
-  </section>
-
-  <!-- DÚVIDAS -->
-  <section class="faq" id="duvidas">
-    <h2>Perguntas frequentes</h2>
-    <div class="faq-item">
-      <button class="faq-q">O pagamento é mensal?<span class="pm">+</span></button>
-      <div class="faq-a"><p>Não. O pagamento é <b>único</b>, via InfinitePay (Pix ou cartão). Sem mensalidade e sem renovação automática.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">Como funcionam os tokens da MUSE IA?<span class="pm">+</span></button>
-      <div class="faq-a"><p>Sua conta já vem com <b>1 bilhão de tokens</b> inclusos. Quando precisar de mais, a recarga é feita com o nosso suporte pelo WhatsApp.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">O que está incluso no Google AI Pro?<span class="pm">+</span></button>
-      <div class="faq-a"><p><b>5 TB</b> de armazenamento no Google Drive + <b>1.000 créditos mensais</b> do Google Flow, válidos por <b>18 meses</b>.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">Preciso enviar minha senha do Google?<span class="pm">+</span></button>
-      <div class="faq-a"><p>Não. A ativação do Flow + AI Pro é feita <b>na sua própria conta Google</b> — você nunca compartilha sua senha.</p></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q">Como recebo meu acesso?<span class="pm">+</span></button>
-      <div class="faq-a"><p>Assim que o pagamento é confirmado, você recebe o <b>passo a passo de ativação</b> + suporte no WhatsApp <b id="faqWaNum">(21) 99293-6790</b>.</p></div>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section class="final">
-    <h2>Pronto para maratonar o futuro?</h2>
-    <p>Pagamento único. Sem mensalidade. Suporte no WhatsApp.</p>
-    <div class="bb-actions">
-      <button class="btn btn-red" data-checkout="muse-ia" data-name="MUSE IA">🔥 Quero a MUSE IA — R$ 59,99</button>
-      <a class="btn btn-wa" id="finalWa" href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
-    </div>
-    <div class="lookup">
-      <h3>🔍 Meus acessos</h3>
-      <p>Já comprou? Digite o e-mail usado na compra para ver seus pedidos.</p>
-      <input id="lookupEmail" type="email" placeholder="Seu e-mail" autocomplete="email">
-      <button class="btn btn-gray" id="lookupBtn">Consultar</button>
-      <div id="lookupResult"></div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <p><b style="color:#b3b3b3">PRIME DIGITAL</b> — CONHECIMENTO QUE TRANSFORMA</p>
-  <p>Oferta independente. Google, Gemini e Muse são marcas de seus respectivos titulares.</p>
-  <p>© 2026 Prime Digital — Todos os direitos reservados.</p>
-</footer>
-
-<!-- MODAL DETALHE -->
-<div class="mbg" id="detailBg" role="dialog" aria-modal="true">
-  <div class="modal">
-    <button class="m-close" data-close="detailBg">✕</button>
-    <div class="m-hero" id="dHero"><img class="mlogo" id="dLogo" src="" alt=""></div>
-    <div class="m-body">
-      <h3 id="dName"></h3>
-      <p class="m-tag" id="dTag"></p>
-      <div class="m-price" id="dPrice"></div>
-      <ul class="m-bens" id="dBens"></ul>
-      <div class="m-actions">
-        <button class="btn btn-red" id="dCta">🔥 Quero esse</button>
-      </div>
-      <p class="m-tut" id="dTut"></p>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL VÍDEO -->
-<div class="mbg" id="videoBg" role="dialog" aria-modal="true">
-  <div class="modal vmodal">
-    <button class="m-close" data-close="videoBg">✕</button>
-    <video id="dVideo" controls playsinline preload="metadata" poster="assets/demo-muse-ia-poster.jpg">
-      <source src="assets/demo-muse-ia.mp4" type="video/mp4">
-      Seu navegador não suporta a reprodução deste vídeo.
-    </video>
-  </div>
-</div>
-
-<!-- MODAL CHECKOUT -->
-<div class="mbg" id="modalBg" role="dialog" aria-modal="true">
-  <div class="modal co">
-    <button class="m-close" data-close="modalBg">✕</button>
-    <div id="modalForm">
-      <h3>Finalizar pedido</h3>
-      <p class="sub" id="modalSub"></p>
-      <label for="fEmail">Seu e-mail</label>
-      <input id="fEmail" type="email" placeholder="voce@email.com" autocomplete="email">
-      <label for="fPhone">Seu WhatsApp (com DDD)</label>
-      <input id="fPhone" type="tel" placeholder="(21) 99999-9999" autocomplete="tel">
-      <button class="btn btn-red" id="payBtn">Continuar para o pagamento →</button>
-      <div class="err" id="mErr"></div>
-      <div class="spin" id="mSpin">Gerando seu link de pagamento seguro…</div>
-      <p class="secure">🔒 Pagamento processado pela InfinitePay (Pix ou cartão).</p>
-    </div>
-    <div class="okmsg" id="mOk">✅ Pedido criado!<br>Redirecionando para o pagamento…</div>
-  </div>
-</div>
-<script>
-const CONFIG = {
-  BACKEND_URL: (window.location.origin && window.location.origin.startsWith("http") && !window.location.origin.includes("localhost")) ? window.location.origin : "https://www.orvexaprime.com.br",
-  WHATSAPP_NUMBER: "5521992936790",
-  WHATSAPP_DISPLAY: "(21) 99293-6790"
-};
-const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
-
-var PRODUCTS = {
-  "muse-ia": {
-    nome: "MUSE IA",
-    tag: "A IA da Meta que chegou para revolucionar.",
-    preco: "R$ 59,99",
-    bg: "assets/muse-card-bg.jpg",
-    logo: "assets/logo-muse.png",
-    beneficios: [
-      "Conta pronta com 1 bilhão de tokens inclusos",
-      "Cria imagens, edita e transforma fotos",
-      "Gera vídeos com inteligência artificial",
-      "Cria documentos, textos e conteúdos",
-      "Pesquisa na internet e raciocínio avançado",
-      "Agente de IA que executa tarefas sozinho",
-      "30+ efeitos de IA para Instagram",
-      "Recarga de tokens disponível com a equipe"
-    ],
-    entrega: "💬 Entrega com passo a passo de acesso e suporte no WhatsApp."
-  },
-  "flow-ai-pro": {
-    nome: "Google Flow + AI Pro",
-    tag: "18 meses de IA do Google na sua própria conta.",
-    preco: "R$ 37,00",
-    bg: "assets/google-card-bg.jpg",
-    logo: "assets/logo-gemini.png",
-    beneficios: [
-      "18 meses de Google AI Pro",
-      "Modelos Gemini Pro e Flash",
-      "Google Flow: 1.000 créditos mensais (Veo e Omni)",
-      "Nano Banana Pro — criar e editar imagens",
-      "Veo — vídeos com IA",
-      "NotebookLM, AI Studio e Antigravity",
-      "5 TB de armazenamento no Google Drive",
-      "Ativação na sua conta Google — sem enviar senha"
-    ],
-    entrega: "🔒 Você ativa na sua própria conta. Nenhuma senha compartilhada.",
-    tutorial: "https://www.youtube.com/shorts/6yournVyUWI"
-  }
-};
-
-(function(){
-  // WhatsApp links
-  ["navWa","finalWa"].forEach(function(id){
-    var el = document.getElementById(id);
-    if (el) el.href = WHATSAPP_URL;
-  });
-  var fn = document.getElementById("faqWaNum");
-  if (fn) fn.textContent = CONFIG.WHATSAPP_DISPLAY;
-
-  // Nav solid on scroll
-  var nav = document.getElementById("nav");
-  function onScroll(){ nav.classList.toggle("scrolled", window.scrollY > 40); }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
-  // Row arrows
-  document.querySelectorAll(".row-arrow").forEach(function(btn){
-    btn.addEventListener("click", function(){
-      var track = btn.parentElement.querySelector(".track");
-      var dir = parseInt(btn.getAttribute("data-scroll"), 10) || 1;
-      track.scrollBy({ left: dir * track.clientWidth * 0.8, behavior: "smooth" });
-    });
-  });
-
-  // ---------- Modals ----------
-  function openModal(id){
-    document.getElementById(id).classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function closeModal(id){
-    document.getElementById(id).classList.remove("open");
-    document.body.style.overflow = "";
-    if (id === "videoBg") { var v = document.getElementById("dVideo"); v.pause(); }
-  }
-  document.querySelectorAll(".mbg").forEach(function(bg){
-    bg.addEventListener("click", function(e){ if (e.target === bg) closeModal(bg.id); });
-  });
-  document.querySelectorAll("[data-close]").forEach(function(b){
-    b.addEventListener("click", function(){ closeModal(b.getAttribute("data-close")); });
-  });
-  document.addEventListener("keydown", function(e){
-    if (e.key === "Escape") document.querySelectorAll(".mbg.open").forEach(function(m){ closeModal(m.id); });
-  });
-
-  // ---------- Detail modal ----------
-  var dHero = document.getElementById("dHero"), dLogo = document.getElementById("dLogo"),
-      dName = document.getElementById("dName"), dTag = document.getElementById("dTag"),
-      dPrice = document.getElementById("dPrice"), dBens = document.getElementById("dBens"),
-      dCta = document.getElementById("dCta"), dTut = document.getElementById("dTut");
-  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","&lt;":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
-
-  function openDetail(id){
-    var p = PRODUCTS[id];
-    if (!p) return;
-    dHero.style.backgroundImage = "url('" + p.bg + "')";
-    dLogo.src = p.logo; dLogo.alt = p.nome;
-    dName.textContent = p.nome;
-    dTag.textContent = p.tag;
-    dPrice.innerHTML = "<b>" + esc(p.preco) + "</b><span>pagamento único</span>";
-    dBens.innerHTML = p.beneficios.map(function(b){ return "<li>" + esc(b) + "</li>"; }).join("");
-    dCta.setAttribute("data-checkout", id);
-    dCta.setAttribute("data-name", p.nome);
-    dTut.innerHTML = p.tutorial
-      ? '🎬 <a href="' + p.tutorial + '" target="_blank" rel="noopener">Ver tutorial de ativação</a><br>' + esc(p.entrega)
-      : esc(p.entrega);
-    openModal("detailBg");
-  }
-
-  // ---------- Checkout modal ----------
-  var modalBg = document.getElementById("modalBg"),
-      modalSub = document.getElementById("modalSub"),
-      fEmail = document.getElementById("fEmail"),
-      fPhone = document.getElementById("fPhone"),
-      payBtn = document.getElementById("payBtn"),
-      mErr = document.getElementById("mErr"),
-      mSpin = document.getElementById("mSpin"),
-      mOk = document.getElementById("mOk"),
-      modalForm = document.getElementById("modalForm"),
-      currentProduct = null, currentName = "", currentPrice = "";
-  var PRICES = { "muse-ia": "R$ 59,99", "flow-ai-pro": "R$ 37,00" };
-
-  function openCheckout(produto, nome){
-    currentProduct = produto; currentName = nome; currentPrice = PRICES[produto] || "";
-    modalSub.textContent = nome + " — " + currentPrice + " (pagamento único)";
-    mErr.style.display = "none"; mSpin.style.display = "none";
-    mOk.style.display = "none"; modalForm.style.display = "block";
-    openModal("modalBg");
-    setTimeout(function(){ fEmail.focus(); }, 150);
-  }
-  function showErr(msg){ mErr.textContent = msg; mErr.style.display = "block"; }
-  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
-
-  fPhone.addEventListener("input", function(){
-    var d = fPhone.value.replace(/\D/g,"").slice(0,11);
-    if (d.length > 6) fPhone.value = "("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
-    else if (d.length > 2) fPhone.value = "("+d.slice(0,2)+") "+d.slice(2);
-    else fPhone.value = d;
-  });
-
-  payBtn.addEventListener("click", function(){
-    var email = fEmail.value.trim();
-    var phone = fPhone.value.replace(/\D/g,"");
-    mErr.style.display = "none";
-    if (!validEmail(email)) return showErr("Digite um e-mail válido para receber seu acesso.");
-    if (phone.length < 10) return showErr("Digite seu WhatsApp com DDD (ex.: (21) 99999-9999).");
-    payBtn.disabled = true; mSpin.style.display = "block";
-    fetch(CONFIG.BACKEND_URL + "/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email, phone: phone, produto: currentProduct })
-    })
-    .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, j: j }; }); })
-    .then(function(res){
-      payBtn.disabled = false; mSpin.style.display = "none";
-      if (res.ok && res.j && res.j.checkout_url) {
-        modalForm.style.display = "none"; mOk.style.display = "block";
-        window.location.href = res.j.checkout_url;
-      } else {
-        showErr((res.j && (res.j.error || res.j.message)) || "Não foi possível gerar o pagamento. Tente novamente ou chame no WhatsApp.");
-      }
-    })
-    .catch(function(){
-      payBtn.disabled = false; mSpin.style.display = "none";
-      showErr("Falha de conexão. Verifique sua internet ou chame no WhatsApp: " + CONFIG.WHATSAPP_DISPLAY);
-    });
-  });
-
-  // ---------- Global click delegation ----------
-  document.addEventListener("click", function(e){
-    var co = e.target.closest("[data-checkout]");
-    if (co) { e.stopPropagation(); openCheckout(co.getAttribute("data-checkout"), co.getAttribute("data-name")); return; }
-    if (e.target.closest("[data-video]")) {
-      openModal("videoBg");
-      var v = document.getElementById("dVideo");
-      if (v.paused) v.play().catch(function(){});
-      return;
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & RESET (ORVEXA PRIME — SaaS DARK LUXURY)
+       ========================================================================== */
+    :root {
+      --bg: #07090D;
+      --bg-surface: #0D1117;
+      --bg-card: #111622;
+      --bg-card-hover: #151C2C;
+      --bg-glass: rgba(13, 17, 23, 0.75);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(99, 102, 241, 0.5);
+      
+      --accent-indigo: #6366F1;
+      --accent-indigo-hover: #4F46E5;
+      --accent-cyan: #38BDF8;
+      --accent-gradient: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+      --accent-gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(56, 189, 248, 0.15) 100%);
+      
+      --text-white: #FFFFFF;
+      --text-heading: #F8FAFC;
+      --text-body: #94A3B8;
+      --text-muted: #64748B;
+      
+      --success: #10B981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --whatsapp: #25D366;
+      --whatsapp-hover: #20BD5A;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px -10px rgba(99, 102, 241, 0.2);
     }
-    var dt = e.target.closest("[data-detail]");
-    if (dt) { openDetail(dt.getAttribute("data-detail")); }
-  });
 
-  // ---------- FAQ ----------
-  document.querySelectorAll(".faq-q").forEach(function(q){
-    q.addEventListener("click", function(){
-      var item = q.parentElement;
-      var wasOpen = item.classList.contains("open");
-      document.querySelectorAll(".faq-item.open").forEach(function(o){
-        o.classList.remove("open");
-        o.querySelector(".pm").textContent = "+";
-      });
-      if (!wasOpen) { item.classList.add("open"); q.querySelector(".pm").textContent = "−"; }
-    });
-  });
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  // ---------- Meus acessos ----------
-  var lookupBtn = document.getElementById("lookupBtn"),
-      lookupEmail = document.getElementById("lookupEmail"),
-      lookupResult = document.getElementById("lookupResult");
-  lookupBtn.addEventListener("click", function(){
-    var email = lookupEmail.value.trim();
-    lookupResult.innerHTML = "";
-    if (!validEmail(email)) { lookupResult.innerHTML = "<p>Digite um e-mail válido.</p>"; return; }
-    lookupResult.innerHTML = "<p>Buscando seus pedidos…</p>";
-    fetch(CONFIG.BACKEND_URL + "/api/meus-pedidos?email=" + encodeURIComponent(email))
-      .then(function(r){ return r.json(); })
-      .then(function(j){
-        var list = j.compras || j.pedidos || j.orders || j.data || (Array.isArray(j) ? j : null);
-        if (list && list.length) {
-          lookupResult.innerHTML = list.map(function(o){
-            var prod = esc(o.produto_nome || o.produto || o.product || o.item || "Pedido");
-            var status = esc(o.status || o.situacao || "Aprovado");
-            var data = o.data ? new Date(o.data).toLocaleDateString("pt-BR") : "";
-            var linkAtivo = o.conta_entregue && o.conta_entregue.startsWith("http") ? '<a href="' + esc(o.conta_entregue) + '" target="_blank" style="color:#e50914;font-weight:bold;text-decoration:underline;">👉 Abrir Link de Ativação</a>' : (o.conta_entregue ? '<code style="color:#e50914;font-size:13px;">' + esc(o.conta_entregue) + '</code>' : '');
-            return '<div class="order"><b>' + prod + "</b> — <span style='color:#e50914;font-weight:bold;'>" + status + "</span>" + (data ? '<br><small style="color:#757575">Data: ' + data + "</small>" : "") + (linkAtivo ? '<div style="margin-top:8px;padding:8px;background:rgba(229,9,20,0.08);border:1px solid rgba(229,9,20,0.25);border-radius:6px;">' + linkAtivo + '</div>' : "") + "</div>";
-          }).join("");
-        } else {
-          lookupResult.innerHTML = "<p>Nenhum pedido encontrado para este e-mail. Se você já comprou, chame no WhatsApp " + esc(CONFIG.WHATSAPP_DISPLAY) + " que a gente resolve. 💬</p>";
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg);
+      color: var(--text-body);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-body);
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Ambient background lights */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1000px, 100vw);
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    img, video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typography helpers */
+    .font-display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      display: inline-block;
+    }
+
+    .gradient-accent-text {
+      background: linear-gradient(135deg, #818CF8 0%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      display: inline-block;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 52px;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4.2vw, 44px);
+      font-weight: 700;
+      color: var(--text-heading);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: clamp(15px, 1.8vw, 17px);
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.22s ease-in-out;
+      text-align: center;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: var(--text-white);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(99, 102, 241, 0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-heading);
+      border-color: var(--border-subtle);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-whatsapp {
+      background: var(--whatsapp);
+      color: #052e16;
+      font-weight: 800;
+      box-shadow: 0 4px 18px rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--whatsapp-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-lg {
+      padding: 16px 36px;
+      font-size: 17px;
+      border-radius: var(--radius-md);
+    }
+
+    /* ==========================================================================
+       1. TOPBAR
+       ========================================================================== */
+    .topbar {
+      background: linear-gradient(90deg, #07090D 0%, #111624 50%, #07090D 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #CBD5E1;
+      text-align: center;
+      letter-spacing: 0.8px;
+      position: relative;
+      z-index: 60;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .topbar-highlight {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .topbar-sep {
+      opacity: 0.3;
+    }
+
+    /* ==========================================================================
+       2. STICKY NAVBAR
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 55;
+      background: rgba(7, 9, 13, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 20px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+      color: var(--text-white);
+    }
+
+    .brand-logo img {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+    }
+
+    .brand-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text-body);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-white);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-white);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    /* Mobile Nav Drawer */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: rgba(7, 9, 13, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 24px;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 54;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-heading);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* ==========================================================================
+       3. HERO SECTION
+       ========================================================================== */
+    .hero {
+      padding: 60px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #E2E8F0;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(34px, 4.4vw, 56px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: var(--text-white);
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 1.9vw, 19px);
+      color: var(--text-body);
+      line-height: 1.6;
+      margin-bottom: 34px;
+      max-width: 580px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .hero-guarantee {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .hero-guarantee svg {
+      color: var(--success);
+      flex-shrink: 0;
+    }
+
+    /* Hero Visual Card */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-visual-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8), 0 0 35px -10px rgba(99, 102, 241, 0.25);
+    }
+
+    .hero-visual-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      background: rgba(7, 9, 13, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #EF4444;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .live-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #EF4444;
+      box-shadow: 0 0 8px #EF4444;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .hero-video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .hero-video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-controls-overlay {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+      z-index: 5;
+    }
+
+    .video-ctrl-btn {
+      background: rgba(7, 9, 13, 0.85);
+      color: var(--text-white);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-full);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+
+    .video-ctrl-btn:hover {
+      background: rgba(99, 102, 241, 0.8);
+      border-color: rgba(99, 102, 241, 0.8);
+    }
+
+    .hero-visual-footer {
+      padding: 14px 18px;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .hero-visual-footer b {
+      color: var(--text-heading);
+    }
+
+    .hero-visual-footer span {
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       4. TRUST BAR
+       ========================================================================== */
+    .trust-bar {
+      padding: 24px 0 56px;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(17, 22, 34, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .trust-item:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .trust-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .trust-info b {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 2px;
+    }
+
+    .trust-info p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* ==========================================================================
+       5. PRODUTOS SECTION
+       ========================================================================== */
+    .products-section {
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 38px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+    }
+
+    .product-card.featured {
+      background: linear-gradient(180deg, #131A2A 0%, #0E1420 100%);
+      border-color: rgba(99, 102, 241, 0.35);
+    }
+
+    .product-card.featured::before {
+      background: var(--accent-gradient);
+    }
+
+    .product-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      align-self: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .product-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .product-header-brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    }
+
+    .product-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .product-tagline {
+      font-size: 15px;
+      color: var(--text-body);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .product-pricing-box {
+      background: rgba(7, 9, 13, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+
+    .pricing-old {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+
+    .pricing-current {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .pricing-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--text-white);
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-type {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .product-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .product-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14.5px;
+      color: #E2E8F0;
+      line-height: 1.45;
+    }
+
+    .feature-check {
+      color: var(--accent-cyan);
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .product-action {
+      margin-top: auto;
+    }
+
+    .product-action .btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+    }
+
+    .product-guarantee-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ==========================================================================
+       6. DEMONSTRAÇÕES ("Não imagine. Veja o que você consegue criar.")
+       ========================================================================== */
+    .demos-section {
+      padding: 80px 0;
+    }
+
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .demo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: var(--shadow-card);
+    }
+
+    .demo-media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .demo-media img, .demo-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .demo-card:hover .demo-media img,
+    .demo-card:hover .demo-media video {
+      transform: scale(1.04);
+    }
+
+    .demo-category-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-white);
+      background: rgba(7, 9, 13, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .demo-play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    .demo-card:hover .demo-play-btn {
+      opacity: 1;
+    }
+
+    .demo-play-btn span {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.9);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .demo-card:hover .demo-play-btn span {
+      transform: scale(1.1);
+    }
+
+    .demo-info {
+      padding: 20px;
+    }
+
+    .demo-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 6px;
+    }
+
+    .demo-desc {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       7. CASOS DE USO ("Feita para quem quer produzir mais")
+       ========================================================================== */
+    .usecases-section {
+      padding: 80px 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(13, 17, 23, 0.5) 50%, transparent 100%);
+    }
+
+    .usecases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .usecase-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      transition: all 0.25s ease;
+    }
+
+    .usecase-card:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .usecase-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .usecase-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 10px;
+    }
+
+    .usecase-desc {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    /* ==========================================================================
+       8. COMO FUNCIONA (4 PASSOS)
+       ========================================================================== */
+    .how-section {
+      padding: 80px 0;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    .how-step {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 30px 24px;
+      transition: all 0.25s ease;
+    }
+
+    .how-step:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+      transform: translateY(-3px);
+    }
+
+    .step-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent-indigo);
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .step-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 10px;
+    }
+
+    .step-desc {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       9. COMPARATIVO
+       ========================================================================== */
+    .compare-section {
+      padding: 80px 0;
+    }
+
+    .compare-table-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow-x: auto;
+      box-shadow: var(--shadow-card);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14.5px;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .compare-table th {
+      background: rgba(7, 9, 13, 0.6);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--text-heading);
+      font-size: 16px;
+    }
+
+    .compare-table td.col-feature {
+      font-weight: 600;
+      color: #E2E8F0;
+      width: 32%;
+    }
+
+    .compare-table td.col-muse {
+      color: var(--text-white);
+      background: rgba(99, 102, 241, 0.03);
+      width: 34%;
+    }
+
+    .compare-table td.col-flow {
+      color: var(--text-white);
+      width: 34%;
+    }
+
+    .compare-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #F1F5F9;
+    }
+
+    /* ==========================================================================
+       10. PROVA SOCIAL ("Quem compra, usa e recomenda")
+       ========================================================================== */
+    .socialproof-section {
+      padding: 80px 0;
+    }
+
+    .proofs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .proof-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .proof-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: var(--shadow-card);
+    }
+
+    .proof-img-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 12;
+      background: #000;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .proof-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.3s ease;
+    }
+
+    .proof-card:hover .proof-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .proof-zoom-icon {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      background: rgba(7, 9, 13, 0.85);
+      color: var(--text-white);
+      border-radius: var(--radius-full);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .proof-caption {
+      padding: 16px 20px;
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.45;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* ==========================================================================
+       11. SEGURANÇA ("Compra simples e segura")
+       ========================================================================== */
+    .security-section {
+      padding: 80px 0;
+    }
+
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .sec-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px 22px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .sec-card:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .sec-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-full);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin: 0 auto 18px;
+    }
+
+    .sec-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 8px;
+    }
+
+    .sec-desc {
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       12. FAQ (ACCORDION)
+       ========================================================================== */
+    .faq-section {
+      padding: 80px 0;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .faq-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .faq-item.open {
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 22px 24px;
+      color: var(--text-heading);
+      font-size: 16.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover {
+      color: var(--text-white);
+    }
+
+    .faq-icon {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--accent-indigo);
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 24px 22px;
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    /* ==========================================================================
+       13. CTA FINAL
+       ========================================================================== */
+    .final-cta-section {
+      padding: 90px 0;
+      position: relative;
+    }
+
+    .final-cta-card {
+      background: linear-gradient(135deg, #111624 0%, #151D2F 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 64px 36px;
+      text-align: center;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8), var(--shadow-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta-card::before {
+      content: "";
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .final-cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 4.5vw, 48px);
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .final-cta-desc {
+      font-size: 18px;
+      color: var(--text-body);
+      max-width: 600px;
+      margin: 0 auto 34px;
+    }
+
+    .final-cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       14. CONSULTA DE PEDIDOS ("Meus Acessos")
+       ========================================================================== */
+    .lookup-section {
+      padding: 70px 0 90px;
+    }
+
+    .lookup-card {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 38px 32px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .lookup-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lookup-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 8px;
+    }
+
+    .lookup-header p {
+      font-size: 14.5px;
+      color: var(--text-body);
+    }
+
+    .lookup-form {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .lookup-input {
+      flex: 1;
+      background: rgba(7, 9, 13, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: var(--text-white);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .lookup-input:focus {
+      border-color: var(--accent-indigo);
+    }
+
+    .order-item-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-top: 12px;
+    }
+
+    .order-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .order-status-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .order-delivery-box {
+      margin-top: 10px;
+      padding: 12px;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+    }
+
+    /* ==========================================================================
+       15. FOOTER
+       ========================================================================== */
+    .footer {
+      background: #040508;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 60px 0 36px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-brand p {
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col a {
+      color: var(--text-body);
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--text-white);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    /* ==========================================================================
+       MOBILE STICKY BOTTOM CTA BAR
+       ========================================================================== */
+    .mobile-sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(7, 9, 13, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 18px;
+      z-index: 45;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+      transform: translateY(120%);
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-sticky-bar.visible {
+      transform: translateY(0);
+    }
+
+    .mobile-sticky-info b {
+      display: block;
+      font-size: 13.5px;
+      color: var(--text-white);
+    }
+
+    .mobile-sticky-info span {
+      font-size: 11.5px;
+      color: var(--accent-cyan);
+    }
+
+    /* ==========================================================================
+       MODALS (CHECKOUT, VIDEO, LIGHTBOX, TERMOS)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-xl);
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      padding: 36px 32px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+      animation: modalSlideUp 0.22s ease-out;
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: scale(0.96) translateY(12px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-body);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text-white);
+    }
+
+    .checkout-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+
+    .checkout-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 6px;
+    }
+
+    .checkout-subtitle {
+      font-size: 14px;
+      color: var(--text-body);
+      margin-bottom: 22px;
+    }
+
+    .checkout-field {
+      margin-bottom: 16px;
+    }
+
+    .checkout-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #CBD5E1;
+      margin-bottom: 6px;
+    }
+
+    .checkout-field input {
+      width: 100%;
+      background: rgba(7, 9, 13, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 13px 16px;
+      color: var(--text-white);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .checkout-field input:focus {
+      border-color: var(--accent-indigo);
+    }
+
+    .checkout-error {
+      display: none;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #FCA5A5;
+      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+    }
+
+    .checkout-spinner {
+      display: none;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-body);
+      margin-top: 14px;
+    }
+
+    .checkout-trust-foot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
+    /* Video & Image Lightbox Modals */
+    .modal-media-card {
+      max-width: 900px;
+      padding: 16px;
+      background: #000;
+    }
+
+    .modal-media-card video, .modal-media-card img {
+      width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+    }
+
+    /* Legal Modals */
+    .modal-legal-card {
+      max-width: 700px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .legal-content h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      color: var(--text-heading);
+      margin: 20px 0 10px;
+    }
+
+    .legal-content p {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hero-visual {
+        max-width: 600px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .trust-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .demos-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .usecases-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .how-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .security-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .proofs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      .topbar {
+        font-size: 11px;
+        padding: 7px 10px;
+      }
+      .topbar-content {
+        gap: 8px;
+      }
+      .brand-logo {
+        font-size: 16px;
+        gap: 8px;
+      }
+      .brand-logo img {
+        width: 32px;
+        height: 32px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .nav-actions [href="#meus-acessos"] {
+        display: none;
+      }
+      .nav-actions .btn-whatsapp {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .hero-badges {
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .hero-badge-item {
+        font-size: 11.5px;
+        padding: 5px 10px;
+      }
+      .hero-title {
+        font-size: clamp(25px, 6.8vw, 34px);
+        line-height: 1.2;
+      }
+      .hero-subtitle {
+        font-size: 14.5px;
+        margin-bottom: 24px;
+      }
+      .hero-cta-group .btn {
+        width: 100%;
+      }
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      .product-card {
+        padding: 28px 20px;
+      }
+      .demos-grid {
+        grid-template-columns: 1fr;
+      }
+      .usecases-grid {
+        grid-template-columns: 1fr;
+      }
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+      .security-grid {
+        grid-template-columns: 1fr;
+      }
+      .proofs-grid {
+        grid-template-columns: 1fr;
+      }
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .lookup-form {
+        flex-direction: column;
+      }
+      .mobile-sticky-bar {
+        display: flex;
+      }
+      .hero {
+        padding: 32px 0 50px;
+      }
+    }
+  </style>
+</head>
+<body id="topo">
+
+  <!-- ========================================================================
+       1. TOPBAR
+       ======================================================================== -->
+  <div class="topbar">
+    <div class="topbar-content">
+      <span>⚡ ACESSO RÁPIDO</span>
+      <span class="topbar-sep">•</span>
+      <span>🔒 PAGAMENTO SEGURO</span>
+      <span class="topbar-sep">•</span>
+      <span>💬 SUPORTE WHATSAPP</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       2. STICKY NAVBAR
+       ======================================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#topo" class="brand-logo" title="ORVEXA PRIME — Home">
+          <img src="assets/logo-prime.png" alt="ORVEXA PRIME Logo">
+          <span>ORVEXA PRIME</span>
+          <span class="brand-badge">SaaS</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#topo">Início</a></li>
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#demonstracoes">Demonstrações</a></li>
+          <li><a href="#como-funciona">Como funciona</a></li>
+          <li><a href="#avaliacoes">Avaliações</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="#meus-acessos" class="btn btn-secondary btn-sm" title="Consultar pedidos anteriores">Meus Acessos</a>
+          <a href="https://wa.me/5521992936790" target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm">
+            <span>💬 Falar no WhatsApp</span>
+          </a>
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu">☰</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#topo" class="mobile-link">Início</a>
+    <a href="#produtos" class="mobile-link">Produtos</a>
+    <a href="#demonstracoes" class="mobile-link">Demonstrações</a>
+    <a href="#como-funciona" class="mobile-link">Como funciona</a>
+    <a href="#avaliacoes" class="mobile-link">Avaliações</a>
+    <a href="#faq" class="mobile-link">FAQ</a>
+    <a href="#meus-acessos" class="mobile-link">Consultar Meus Acessos</a>
+    <a href="https://wa.me/5521992936790" target="_blank" rel="noopener" class="btn btn-whatsapp" style="margin-top: 10px;">
+      💬 Falar no WhatsApp
+    </a>
+  </nav>
+
+  <!-- ========================================================================
+       3. HERO SECTION
+       ======================================================================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Hero Copy -->
+        <div class="hero-content">
+          <div class="hero-badges">
+            <span class="hero-badge-item">
+              <span class="hero-badge-dot"></span>
+              Pagamento único
+            </span>
+            <span class="hero-badge-item">
+              <span class="hero-badge-dot"></span>
+              Acesso rápido
+            </span>
+            <span class="hero-badge-item">
+              <span class="hero-badge-dot"></span>
+              Suporte brasileiro
+            </span>
+          </div>
+
+          <h1 class="hero-title">
+            Tenha acesso às <span class="gradient-accent-text">principais IAs</span> sem complicação
+          </h1>
+
+          <p class="hero-subtitle">
+            Crie imagens, vídeos e conteúdos com ferramentas profissionais de inteligência artificial. Sem assinaturas abusivas, sem limites diários restritivos.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#produtos" class="btn btn-primary btn-lg">
+              <span>Conhecer as IAs</span>
+              <span>→</span>
+            </a>
+            <a href="#como-funciona" class="btn btn-secondary btn-lg">
+              <span>Ver como funciona</span>
+            </a>
+          </div>
+
+          <div class="hero-guarantee">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Entrega imediata na tela e no e-mail após a confirmação.</span>
+          </div>
+        </div>
+
+        <!-- Hero Visual (Video Player Card) -->
+        <div class="hero-visual">
+          <div class="hero-visual-card">
+            <div class="hero-visual-header">
+              <div class="window-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="hero-live-badge">
+                <span class="live-pulse"></span>
+                Demonstração da IA
+              </div>
+            </div>
+
+            <div class="hero-video-wrapper">
+              <video id="heroVideo" src="assets/demo-muse-ia.mp4" poster="assets/demo-muse-ia-poster.jpg" autoplay loop muted playsinline></video>
+              <div class="video-controls-overlay">
+                <button class="video-ctrl-btn" id="heroMuteBtn" title="Ativar/Desativar som">🔊 Áudio</button>
+                <button class="video-ctrl-btn" data-video-trigger="assets/demo-muse-ia.mp4" title="Ver em tela cheia">⛶ Expandir</button>
+              </div>
+            </div>
+
+            <div class="hero-visual-footer">
+              <div>
+                <b>MUSE IA</b> • <small style="color: var(--text-muted);">Geração Multimodal 4K</small>
+              </div>
+              <span>1 Bilhão de Tokens</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. TRUST BAR
+       ======================================================================== -->
+  <section class="trust-bar">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <div class="trust-info">
+            <b>Pagamento seguro</b>
+            <p>InfinitePay criptografada</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">⚡</div>
+          <div class="trust-info">
+            <b>Acesso rápido</b>
+            <p>Liberação imediata</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">💬</div>
+          <div class="trust-info">
+            <b>Suporte WhatsApp</b>
+            <p>Atendimento humanizado</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">💳</div>
+          <div class="trust-info">
+            <b>Pix ou cartão</b>
+            <p>Aprovação em segundos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       5. PRODUTOS ("Escolha a IA ideal para você")
+       ======================================================================== -->
+  <section class="products-section" id="produtos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">CATÁLOGO OFICIAL</span>
+        <h2 class="section-title">Escolha a IA ideal para você</h2>
+        <p class="section-desc">
+          Ferramentas testadas e validadas para acelerar seu fluxo criativo e profissional. Pagamento único com suporte dedicado.
+        </p>
+      </div>
+
+      <div class="products-grid">
+        <!-- MUSE IA Card -->
+        <div class="product-card featured">
+          <div>
+            <span class="product-badge">⭐ MAIS ESCOLHIDO • CRIAÇÃO COMPLETA</span>
+            
+            <div class="product-header-brand">
+              <img src="assets/logo-muse.png" alt="MUSE IA">
+              <div>
+                <h3 class="product-title">MUSE IA</h3>
+                <span style="font-size: 13px; color: var(--accent-cyan); font-weight: 600;">1 Bilhão de Tokens Inclusos</span>
+              </div>
+            </div>
+
+            <p class="product-tagline">
+              A suíte multimodal definitiva para gerar imagens fotorrealistas, vídeos cinematográficos e roteiros sem limites restritivos.
+            </p>
+
+            <div class="product-pricing-box">
+              <div class="pricing-old">De R$ 197,00 por</div>
+              <div class="pricing-current">
+                <span class="pricing-val">R$ 59,99</span>
+                <span class="pricing-type">Pagamento único</span>
+              </div>
+            </div>
+
+            <ul class="product-features">
+              <li><span class="feature-check">✔</span> <span><b>1 bilhão de tokens</b> creditados na conta</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Criação de imagens</b> em ultra-alta resolução</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Criação de vídeos</b> cinematográficos fluidos</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Geração de conteúdos</b>, copies e scripts</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Suporte brasileiro</b> direto pelo WhatsApp</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Sem assinatura mensal</b>: pague uma vez e use</span></li>
+            </ul>
+          </div>
+
+          <div class="product-action">
+            <button class="btn btn-primary" data-checkout="muse-ia" data-name="MUSE IA — 1 Bilhão de Tokens">
+              <span>Quero a MUSE</span>
+              <span>→</span>
+            </button>
+            <p class="product-guarantee-note">🔒 Liberação imediata após a confirmação</p>
+          </div>
+        </div>
+
+        <!-- Google Flow Card -->
+        <div class="product-card">
+          <div>
+            <span class="product-badge" style="color: #A78BFA; background: rgba(167, 139, 250, 0.1); border-color: rgba(167, 139, 250, 0.25);">
+              PRODUTIVIDADE & RACIOCÍNIO
+            </span>
+
+            <div class="product-header-brand">
+              <img src="assets/logo-gemini.png" alt="Google Flow e AI Pro">
+              <div>
+                <h3 class="product-title">Google Flow + AI Pro</h3>
+                <span style="font-size: 13px; color: #A78BFA; font-weight: 600;">18 Meses de Acesso Completo</span>
+              </div>
+            </div>
+
+            <p class="product-tagline">
+              Potência máxima do Gemini 1.5 Pro com janela estendida de contexto, integração de dados e análise avançada de arquivos.
+            </p>
+
+            <div class="product-pricing-box">
+              <div class="pricing-old">De R$ 149,00 por</div>
+              <div class="pricing-current">
+                <span class="pricing-val">R$ 37,00</span>
+                <span class="pricing-type">Pagamento único</span>
+              </div>
+            </div>
+
+            <ul class="product-features">
+              <li><span class="feature-check">✔</span> <span><b>18 meses de acesso</b> garantido e contínuo</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Gemini 1.5 Pro</b> com raciocínio de alta precisão</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Integração completa</b> para análise de documentos</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Tutorial em vídeo</b> exclusivo passo a passo</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Suporte prioritário</b> para ativação rápida</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Pagamento único</b> sem renovações automáticas</span></li>
+            </ul>
+          </div>
+
+          <div class="product-action">
+            <button class="btn btn-secondary" data-checkout="flow-ai-pro" data-name="Google Flow + Google AI Pro — 18 meses">
+              <span>Quero o Flow</span>
+              <span>→</span>
+            </button>
+            <p class="product-guarantee-note">🔒 Link de ativação oficial com tutorial incluso</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       6. DEMONSTRAÇÕES ("Não imagine. Veja o que você consegue criar.")
+       ======================================================================== -->
+  <section class="demos-section" id="demonstracoes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">PORTFÓLIO E RESULTADOS</span>
+        <h2 class="section-title">Não imagine. Veja o que você consegue criar.</h2>
+        <p class="section-desc">
+          Confira exemplos práticos gerados com as tecnologias de ponta disponíveis na Orvexa Prime.
+        </p>
+      </div>
+
+      <div class="demos-grid">
+        <!-- 1. Vídeos Cinematográficos -->
+        <div class="demo-card" data-video-trigger="assets/demo-muse-ia.mp4">
+          <div class="demo-media">
+            <span class="demo-category-tag">Vídeos cinematográficos</span>
+            <img src="assets/demo-muse-ia-poster.jpg" alt="Vídeos cinematográficos">
+            <div class="demo-play-btn"><span>▶</span></div>
+          </div>
+          <div class="demo-info">
+            <h4 class="demo-title">Vídeos com Qualidade Cinema</h4>
+            <p class="demo-desc">Movimentos de câmera realistas, iluminação dramática e texturas hiper-detalhadas em alta taxa de quadros.</p>
+          </div>
+        </div>
+
+        <!-- 2. Criativos para Anúncios -->
+        <div class="demo-card" data-image-trigger="assets/muse-banner.jpg">
+          <div class="demo-media">
+            <span class="demo-category-tag">Criativos para anúncios</span>
+            <img src="assets/muse-banner.jpg" alt="Criativos para anúncios">
+            <div class="demo-play-btn"><span>🔍</span></div>
+          </div>
+          <div class="demo-info">
+            <h4 class="demo-title">Peças Publicitárias de Alta Conversão</h4>
+            <p class="demo-desc">Banners e criativos magnéticos concebidos para reduzir o CPA no Meta Ads e Google Ads.</p>
+          </div>
+        </div>
+
+        <!-- 3. Conteúdo para Redes Sociais -->
+        <div class="demo-card" data-video-trigger="assets/muse-short.mp4">
+          <div class="demo-media">
+            <span class="demo-category-tag">Redes sociais</span>
+            <img src="assets/hero-bg.jpg" alt="Conteúdo para redes sociais">
+            <div class="demo-play-btn"><span>▶</span></div>
+          </div>
+          <div class="demo-info">
+            <h4 class="demo-title">Postagens e Narrativas Visuais</h4>
+            <p class="demo-desc">Estratégias completas de feed e carrosséis com estética moderna para capturar a atenção imediata.</p>
+          </div>
+        </div>
+
+        <!-- 4. Imagens de Produtos -->
+        <div class="demo-card" data-image-trigger="assets/muse-card-bg.jpg">
+          <div class="demo-media">
+            <span class="demo-category-tag">Imagens de produtos</span>
+            <img src="assets/muse-card-bg.jpg" alt="Imagens de produtos">
+            <div class="demo-play-btn"><span>🔍</span></div>
+          </div>
+          <div class="demo-info">
+            <h4 class="demo-title">Fotografia Comercial de Estúdio</h4>
+            <p class="demo-desc">Insira qualquer produto em cenários de luxo, sem câmeras profissionais ou aluguel de locações.</p>
+          </div>
+        </div>
+
+        <!-- 5. Avatares 3D -->
+        <div class="demo-card" data-image-trigger="assets/rick-3d.jpg">
+          <div class="demo-media">
+            <span class="demo-category-tag">Avatares 3D</span>
+            <img src="assets/rick-3d.jpg" alt="Avatares">
+            <div class="demo-play-btn"><span>🔍</span></div>
+          </div>
+          <div class="demo-info">
+            <h4 class="demo-title">Renderização de Personagens</h4>
+            <p class="demo-desc">Criação de avatares com sombreamento volumétrico, expressividade facial e acabamento premium.</p>
+          </div>
+        </div>
+
+        <!-- 6. Reels e Shorts -->
+        <div class="demo-card" data-video-trigger="assets/muse-video.mp4">
+          <div class="demo-media">
+            <span class="demo-category-tag">Reels & Shorts</span>
+            <img src="assets/morty-3d.jpg" alt="Reels">
+            <div class="demo-play-btn"><span>▶</span></div>
+          </div>
+          <div class="demo-info">
+            <h4 class="demo-title">Vídeos Verticais Dinâmicos</h4>
+            <p class="demo-desc">Vídeos envolventes para TikTok e Reels com transições perfeitas e retenção de público elevada.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       7. CASOS DE USO ("Feita para quem quer produzir mais")
+       ======================================================================== -->
+  <section class="usecases-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">APLICAÇÕES PRÁTICAS</span>
+        <h2 class="section-title">Feita para quem quer produzir mais</h2>
+        <p class="section-desc">
+          Descubra como os profissionais do mercado digital usam a Orvexa Prime no dia a dia:
+        </p>
+      </div>
+
+      <div class="usecases-grid">
+        <div class="usecase-card">
+          <div class="usecase-icon-box">📱</div>
+          <h3 class="usecase-title">Social Media</h3>
+          <p class="usecase-desc">Planeje e crie o calendário de conteúdo do mês inteiro em apenas um turno de trabalho com artes originais.</p>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-icon-box">💼</div>
+          <h3 class="usecase-title">Empreendedores</h3>
+          <p class="usecase-desc">Acelere lançamentos, crie materiais institucionais e propostas de alto padrão sem inflar os custos operacionais.</p>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-icon-box">🎬</div>
+          <h3 class="usecase-title">Criadores de Conteúdo</h3>
+          <p class="usecase-desc">Gere roteiros virais para o YouTube, miniaturas magnéticas e takes em vídeo sem precisar gravar do zero.</p>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-icon-box">📈</div>
+          <h3 class="usecase-title">Gestores de Tráfego</h3>
+          <p class="usecase-desc">Produza dezenas de variações de criativos por semana e encontre anúncios vencedores com muito mais agilidade.</p>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-icon-box">🛍️</div>
+          <h3 class="usecase-title">E-commerce</h3>
+          <p class="usecase-desc">Fotografe seus produtos em cenários realistas de estúdio e crie descrições completas e persuasivas.</p>
+        </div>
+
+        <div class="usecase-card">
+          <div class="usecase-icon-box">🎨</div>
+          <h3 class="usecase-title">Designers</h3>
+          <p class="usecase-desc">Construa concept arts, moodboards e fundos exclusivos para seus projetos com acabamento visual impecável.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       8. COMO FUNCIONA (4 PASSOS)
+       ======================================================================== -->
+  <section class="how-section" id="como-funciona">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">SIMPLICIDADE ABSOLUTA</span>
+        <h2 class="section-title">Como funciona</h2>
+        <p class="section-desc">
+          Do pagamento ao primeiro prompt gerado em menos de 2 minutos.
+        </p>
+      </div>
+
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="step-number">01</div>
+          <h3 class="step-title">Escolha sua IA</h3>
+          <p class="step-desc">Selecione a MUSE IA para foco multimodal de imagens/vídeos ou o Google Flow AI Pro para raciocínio e produtividade.</p>
+        </div>
+
+        <div class="how-step">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Faça o pagamento</h3>
+          <p class="step-desc">Pague com segurança máxima via Pix com confirmação imediata ou cartão de crédito parcelado.</p>
+        </div>
+
+        <div class="how-step">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Receba seu acesso</h3>
+          <p class="step-desc">Suas credenciais ou link de ativação oficial são entregues instantaneamente na tela e enviados ao seu e-mail.</p>
+        </div>
+
+        <div class="how-step">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Conte com suporte</h3>
+          <p class="step-desc">Tutoriais passo a passo e nossa equipe disponível no WhatsApp para qualquer orientação que você precisar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       9. COMPARATIVO
+       ======================================================================== -->
+  <section class="compare-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">MATRIZ COMPARATIVA</span>
+        <h2 class="section-title">Qual IA é a mais indicada para você?</h2>
+        <p class="section-desc">
+          Compare as características de cada ferramenta e escolha a que melhor atende suas metas.
+        </p>
+      </div>
+
+      <div class="compare-table-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Recurso / Critério</th>
+              <th>MUSE IA (1B Tokens)</th>
+              <th>Google Flow + AI Pro (18m)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-feature">Foco Principal</td>
+              <td class="col-muse">Criação de imagens & vídeos de alta resolução</td>
+              <td class="col-flow">Raciocínio lógico, textos longos e pesquisa</td>
+            </tr>
+            <tr>
+              <td class="col-feature">Volume / Duração</td>
+              <td class="col-muse">1 bilhão de tokens inclusos</td>
+              <td class="col-flow">18 meses de acesso contínuo</td>
+            </tr>
+            <tr>
+              <td class="col-feature">Geração de Vídeos</td>
+              <td class="col-muse"><span class="compare-badge" style="color: var(--success);">✔ Sim, nativo em alta qualidade</span></td>
+              <td class="col-flow"><span class="compare-badge">Via integrações de prompt</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Criação de Imagens</td>
+              <td class="col-muse"><span class="compare-badge" style="color: var(--success);">✔ Hiper-realismo avançado</span></td>
+              <td class="col-flow"><span class="compare-badge">✔ Suportado via ecossistema</span></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Perfil Recomendado</td>
+              <td class="col-muse"><b>Designers, Criadores e Gestores de Tráfego</b></td>
+              <td class="col-flow"><b>Empresários, Redatores e Desenvolvedores</b></td>
+            </tr>
+            <tr>
+              <td class="col-feature">Modelo de Pagamento</td>
+              <td class="col-muse"><b>R$ 59,99</b> (Pagamento único)</td>
+              <td class="col-flow"><b>R$ 37,00</b> (Pagamento único)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       10. PROVA SOCIAL ("Quem compra, usa e recomenda")
+       ======================================================================== -->
+  <section class="socialproof-section" id="avaliacoes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">COMPROVAÇÕES REAIS</span>
+        <h2 class="section-title">Quem compra, usa e recomenda</h2>
+        <p class="section-desc">
+          Prints e mensagens reais de clientes recebidos no WhatsApp confirmando entrega, funcionamento e suporte ágil.
+        </p>
+      </div>
+
+      <div class="proofs-grid">
+        <div class="proof-card" data-image-trigger="assets/prova-whats-1.jpg">
+          <div class="proof-img-wrap">
+            <img src="assets/prova-whats-1.jpg" alt="Comprovante de atendimento e entrega" loading="lazy">
+            <div class="proof-zoom-icon"><span>🔍 Ampliar</span></div>
+          </div>
+          <div class="proof-caption">Atendimento rápido e orientações de ativação fornecidas no WhatsApp.</div>
+        </div>
+
+        <div class="proof-card" data-image-trigger="assets/prova-whats-2.jpg">
+          <div class="proof-img-wrap">
+            <img src="assets/prova-whats-2.jpg" alt="Acesso liberado no WhatsApp" loading="lazy">
+            <div class="proof-zoom-icon"><span>🔍 Ampliar</span></div>
+          </div>
+          <div class="proof-caption">Confirmação de recebimento e credenciais validadas pelo cliente.</div>
+        </div>
+
+        <div class="proof-card" data-image-trigger="assets/prova-whats-3.jpg">
+          <div class="proof-img-wrap">
+            <img src="assets/prova-whats-3.jpg" alt="Depoimento de cliente" loading="lazy">
+            <div class="proof-zoom-icon"><span>🔍 Ampliar</span></div>
+          </div>
+          <div class="proof-caption">Feedback positivo sobre a velocidade do suporte e qualidade das IAs.</div>
+        </div>
+
+        <div class="proof-card" data-image-trigger="assets/prova-grupo-1.jpg">
+          <div class="proof-img-wrap">
+            <img src="assets/prova-grupo-1.jpg" alt="Comunidade ativa" loading="lazy">
+            <div class="proof-zoom-icon"><span>🔍 Ampliar</span></div>
+          </div>
+          <div class="proof-caption">Comunidade e trocas de experiências entre criadores que utilizam as ferramentas.</div>
+        </div>
+
+        <div class="proof-card" data-image-trigger="assets/prova-entrega-2.jpg">
+          <div class="proof-img-wrap">
+            <img src="assets/prova-entrega-2.jpg" alt="Comprovante de liberação" loading="lazy">
+            <div class="proof-zoom-icon"><span>🔍 Ampliar</span></div>
+          </div>
+          <div class="proof-caption">Registro de ativação automática concluída no sistema.</div>
+        </div>
+
+        <div class="proof-card" data-image-trigger="assets/prova-entrega-3.jpg">
+          <div class="proof-img-wrap">
+            <img src="assets/prova-entrega-3.jpg" alt="Entrega finalizada" loading="lazy">
+            <div class="proof-zoom-icon"><span>🔍 Ampliar</span></div>
+          </div>
+          <div class="proof-caption">Acesso entregue e ativo com tutorial de utilização incluso.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       11. SEGURANÇA ("Compra simples e segura")
+       ======================================================================== -->
+  <section class="security-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">PROTEÇÃO COMPLETA</span>
+        <h2 class="section-title">Compra simples e segura</h2>
+        <p class="section-desc">
+          Infraestrutura blindada de pagamentos com entrega automatizada e suporte humanizado.
+        </p>
+      </div>
+
+      <div class="security-grid">
+        <div class="sec-card">
+          <div class="sec-icon">🛡️</div>
+          <h3 class="sec-title">Gateway InfinitePay</h3>
+          <p class="sec-desc">Pagamento processado em ambiente bancário com criptografia SSL de ponta a ponta.</p>
+        </div>
+
+        <div class="sec-card">
+          <div class="sec-icon">⚡</div>
+          <h3 class="sec-title">Pix ou Cartão</h3>
+          <p class="sec-desc">Confirmação em poucos segundos no Pix ou parcelamento flexível em até 12x no cartão.</p>
+        </div>
+
+        <div class="sec-card">
+          <div class="sec-icon">📦</div>
+          <h3 class="sec-title">Liberação Imediata</h3>
+          <p class="sec-desc">Estoque automatizado: credenciais ou links de ativação entregues sem filas de espera.</p>
+        </div>
+
+        <div class="sec-card">
+          <div class="sec-icon">💬</div>
+          <h3 class="sec-title">Suporte Brasileiro</h3>
+          <p class="sec-desc">Canal direto no WhatsApp com equipe real pronta para ajudar você em qualquer etapa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       12. FAQ (ACCORDION)
+       ======================================================================== -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">DÚVIDAS FREQUENTES</span>
+        <h2 class="section-title">Perguntas frequentes</h2>
+        <p class="section-desc">
+          Respostas claras para as principais dúvidas sobre os produtos e a entrega.
+        </p>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-item open">
+          <button class="faq-question">
+            <span>Como recebo o acesso após a confirmação do pagamento?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              A liberação é automática. Imediatamente após a confirmação do Pix ou cartão pela InfinitePay, seus dados de acesso (login e senha da conta Muse IA ou link oficial com tutorial do Google Flow) são exibidos diretamente na tela e também enviados para o seu e-mail cadastrado.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>É pagamento único ou haverá cobrança mensal recorrente?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              É pagamento único! Você não assina nenhum plano recorrente e não terá surpresas no seu cartão. Você paga uma única vez e utiliza o pacote adquirido (1 bilhão de tokens na Muse IA ou 18 meses de acesso no Google Flow + AI Pro).
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>O que acontece se eu tiver dúvidas ou dificuldades para ativar?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nossa equipe oferece suporte direto e em português via WhatsApp no número <b>(21) 99293-6790</b>. Além disso, disponibilizamos tutoriais em vídeo passo a passo demonstrando exatamente como realizar o primeiro login ou resgate do link.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Quais são as formas de pagamento aceitas?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Aceitamos Pix (com compensação em poucos segundos) e Cartão de Crédito com possibilidade de parcelamento. Todo o processamento é executado pela InfinitePay.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>O que é a MUSE IA e quanto tempo dura 1 bilhão de tokens?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              A MUSE IA é uma plataforma completa de inteligência artificial multimodal de altíssima fidelidade visual. 1 bilhão de tokens é uma quantidade massiva, suficiente para gerar milhares de imagens ultrarrealistas, centenas de vídeos cinematográficos e infinitos textos e scripts para o seu negócio por um longo período.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Como funciona o Google Flow + AI Pro de 18 meses?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Você recebe um link de ativação oficial com validade de 18 meses para o ecossistema Gemini AI Pro, acompanhado de um vídeo tutorial explicativo. Você poderá desfrutar de janelas estendidas de contexto e análise de documentos longos diretamente na nuvem do Google.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Posso consultar compras realizadas anteriormente?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sim! Na seção <b>Meus Acessos</b> deste site, você pode digitar o e-mail utilizado na compra a qualquer momento para visualizar o status do pedido e recuperar seus links e credenciais entregues.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       13. CTA FINAL ("Comece a criar hoje")
+       ======================================================================== -->
+  <section class="final-cta-section">
+    <div class="container">
+      <div class="final-cta-card">
+        <h2 class="final-cta-title">Comece a criar hoje</h2>
+        <p class="final-cta-desc">
+          Escolha sua ferramenta, faça o pagamento e receba seu acesso em instantes. Junte-se a criadores e profissionais que já aceleraram sua produção com IA.
+        </p>
+        <div class="final-cta-actions">
+          <a href="#produtos" class="btn btn-primary btn-lg">
+            <span>Quero começar agora</span>
+            <span>→</span>
+          </a>
+          <a href="https://wa.me/5521992936790" target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+            <span>Tirar dúvidas no WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       14. CONSULTA DE PEDIDOS ("Meus Acessos")
+       ======================================================================== -->
+  <section class="lookup-section" id="meus-acessos">
+    <div class="container">
+      <div class="lookup-card">
+        <div class="lookup-header">
+          <span class="section-tag" style="margin-bottom: 10px;">ÁREA DO CLIENTE</span>
+          <h3>Consultar Meus Acessos</h3>
+          <p>Digite o e-mail informado no checkout para recuperar os dados e links dos seus pedidos.</p>
+        </div>
+
+        <div class="lookup-form">
+          <input type="email" id="lookupEmail" class="lookup-input" placeholder="Seu e-mail cadastrado (ex: voce@gmail.com)" required>
+          <button id="lookupBtn" class="btn btn-primary">
+            <span>Consultar</span>
+          </button>
+        </div>
+
+        <div id="lookupResult"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       15. FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#topo" class="brand-logo">
+            <img src="assets/logo-prime.png" alt="ORVEXA PRIME">
+            <span>ORVEXA PRIME</span>
+          </a>
+          <p>
+            Plataforma premium para aquisição simplificada de ferramentas de Inteligência Artificial para criadores, gestores e empresas.
+          </p>
+          <div style="font-size: 13px; color: var(--text-body);">
+            Suporte: <b>(21) 99293-6790</b>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#topo">Início</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#demonstracoes">Demonstrações</a></li>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#avaliacoes">Avaliações</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Atendimento</h4>
+          <ul>
+            <li><a href="#faq">Dúvidas Frequentes</a></li>
+            <li><a href="#meus-acessos">Meus Acessos</a></li>
+            <li><a href="https://wa.me/5521992936790" target="_blank" rel="noopener">WhatsApp Oficial</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Políticas & Termos</h4>
+          <ul>
+            <li><a href="javascript:void(0)" data-legal-modal="termos">Termos de Uso</a></li>
+            <li><a href="javascript:void(0)" data-legal-modal="privacidade">Política de Privacidade</a></li>
+            <li><a href="javascript:void(0)" data-legal-modal="reembolso">Política de Reembolso</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 ORVEXA PRIME. Todos os direitos reservados.
+        </div>
+        <div style="color: var(--text-muted); font-size: 12px;">
+          Ambiente homologado com InfinitePay • CNPJ / Pagamentos Protegidos
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       16. MOBILE STICKY BOTTOM CTA BAR
+       ======================================================================== -->
+  <div class="mobile-sticky-bar" id="mobileStickyBar">
+    <div class="mobile-sticky-info">
+      <b>IAs Profissionais</b>
+      <span>A partir de R$ 37,00 (único)</span>
+    </div>
+    <a href="#produtos" class="btn btn-primary btn-sm">
+      <span>Garantir minha IA</span>
+      <span>→</span>
+    </a>
+  </div>
+
+  <!-- ========================================================================
+       17. CHECKOUT MODAL (PRESERVED LOGIC)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="checkoutModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" data-close-modal="checkoutModal" aria-label="Fechar">✕</button>
+      
+      <span class="checkout-badge">🔒 AMBIENTE SEGURO INFINITEPAY</span>
+      <h3 class="checkout-title" id="checkoutProductTitle">Finalizar Pedido</h3>
+      <p class="checkout-subtitle" id="checkoutProductSubtitle">Preencha seus dados para receber o acesso.</p>
+
+      <div class="checkout-error" id="checkoutError"></div>
+
+      <form id="checkoutForm" onsubmit="return false;">
+        <div class="checkout-field">
+          <label for="checkoutEmail">Seu melhor e-mail (para envio do acesso)</label>
+          <input type="email" id="checkoutEmail" placeholder="exemplo@gmail.com" required autocomplete="email">
+        </div>
+
+        <div class="checkout-field">
+          <label for="checkoutPhone">WhatsApp com DDD (para suporte e envio)</label>
+          <input type="tel" id="checkoutPhone" placeholder="(21) 99999-9999" required autocomplete="tel">
+        </div>
+
+        <button type="button" id="submitCheckoutBtn" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 10px;">
+          <span>Ir para Pagamento Seguro</span>
+          <span>→</span>
+        </button>
+
+        <div class="checkout-spinner" id="checkoutSpinner">
+          <span>⚡ Conectando à InfinitePay... Aguarde um instante.</span>
+        </div>
+
+        <div class="checkout-trust-foot">
+          <span>🔒 Criptografia SSL 256 bits</span>
+          <span>•</span>
+          <span>Aprovação instantânea</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       18. MEDIA PREVIEW MODAL (VÍDEO / LIGHTBOX)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="mediaModal">
+    <div class="modal-card modal-media-card">
+      <button class="modal-close-btn" data-close-modal="mediaModal" aria-label="Fechar">✕</button>
+      <div id="mediaModalContainer" style="display:flex; justify-content:center; align-items:center;"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       19. LEGAL MODALS (TERMOS, PRIVACIDADE, REEMBOLSO)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="legalModal">
+    <div class="modal-card modal-legal-card">
+      <button class="modal-close-btn" data-close-modal="legalModal" aria-label="Fechar">✕</button>
+      <div class="legal-content" id="legalModalContent"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       SCRIPTS (PRESERVANDO TOTALMENTE APIs, CHECKOUT E MEUS PEDIDOS)
+       ======================================================================== -->
+  <script>
+    (function() {
+      // Configuration & Fallbacks
+      var CONFIG = {
+        BACKEND_URL: (function() {
+          var h = window.location.host;
+          if (h && !h.includes("localhost") && !h.includes("127.0.0.1")) {
+            return window.location.protocol + "//" + h;
+          }
+          return "https://www.orvexaprime.com.br";
+        })(),
+        WHATSAPP_URL: "https://wa.me/5521992936790",
+        WHATSAPP_DISPLAY: "(21) 99293-6790"
+      };
+
+      var PRODUCTS_INFO = {
+        "muse-ia": {
+          title: "MUSE IA — 1 Bilhão de Tokens",
+          priceStr: "R$ 59,99",
+          desc: "Acesso direto à conta com 1 bilhão de tokens para geração multimodal de imagens e vídeos."
+        },
+        "flow-ai-pro": {
+          title: "Google Flow + Google AI Pro — 18 meses",
+          priceStr: "R$ 37,00",
+          desc: "Link de ativação oficial com 18 meses de acesso completo ao Gemini AI Pro e tutorial em vídeo."
         }
-      })
-      .catch(function(){
-        lookupResult.innerHTML = "<p>Não foi possível consultar agora. Tente novamente ou chame no WhatsApp " + esc(CONFIG.WHATSAPP_DISPLAY) + ".</p>";
+      };
+
+      // Helper function for HTML escaping
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+      }
+
+      // Modal open/close helpers
+      function openModal(id) {
+        var m = document.getElementById(id);
+        if (m) {
+          m.classList.add("open");
+          document.body.style.overflow = "hidden";
+        }
+      }
+
+      function closeModal(id) {
+        var m = document.getElementById(id);
+        if (m) {
+          m.classList.remove("open");
+          document.body.style.overflow = "";
+          if (id === "mediaModal") {
+            var c = document.getElementById("mediaModalContainer");
+            if (c) c.innerHTML = "";
+          }
+        }
+      }
+
+      // Close handlers
+      document.querySelectorAll("[data-close-modal]").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          closeModal(btn.getAttribute("data-close-modal"));
+        });
       });
-  });
-})();
-</script>
+
+      document.querySelectorAll(".modal-backdrop").forEach(function(bg) {
+        bg.addEventListener("click", function(e) {
+          if (e.target === bg) closeModal(bg.id);
+        });
+      });
+
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+          document.querySelectorAll(".modal-backdrop.open").forEach(function(m) {
+            closeModal(m.id);
+          });
+        }
+      });
+
+      // Mobile Menu Drawer Toggle
+      var mobileBtn = document.getElementById("mobileMenuBtn");
+      var mobileNav = document.getElementById("mobileNav");
+      if (mobileBtn && mobileNav) {
+        mobileBtn.addEventListener("click", function() {
+          mobileNav.classList.toggle("open");
+        });
+        document.querySelectorAll(".mobile-link").forEach(function(link) {
+          link.addEventListener("click", function() {
+            mobileNav.classList.remove("open");
+          });
+        });
+      }
+
+      // Hero Video Sound Toggle
+      var heroVideo = document.getElementById("heroVideo");
+      var heroMuteBtn = document.getElementById("heroMuteBtn");
+      if (heroVideo && heroMuteBtn) {
+        heroMuteBtn.addEventListener("click", function() {
+          heroVideo.muted = !heroVideo.muted;
+          heroMuteBtn.textContent = heroVideo.muted ? "🔊 Áudio" : "🔇 Mutar";
+        });
+      }
+
+      // Mobile Sticky Bottom Bar Scroll Observer
+      var stickyBar = document.getElementById("mobileStickyBar");
+      var heroSection = document.querySelector(".hero");
+      if (stickyBar && heroSection) {
+        window.addEventListener("scroll", function() {
+          var heroBottom = heroSection.getBoundingClientRect().bottom;
+          if (heroBottom < 100) {
+            stickyBar.classList.add("visible");
+          } else {
+            stickyBar.classList.remove("visible");
+          }
+        }, { passive: true });
+      }
+
+      // FAQ Accordion
+      document.querySelectorAll(".faq-question").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          var item = btn.parentElement;
+          var wasOpen = item.classList.contains("open");
+          document.querySelectorAll(".faq-item.open").forEach(function(it) {
+            it.classList.remove("open");
+          });
+          if (!wasOpen) {
+            item.classList.add("open");
+          }
+        });
+      });
+
+      // Checkout Logic (PRESERVED AND VERIFIED)
+      var currentProduct = "muse-ia";
+      var checkoutModal = document.getElementById("checkoutModal");
+      var checkoutTitle = document.getElementById("checkoutProductTitle");
+      var checkoutSub = document.getElementById("checkoutProductSubtitle");
+      var checkoutEmail = document.getElementById("checkoutEmail");
+      var checkoutPhone = document.getElementById("checkoutPhone");
+      var submitCheckoutBtn = document.getElementById("submitCheckoutBtn");
+      var checkoutError = document.getElementById("checkoutError");
+      var checkoutSpinner = document.getElementById("checkoutSpinner");
+
+      // Auto Phone Mask
+      if (checkoutPhone) {
+        checkoutPhone.addEventListener("input", function() {
+          var d = checkoutPhone.value.replace(/\D/g, "").slice(0, 11);
+          if (d.length > 6) {
+            checkoutPhone.value = "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7);
+          } else if (d.length > 2) {
+            checkoutPhone.value = "(" + d.slice(0, 2) + ") " + d.slice(2);
+          } else {
+            checkoutPhone.value = d;
+          }
+        });
+      }
+
+      function openCheckout(productId, productName) {
+        currentProduct = productId || "muse-ia";
+        var info = PRODUCTS_INFO[currentProduct] || {
+          title: productName || "Produto Orvexa Prime",
+          priceStr: "Pagamento Único"
+        };
+
+        checkoutTitle.textContent = info.title;
+        checkoutSub.textContent = info.priceStr + " — Pagamento único com liberação imediata";
+        checkoutError.style.display = "none";
+        checkoutSpinner.style.display = "none";
+        submitCheckoutBtn.disabled = false;
+        
+        openModal("checkoutModal");
+        setTimeout(function() {
+          if (checkoutEmail) checkoutEmail.focus();
+        }, 150);
+      }
+
+      // Click Delegation for Checkout Buttons
+      document.addEventListener("click", function(e) {
+        var btn = e.target.closest("[data-checkout]");
+        if (btn) {
+          e.preventDefault();
+          var prod = btn.getAttribute("data-checkout");
+          var name = btn.getAttribute("data-name");
+          openCheckout(prod, name);
+          return;
+        }
+
+        // Video Lightbox Trigger
+        var vBtn = e.target.closest("[data-video-trigger]");
+        if (vBtn) {
+          e.preventDefault();
+          var vSrc = vBtn.getAttribute("data-video-trigger");
+          var container = document.getElementById("mediaModalContainer");
+          if (container && vSrc) {
+            container.innerHTML = '<video src="' + esc(vSrc) + '" controls autoplay playsinline style="width:100%; border-radius:12px;"></video>';
+            openModal("mediaModal");
+          }
+          return;
+        }
+
+        // Image Lightbox Trigger
+        var iBtn = e.target.closest("[data-image-trigger]");
+        if (iBtn) {
+          e.preventDefault();
+          var iSrc = iBtn.getAttribute("data-image-trigger");
+          var imgContainer = document.getElementById("mediaModalContainer");
+          if (imgContainer && iSrc) {
+            imgContainer.innerHTML = '<img src="' + esc(iSrc) + '" alt="Visualização ampliada" style="max-width:100%; max-height:85vh; object-fit:contain; border-radius:12px;">';
+            openModal("mediaModal");
+          }
+          return;
+        }
+
+        // Legal Modal Trigger
+        var lBtn = e.target.closest("[data-legal-modal]");
+        if (lBtn) {
+          e.preventDefault();
+          var legalType = lBtn.getAttribute("data-legal-modal");
+          openLegalModal(legalType);
+          return;
+        }
+      });
+
+      // Submit Checkout to Backend
+      if (submitCheckoutBtn) {
+        submitCheckoutBtn.addEventListener("click", function() {
+          var email = checkoutEmail.value.trim();
+          var rawPhone = checkoutPhone.value.replace(/\D/g, "");
+
+          checkoutError.style.display = "none";
+
+          if (!isValidEmail(email)) {
+            checkoutError.textContent = "Por favor, digite um e-mail válido para receber seu acesso.";
+            checkoutError.style.display = "block";
+            return;
+          }
+
+          if (rawPhone.length < 10) {
+            checkoutError.textContent = "Digite um número de WhatsApp válido com DDD (ex: (21) 99999-9999).";
+            checkoutError.style.display = "block";
+            return;
+          }
+
+          submitCheckoutBtn.disabled = true;
+          checkoutSpinner.style.display = "block";
+
+          fetch(CONFIG.BACKEND_URL + "/api/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: email,
+              phone: rawPhone,
+              produto: currentProduct
+            })
+          })
+          .then(function(res) {
+            return res.json().then(function(data) {
+              return { ok: res.ok, data: data };
+            });
+          })
+          .then(function(result) {
+            submitCheckoutBtn.disabled = false;
+            checkoutSpinner.style.display = "none";
+
+            if (result.ok && result.data && result.data.checkout_url) {
+              window.location.href = result.data.checkout_url;
+            } else {
+              var errMsg = (result.data && (result.data.error || result.data.message)) ||
+                "Não foi possível gerar o link de pagamento. Tente novamente ou chame no WhatsApp " + CONFIG.WHATSAPP_DISPLAY;
+              checkoutError.textContent = errMsg;
+              checkoutError.style.display = "block";
+            }
+          })
+          .catch(function(err) {
+            submitCheckoutBtn.disabled = false;
+            checkoutSpinner.style.display = "none";
+            checkoutError.textContent = "Falha de conexão. Verifique sua internet ou solicite atendimento no WhatsApp " + CONFIG.WHATSAPP_DISPLAY;
+            checkoutError.style.display = "block";
+          });
+        });
+      }
+
+      // Order Lookup ("Meus Acessos")
+      var lookupBtn = document.getElementById("lookupBtn");
+      var lookupEmail = document.getElementById("lookupEmail");
+      var lookupResult = document.getElementById("lookupResult");
+
+      if (lookupBtn && lookupEmail && lookupResult) {
+        lookupBtn.addEventListener("click", function() {
+          var email = lookupEmail.value.trim();
+          lookupResult.innerHTML = "";
+
+          if (!isValidEmail(email)) {
+            lookupResult.innerHTML = '<div style="color:#FCA5A5; font-size:14px; margin-top:12px; text-align:center;">Por favor, digite um e-mail válido.</div>';
+            return;
+          }
+
+          lookupResult.innerHTML = '<div style="color:var(--text-body); font-size:14px; margin-top:14px; text-align:center;">Buscando seus pedidos na nuvem...</div>';
+
+          fetch(CONFIG.BACKEND_URL + "/api/meus-pedidos?email=" + encodeURIComponent(email))
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+              var list = res.compras || res.pedidos || res.orders || (Array.isArray(res) ? res : null);
+              if (list && list.length > 0) {
+                lookupResult.innerHTML = list.map(function(order) {
+                  var pName = esc(order.produto_nome || order.produto || "Pedido");
+                  var status = esc(order.status || "Aprovado");
+                  var dateStr = order.data ? new Date(order.data).toLocaleDateString("pt-BR") : "";
+                  var delivered = order.conta_entregue || "";
+
+                  var actionBox = "";
+                  if (delivered.startsWith("http")) {
+                    actionBox = '<div class="order-delivery-box"><a href="' + esc(delivered) + '" target="_blank" rel="noopener" style="color:var(--accent-cyan); font-weight:700; text-decoration:underline;">👉 Abrir Link de Ativação do Google Flow</a></div>';
+                  } else if (delivered) {
+                    actionBox = '<div class="order-delivery-box"><b>Dados da conta entregue:</b><br><code style="color:var(--accent-cyan); font-size:13px; word-break:break-all;">' + esc(delivered) + '</code></div>';
+                  }
+
+                  return '<div class="order-item-card">' +
+                    '<div class="order-item-header">' +
+                      '<b style="color:var(--text-heading); font-size:15px;">' + pName + '</b>' +
+                      '<span class="order-status-badge">' + status + '</span>' +
+                    '</div>' +
+                    (dateStr ? '<div style="font-size:12px; color:var(--text-muted);">Data: ' + dateStr + '</div>' : '') +
+                    actionBox +
+                  '</div>';
+                }).join("");
+              } else {
+                lookupResult.innerHTML = '<div style="color:var(--text-body); font-size:14px; margin-top:14px; text-align:center; padding:16px; background:rgba(255,255,255,0.03); border-radius:8px;">' +
+                  'Nenhum pedido localizado para este e-mail.<br>Se você realizou um pagamento recente, chame nosso suporte no WhatsApp <a href="' + CONFIG.WHATSAPP_URL + '" target="_blank" style="color:var(--whatsapp); font-weight:700; text-decoration:underline;">' + CONFIG.WHATSAPP_DISPLAY + '</a> para liberação imediata.</div>';
+              }
+            })
+            .catch(function() {
+              lookupResult.innerHTML = '<div style="color:#FCA5A5; font-size:14px; margin-top:14px; text-align:center;">Não foi possível consultar no momento. Chame no WhatsApp ' + CONFIG.WHATSAPP_DISPLAY + ' que ajudamos você na hora.</div>';
+            });
+        });
+      }
+
+      // Legal Modals Content
+      function openLegalModal(type) {
+        var content = document.getElementById("legalModalContent");
+        if (!content) return;
+
+        if (type === "termos") {
+          content.innerHTML = '<h2>Termos de Uso</h2>' +
+            '<h3>1. Identificação do Serviço</h3><p>A ORVEXA PRIME atua como facilitadora comercial e provedora de soluções para ferramentas digitais de inteligência artificial, oferecendo pacotes de tokens e acessos pré-configurados.</p>' +
+            '<h3>2. Modalidade de Pagamento</h3><p>Todas as compras disponibilizadas são em modalidade de pagamento único, sem recorrência ou renovação automática, salvo se explicitamente acordado em ofertas futuras.</p>' +
+            '<h3>3. Entrega do Acesso</h3><p>A entrega é realizada de maneira eletrônica após a confirmação do pagamento pelas instituições financeiras homologadas (InfinitePay). As credenciais ou links são disponibilizados na tela e por e-mail.</p>' +
+            '<h3>4. Suporte ao Usuário</h3><p>Oferecemos auxílio de ativação e suporte técnico em horário comercial através do WhatsApp oficial (21) 99293-6790.</p>';
+        } else if (type === "privacidade") {
+          content.innerHTML = '<h2>Política de Privacidade</h2>' +
+            '<h3>1. Coleta de Informações</h3><p>Coletamos exclusivamente o e-mail e o número de telefone (WhatsApp) com o propósito estrito de entregar o acesso adquirido, enviar confirmações de pedidos e prestar suporte técnico.</p>' +
+            '<h3>2. Segurança dos Dados</h3><p>Seus dados são protegidos com protocolos modernos de criptografia. Dados bancários e de cartões de crédito são processados diretamente no ambiente criptografado da InfinitePay e nunca são armazenados em nossos servidores.</p>' +
+            '<h3>3. Compartilhamento</h3><p>A ORVEXA PRIME não vende nem compartilha suas informações de contato com terceiros sob nenhuma circunstância.</p>';
+        } else if (type === "reembolso") {
+          content.innerHTML = '<h2>Política de Reembolso e Garantia</h2>' +
+            '<h3>1. Garantia de Funcionamento</h3><p>Garantimos que todas as contas e links entregues estão ativos e prontos para utilização de acordo com o plano contratado.</p>' +
+            '<h3>2. Solicitação de Suporte</h3><p>Em caso de qualquer inconsistência no acesso ou ativação, o comprador tem direito ao reenvio imediato ou suporte personalizado da equipe técnica.</p>' +
+            '<h3>3. Cancelamento</h3><p>Em conformidade com a legislação de defesa do consumidor para produtos digitais, o cliente poderá solicitar cancelamento e estorno caso a ativação não seja viabilizada, contatando diretamente o canal oficial do WhatsApp.</p>';
+        }
+
+        openModal("legalModal");
+      }
+    })();
+  </script>
 </body>
 </html>
