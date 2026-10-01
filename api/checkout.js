@@ -5,6 +5,7 @@ const {
   INFINITEPAY_HANDLE,
   INFINITEPAY_API,
   PUBLIC_URL,
+  getPublicUrl,
   isValidEmail,
   newOrderNsu,
 } = require("../lib/products");
@@ -32,7 +33,9 @@ module.exports = async function handler(req, res) {
     if (!item) {
       return res.status(400).json({ error: "Produto inválido." });
     }
-    if (!INFINITEPAY_HANDLE || !PUBLIC_URL) {
+
+    const baseUrl = getPublicUrl(req);
+    if (!INFINITEPAY_HANDLE || !baseUrl) {
       return res
         .status(500)
         .json({ error: "Checkout ainda não configurado (INFINITEPAY_HANDLE / PUBLIC_URL)." });
@@ -61,8 +64,8 @@ module.exports = async function handler(req, res) {
         handle: INFINITEPAY_HANDLE,
         items: [{ quantity: 1, price: item.priceCents, description: item.title }],
         order_nsu,
-        redirect_url: `${PUBLIC_URL}/api/entrega?pagamento=aprovado&produto=${produto}&order_nsu=${order_nsu}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(buyerPhone)}`,
-        webhook_url: `${PUBLIC_URL}/api/webhook`,
+        redirect_url: `${baseUrl}/api/entrega?pagamento=aprovado&produto=${produto}&order_nsu=${order_nsu}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(buyerPhone)}`,
+        webhook_url: `${baseUrl}/api/webhook`,
         customer: ipCustomer,
         metadata: { produto, email, phone: buyerPhone, order_nsu },
       }),
