@@ -3,12 +3,9 @@
 const { PRODUCTS, isValidEmail } = require("../lib/products");
 const {
   getOrder,
-  setOrderStatus,
-  alreadyDelivered,
-  markDelivered,
-  popStockAccount,
+  deliverOrder,
+  markEmailSent,
   stockCount,
-  recordSale,
 } = require("../lib/store");
 const { sendEmail, emailMuseIa, emailFlowAiPro, emailSuperDuolingo } = require("../lib/email");
 
@@ -29,9 +26,6 @@ module.exports = async function handler(req, res) {
   try {
     const { order_nsu, transaction_nsu, paid_amount, amount } = req.body || {};
     if (!order_nsu || !transaction_nsu) return res.status(200).end();
-
-    // Idempotência: ignora avisos repetidos da mesma transação
-    if (await alreadyDelivered(transaction_nsu)) return res.status(200).end();
 
     const order = await getOrder(order_nsu);
     let produtoKey = order && order.produto;
@@ -60,149 +54,71 @@ module.exports = async function handler(req, res) {
     const buyerEmail = (order && order.email) || (req.body.customer && req.body.customer.email) || (req.body.metadata && req.body.metadata.email) || "";
     const buyerPhone = (order && order.phone) || (req.body.customer && (req.body.customer.phone || req.body.customer.phone_number)) || (req.body.metadata && req.body.metadata.phone) || "";
 
-    let deliveredText = "";
-
-    // Se já foi entregue na tela em /api/entrega, reutiliza o mesmo item para não gastar outro do estoque
-    if (order && order.delivered_item) {
-      deliveredText = order.delivered_item;
-      if (isValidEmail(buyerEmail)) {
-        try {
-          if (produtoKey === "muse-ia" && deliveredText.includes(";")) {
-            const [l, s] = deliveredText.split(";");
-            await sendEmail(buyerEmail, `🚀 Seu acesso à ${produto.short} foi liberado!`, emailMuseIa({ login: l, senha: s }));
-          } else if (produtoKey === "flow-ai-pro") {
-            await sendEmail(buyerEmail, `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`, emailFlowAiPro({ link: deliveredText }));
-          }
-        } catch (errEmail) {
-          console.warn("Aviso envio de e-mail (reentrega):", errEmail.message);
-        }
-      }
-      await markDelivered(transaction_nsu);
-      return res.status(200).end();
-    }
-
-    // ---- 1. MUSE IA: Estoque de login e senha + procedimento ----
-    if (produtoKey === "muse-ia") {
-      const account = await popStockAccount("muse-ia");
-      if (!account) {
-        console.error("⚠️ ESTOQUE ESGOTADO DE MUSE IA! Pagamento aprovado sem conta para entregar.");
-        deliveredText = "⚠️ Estoque esgotado — reposição manual necessária";
-        await notifyAdmin(
-          "⚠️ Estoque de MUSE IA esgotado",
-          `<p>Pagamento aprovado para <b>${buyerEmail}</b> (pedido ${order_nsu}), mas <b>não havia contas de MUSE IA no estoque</b>. Envie pelo WhatsApp ou cadastre novas contas no painel admin.</p>`
-        );
-      } else {
-        deliveredText = `${account.login};${account.senha}`;
-        if (isValidEmail(buyerEmail)) {
-          try {
-            await sendEmail(
-              buyerEmail,
-              `🚀 Seu acesso à ${produto.short} foi liberado!`,
-              emailMuseIa({ login: account.login, senha: account.senha })
-            );
-          } catch (errEmail) {
-            console.warn("Aviso envio de e-mail (MUSE IA):", errEmail.message);
-          }
-        }
-      }
-    }
-
-    // ---- 2. Gemini Pro (Google Flow + AI Pro 18 meses): Link de ativação ----
-    else if (produtoKey === "flow-ai-pro") {
-      const linkObj = await popStockAccount("flow-ai-pro");
-      const linkUrl = linkObj ? (linkObj.link || linkObj.activation_link || linkObj.url || linkObj) : null;
-
-      if (!linkUrl) {
-        console.error("⚠️ ESTOQUE ESGOTADO DE GEMINI PRO 18M! Sem link de ativação.");
-        deliveredText = "⚠️ Estoque de links esgotado — reposição necessária";
-        await notifyAdmin(
-          "⚠️ Estoque de links Gemini Pro esgotado",
-          `<p>Pagamento aprovado para <b>${buyerEmail}</b> (${produto.title}, pedido ${order_nsu}), mas <b>não havia links de ativação no estoque</b>. Cadastre novos links no painel admin.</p>`
-        );
-      } else {
-        deliveredText = String(linkUrl);
-        if (isValidEmail(buyerEmail)) {
-          try {
-            await sendEmail(
-              buyerEmail,
-              `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`,
-              emailFlowAiPro({ link: linkUrl })
-            );
-          } catch (errEmail) {
-            console.warn("Aviso envio de e-mail (Flow AI Pro):", errEmail.message);
-          }
-        }
-      }
-    }
-
-    // ---- 3. Super Duolingo: Link de convite ----
-    else if (produtoKey === "super-duolingo") {
-      const duoObj = await popStockAccount("super-duolingo");
-      const duoLink = duoObj ? (duoObj.link || duoObj.invite_link || duoObj.url || duoObj) : null;
-
-      if (!duoLink) {
-        console.error("⚠️ ESTOQUE ESGOTADO DE DUOLINGO! Sem link de convite.");
-        deliveredText = "⚠️ Estoque de convites esgotado — reposição necessária";
-        await notifyAdmin(
-          "⚠️ Estoque de convites Duolingo esgotado",
-          `<p>Pagamento aprovado para <b>${buyerEmail}</b> (${produto.title}, pedido ${order_nsu}), mas <b>não havia convites no estoque</b>.</p>`
-        );
-      } else {
-        deliveredText = String(duoLink);
-        if (isValidEmail(buyerEmail)) {
-          try {
-            await sendEmail(
-              buyerEmail,
-              `🦉 Seu Super Duolingo (1 Ano) Está Liberado!`,
-              emailSuperDuolingo({ link: duoLink })
-            );
-          } catch (errEmail) {
-            console.warn("Aviso envio de e-mail (Duolingo):", errEmail.message);
-          }
-        }
-      }
-    }
-
-    // Registra a venda no histórico do painel e envia notificações (WhatsApp/Webhook)
-    const hasItem = deliveredText && !deliveredText.startsWith("⚠️");
-    const saleRecord = {
-      id: `sale-${Date.now()}`,
-      order_nsu,
-      transaction_nsu: String(transaction_nsu),
-      email: buyerEmail || "cliente@orvexa.digital",
-      phone: buyerPhone || "",
+    // Executa entrega atômica e idempotente (evita qualquer retirada duplicada do estoque)
+    const delivery = await deliverOrder({
+      orderNsu: order_nsu,
+      transactionNsu: transaction_nsu,
       produto: produtoKey,
-      produto_nome: produto.title,
-      valor: produto.priceBRL,
-      conta_entregue: deliveredText,
-      data: new Date().toISOString(),
-      status: hasItem ? "pago" : "pendente_envio",
-    };
-    await recordSale(saleRecord);
-
-    // Atualiza status do pedido com o item entregue para exibir em /api/entrega
-    await setOrderStatus(order_nsu, {
-      status: hasItem ? "pago" : "pendente_envio",
-      transaction_nsu: String(transaction_nsu),
-      delivered_item: deliveredText,
       email: buyerEmail,
       phone: buyerPhone,
-      produto: produtoKey,
-      paid_at: new Date().toISOString(),
     });
 
-    await markDelivered(transaction_nsu);
+    const deliveredText = delivery.deliveredItem;
+    const hasItem = deliveredText && !deliveredText.startsWith("⚠️");
 
-    // Alerta de estoque baixo
-    const remaining = await stockCount(produtoKey);
-    if (remaining <= 2) {
+    // Dispara envio de e-mail APENAS se ainda não tiver sido enviado
+    if (hasItem && !delivery.emailSent && isValidEmail(buyerEmail)) {
+      try {
+        if (produtoKey === "muse-ia" && deliveredText.includes(";")) {
+          const [l, s] = deliveredText.split(";");
+          await sendEmail(
+            buyerEmail,
+            `🚀 Seu acesso à ${produto.short} foi liberado!`,
+            emailMuseIa({ login: l, senha: s })
+          );
+          await markEmailSent(order_nsu);
+        } else if (produtoKey === "flow-ai-pro") {
+          await sendEmail(
+            buyerEmail,
+            `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`,
+            emailFlowAiPro({ link: deliveredText })
+          );
+          await markEmailSent(order_nsu);
+        } else if (produtoKey === "super-duolingo") {
+          await sendEmail(
+            buyerEmail,
+            `🦉 Seu Super Duolingo (1 Ano) Está Liberado!`,
+            emailSuperDuolingo({ link: deliveredText })
+          );
+          await markEmailSent(order_nsu);
+        }
+      } catch (errEmail) {
+        console.warn("Aviso envio de e-mail (webhook):", errEmail.message);
+      }
+    }
+
+    // Se estoque acabou e era uma entrega nova, avisa admin
+    if (delivery.isStockEmpty && delivery.isNewDelivery) {
       await notifyAdmin(
-        `⚠️ Estoque baixo: ${produto.short} (${remaining} restantes)`,
-        `<p>Restam apenas <b>${remaining}</b> itens de <b>${produto.title}</b> no estoque. Cadastre mais pelo painel admin.</p>`
+        `⚠️ Estoque esgotado: ${produto.short}`,
+        `<p>Pagamento aprovado para <b>${buyerEmail}</b> (${produto.title}, pedido ${order_nsu}), mas <b>não havia itens no estoque</b>.</p>`
       );
     }
 
-    console.log(`✅ [VENDA PROCESSADA] ${produto.title} para ${buyerEmail} (pedido ${order_nsu})`);
+    // Alerta de estoque baixo se houve retirada
+    if (delivery.isNewDelivery && !delivery.isStockEmpty) {
+      try {
+        const remaining = await stockCount(produtoKey);
+        if (remaining <= 2) {
+          await notifyAdmin(
+            `⚠️ Estoque baixo: ${produto.short} (${remaining} restantes)`,
+            `<p>Restam apenas <b>${remaining}</b> itens de <b>${produto.title}</b> no estoque. Cadastre mais pelo painel admin.</p>`
+          );
+        }
+      } catch (eCnt) {}
+    }
+
+    console.log(`✅ [WEBHOOK SUCESSO] ${produto.title} para ${buyerEmail} (pedido ${order_nsu})`);
     return res.status(200).end();
   } catch (e) {
     console.error("Erro no webhook:", e.message);

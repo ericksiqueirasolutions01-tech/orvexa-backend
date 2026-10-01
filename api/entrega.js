@@ -1,7 +1,7 @@
 // GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...&email=...&phone=...
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
 const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
-const { getOrder, setOrderStatus, popStockAccount, recordSale } = require("../lib/store");
+const { getOrder, deliverOrder, markEmailSent } = require("../lib/store");
 const { sendEmail, emailMuseIa, emailFlowAiPro } = require("../lib/email");
 
 module.exports = async function handler(req, res) {
@@ -34,70 +34,39 @@ module.exports = async function handler(req, res) {
 
   let deliveredItem = (order && order.delivered_item) || "";
 
-  // Se o pagamento foi aprovado e a conta ainda não foi entregue, retira do estoque persistente
-  if (status === "aprovado" && !deliveredItem) {
+  // Se o pagamento foi aprovado, realiza entrega atômica e idempotente
+  if (status === "aprovado" && orderNsu) {
     try {
-      const item = await popStockAccount(produtoKey);
-      if (item) {
-        if (produtoKey === "muse-ia") {
-          deliveredItem = `${item.login};${item.senha}`;
-        } else {
-          deliveredItem = String(item.link || item.activation_link || item.url || item);
-        }
+      const delivery = await deliverOrder({
+        orderNsu,
+        transactionNsu: (order && order.transaction_nsu) || "",
+        produto: produtoKey,
+        email: buyerEmail,
+        phone: buyerPhone,
+      });
 
-        if (orderNsu) {
-          await setOrderStatus(orderNsu, {
-            status: "pago",
-            delivered_item: deliveredItem,
-            email: buyerEmail,
-            phone: buyerPhone,
-            produto: produtoKey,
-          });
-        }
+      deliveredItem = delivery.deliveredItem;
+      if (delivery.produto) produtoKey = delivery.produto;
+      if (delivery.email && !buyerEmail) buyerEmail = delivery.email;
+      if (delivery.phone && !buyerPhone) buyerPhone = delivery.phone;
 
-        await recordSale({
-          id: `sale-${Date.now()}`,
-          order_nsu: orderNsu || `onscreen-${Date.now()}`,
-          transaction_nsu: (order && order.transaction_nsu) || `tx-onscreen-${Date.now()}`,
-          email: buyerEmail || "cliente@orvexa.digital",
-          phone: buyerPhone || "",
-          produto: produtoKey,
-          produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
-          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 59.99 : 37.00),
-          conta_entregue: deliveredItem,
-          data: new Date().toISOString(),
-          status: "pago",
-        });
-      } else {
-        // Estoque vazio: registra venda como pendente de envio manual para acompanhamento
-        await recordSale({
-          id: `sale-${Date.now()}`,
-          order_nsu: orderNsu || `onscreen-pendente-${Date.now()}`,
-          transaction_nsu: (order && order.transaction_nsu) || `tx-pendente-${Date.now()}`,
-          email: buyerEmail || "cliente@orvexa.digital",
-          phone: buyerPhone || "",
-          produto: produtoKey,
-          produto_nome: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].title) || produtoKey,
-          valor: (PRODUCTS[produtoKey] && PRODUCTS[produtoKey].priceBRL) || (produtoKey === "muse-ia" ? 59.99 : 37.00),
-          conta_entregue: "⚠️ Aguardando envio manual (estoque esgotado)",
-          data: new Date().toISOString(),
-          status: "pendente_envio",
-        });
+      // Dispara envio de e-mail complementar apenas se ainda NÃO foi enviado (pelo webhook ou outra requisição)
+      if (buyerEmail && deliveredItem && !deliveredItem.startsWith("⚠️") && !delivery.emailSent) {
+        try {
+          if (produtoKey === "muse-ia" && deliveredItem.includes(";")) {
+            const [l, s] = deliveredItem.split(";");
+            sendEmail(buyerEmail, "🚀 Seu acesso à MUSE IA foi liberado!", emailMuseIa({ login: l, senha: s })).catch(() => {});
+            await markEmailSent(orderNsu);
+          } else if (produtoKey === "flow-ai-pro") {
+            sendEmail(buyerEmail, "⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!", emailFlowAiPro({ link: deliveredItem })).catch(() => {});
+            await markEmailSent(orderNsu);
+          }
+        } catch (errM) {
+          console.warn("Aviso envio de e-mail em api/entrega:", errM.message);
+        }
       }
     } catch (ePop) {
-      console.error("Erro na entrega imediata em api/entrega:", ePop.message);
-    }
-
-    // Dispara envio de e-mail complementar caso Resend esteja configurado
-    if (buyerEmail && deliveredItem && !deliveredItem.startsWith("⚠️")) {
-      try {
-        if (produtoKey === "muse-ia" && deliveredItem.includes(";")) {
-          const [l, s] = deliveredItem.split(";");
-          sendEmail(buyerEmail, "🚀 Seu acesso à MUSE IA foi liberado!", emailMuseIa({ login: l, senha: s })).catch(() => {});
-        } else if (produtoKey === "flow-ai-pro") {
-          sendEmail(buyerEmail, "⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!", emailFlowAiPro({ link: deliveredItem })).catch(() => {});
-        }
-      } catch (errM) {}
+      console.error("Erro na entrega atômica em api/entrega:", ePop.message);
     }
   }
 
