@@ -1,556 +1,445 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prime Digital — IA de verdade, acesso imediato</title>
-<meta name="description" content="MUSE IA com 1 bilhão de tokens e Google Flow + AI Pro por 18 meses. Pagamento único, acesso imediato. Prime Digital — Conhecimento que transforma.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prime Digital — Catálogo de IAs</title>
+<meta name="description" content="MUSE IA (1 bilhão de tokens) e Google Flow + AI Pro (18 meses). Pagamento único, acesso imediato, suporte no WhatsApp.">
+<meta property="og:title" content="Prime Digital — Catálogo de IAs">
+<meta property="og:description" content="MUSE IA e Google Flow + AI Pro. Pagamento único, acesso imediato.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Prime Digital — As IAs mais desejadas, acesso imediato">
-<meta property="og:description" content="MUSE IA (1 bilhão de tokens) e Google Flow + AI Pro (18 meses). Pagamento único. Quem comprou, aprovou.">
 <meta property="og:image" content="assets/og-image.jpg">
-<meta name="theme-color" content="#07080f">
+<link rel="icon" href="assets/logo-prime.png">
 <style>
-:root{
-  --bg:#07080f; --txt:#f5f7ff; --mut:#a9adc7;
-  --blue:#4f7cff; --purple:#a855f7; --lime:#b8ff29;
-  --glass:rgba(17,19,33,.58); --stroke:rgba(255,255,255,.10);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--red:#e50914;--bg:#141414;--bg2:#181818;--txt:#fff;--mut:#b3b3b3}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;overflow-x:hidden}
-img{max-width:100%;display:block;height:auto}
-a{color:var(--blue)}
-.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
-section{padding:72px 0;position:relative}
-/* ---------- animated mesh background ---------- */
-.bg-fx{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg)}
-.bg-fx i{position:absolute;width:62vmax;height:62vmax;border-radius:50%;filter:blur(90px);opacity:.5;animation:drift 26s ease-in-out infinite alternate}
-.bg-fx i:nth-child(1){background:#1e40af;top:-18%;left:-12%}
-.bg-fx i:nth-child(2){background:#6d28d9;bottom:-22%;right:-14%;animation-delay:-9s}
-.bg-fx i:nth-child(3){background:#4d7c0f;top:38%;left:58%;opacity:.26;animation-delay:-17s}
-@keyframes drift{to{transform:translate(9vmax,7vmax) scale(1.15)}}
-/* ---------- reveal on scroll ---------- */
-.rv{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-.rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
-/* ---------- type & buttons ---------- */
-h2.sec{font-size:clamp(28px,6vw,44px);margin:0 0 10px;letter-spacing:-1px;text-align:center;line-height:1.12}
-h2.sec .grad{background:linear-gradient(90deg,var(--blue),var(--purple),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
-p.sub{text-align:center;color:var(--mut);margin:0 0 40px;font-size:clamp(15px,3vw,18px)}
-.btn{display:inline-block;text-decoration:none;font-weight:800;border-radius:14px;padding:15px 28px;font-size:16px;transition:transform .15s,box-shadow .15s,filter .15s;border:0;cursor:pointer}
-.btn:active{transform:scale(.97)}
-.btn:hover{filter:brightness(1.08)}
-.btn-lime{background:var(--lime);color:#0b1002;box-shadow:0 10px 32px rgba(184,255,41,.28)}
-.btn-blue{background:linear-gradient(90deg,var(--blue),var(--purple));color:#fff;box-shadow:0 10px 32px rgba(79,124,255,.35)}
-.btn-ghost{background:rgba(255,255,255,.05);color:var(--txt);border:1px solid var(--stroke);backdrop-filter:blur(10px)}
-.btn-sm{padding:11px 20px;font-size:14px}
-.glass{background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--stroke);border-radius:24px}
-/* ---------- header ---------- */
-.topbar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(7,8,15,.66);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--stroke)}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:10px;padding-bottom:10px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--txt);font-weight:800;font-size:17px}
-.brand img{width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px rgba(184,255,41,.35)}
-.brand small{display:block;font-size:10px;color:var(--mut);font-weight:400;letter-spacing:1.5px}
-.nav{display:none;gap:22px}
-@media(min-width:760px){.nav{display:flex}}
-.nav a{color:var(--mut);text-decoration:none;font-size:14px;font-weight:600}
-.nav a:hover{color:var(--txt)}
-/* ---------- hero ---------- */
-.hero{min-height:100svh;display:flex;align-items:center;padding:130px 0 80px;position:relative}
-.hero::before{content:"";position:absolute;inset:0;background:url("assets/hero-bg.jpg") center/cover no-repeat;opacity:.14;pointer-events:none}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--bg) 96%);pointer-events:none}
-.hero .wrap{position:relative;z-index:1;text-align:center}
-.pill{display:inline-block;font-size:12px;font-weight:800;letter-spacing:2.5px;color:var(--lime);border:1px solid rgba(184,255,41,.45);border-radius:999px;padding:9px 20px;margin-bottom:26px;background:rgba(184,255,41,.07);backdrop-filter:blur(8px)}
-.hero h1{font-size:clamp(44px,11vw,96px);line-height:1.02;margin:0 0 22px;letter-spacing:-3px;font-weight:900}
-.hero h1 .grad{background:linear-gradient(92deg,var(--blue) 0%,var(--purple) 48%,var(--lime) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.lead{color:var(--mut);font-size:clamp(16px,3.6vw,21px);max-width:660px;margin:0 auto 36px}
-.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
-/* animated counters */
-.cstats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.cstat{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--stroke);border-radius:18px;padding:18px 26px;min-width:150px}
-.cstat b{display:block;font-size:clamp(24px,5vw,34px);letter-spacing:-1px;background:linear-gradient(90deg,#fff,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
-.cstat span{font-size:13px;color:var(--mut)}
-.scroll-hint{margin-top:44px;color:var(--mut);font-size:12px;letter-spacing:3px;animation:bob 2.2s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(8px)}}
-/* ---------- products: sticky chapters ---------- */
-.pchap{display:grid;gap:24px;margin-bottom:72px}
-.pchap:last-child{margin-bottom:0}
-@media(min-width:920px){
-  .pchap{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:start}
-  .pchap.rev .pmedia{order:2}
-  .pmedia{position:sticky;top:96px}
-}
-.pmedia{overflow:hidden;position:relative}
-.pmedia .ph{height:210px;background-size:cover;background-position:center;position:relative;display:flex;align-items:center;justify-content:center}
-@media(min-width:920px){.pmedia .ph{height:260px}}
-.pmedia .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(10,11,20,.88))}
-.pmedia .ph img.plogo{position:relative;z-index:1;max-height:110px;max-width:64%;object-fit:contain;filter:drop-shadow(0 10px 26px rgba(0,0,0,.65))}
-.badge{position:absolute;top:16px;left:16px;z-index:2;background:var(--lime);color:#0b1002;font-size:11px;font-weight:800;letter-spacing:1.5px;border-radius:999px;padding:7px 15px;box-shadow:0 6px 20px rgba(184,255,41,.4)}
-.pmedia .pbody{padding:28px}
-.pmedia h3{margin:0 0 6px;font-size:clamp(24px,4vw,30px);letter-spacing:-.5px}
-.pmedia .tag{color:var(--mut);font-size:15px;margin:0 0 18px}
-.price-row{display:flex;align-items:baseline;gap:10px;margin:4px 0}
-.price{font-size:clamp(40px,7vw,54px);font-weight:900;letter-spacing:-2px}
-.price small{font-size:14px;color:var(--mut);font-weight:400;letter-spacing:0}
-.pmedia .btn{width:100%;text-align:center;margin-top:18px}
-.tut{margin:14px 0 0;font-size:13px;color:var(--mut);text-align:center}
-.pcontent{padding:6px 2px}
-.pcontent h4{font-size:13px;letter-spacing:2.5px;color:var(--lime);margin:0 0 18px;font-weight:800}
-.benefits{list-style:none;margin:0;padding:0}
-.benefits li{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--stroke);border-radius:14px;padding:14px 16px 14px 46px;position:relative;margin-bottom:10px;font-size:15px;color:#dde1f5}
-.benefits li::before{content:"✓";position:absolute;left:16px;top:13px;color:var(--lime);font-weight:900;font-size:17px}
-.benefits li b{color:#fff}
-.pnote{margin-top:16px;color:var(--mut);font-size:14px}
-/* ---------- features ---------- */
-.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(min-width:700px){.feat-grid{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:1020px){.feat-grid{grid-template-columns:repeat(4,1fr)}}
-.feat{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--stroke);border-radius:16px;padding:18px 16px;font-size:14px;transition:transform .2s,border-color .2s}
-.feat:hover{transform:translateY(-4px);border-color:rgba(184,255,41,.4)}
-.feat .ic{font-size:24px;display:block;margin-bottom:10px}
-.note-tech{text-align:center;color:var(--mut);font-size:14px;margin-top:28px}
-/* ---------- SOCIAL PROOF MARQUEE ---------- */
-#provas{overflow:hidden}
-.stars{text-align:center;font-size:22px;letter-spacing:6px;margin-bottom:8px}
-.marquee{overflow:hidden;padding:10px 0;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.mq-track{display:flex;gap:18px;width:max-content;padding:6px 0;animation:mqL 42s linear infinite}
-.mq-track.rev{animation:mqR 48s linear infinite}
-@keyframes mqL{to{transform:translateX(-50%)}}
-@keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-.marquee:hover .mq-track,.marquee.touch-paused .mq-track{animation-play-state:paused}
-@media (prefers-reduced-motion:reduce){.mq-track{animation:none}}
-.mq-card{flex:0 0 auto;width:min(300px,72vw);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;margin:0}
-.mq-card img{width:100%}
-.mq-card figcaption{padding:13px 15px;font-size:13px;color:var(--mut);border-top:1px solid var(--stroke)}
-.mq-card figcaption b{color:var(--lime)}
-.mq-live{display:inline-flex;align-items:center;gap:8px;justify-content:center;font-size:12px;font-weight:800;letter-spacing:2px;color:var(--lime);margin:0 0 26px}
-.mq-live::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime);animation:blink 1.6s ease-in-out infinite}
-@keyframes blink{50%{opacity:.35}}
-.live-row{text-align:center}
-/* ---------- steps ---------- */
-.steps{display:grid;grid-template-columns:1fr;gap:14px;max-width:920px;margin:0 auto}
-@media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr)}}
-.step{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--stroke);border-radius:18px;padding:26px 18px;text-align:center}
-.step .n{width:48px;height:48px;border-radius:16px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 8px 24px rgba(79,124,255,.35)}
-.step h4{margin:0 0 6px;font-size:16px}
-.step p{margin:0;font-size:13.5px;color:var(--mut)}
-/* ---------- faq ---------- */
-.faq{max-width:780px;margin:0 auto}
-.faq details{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--stroke);border-radius:16px;margin-bottom:10px;overflow:hidden}
-.faq summary{padding:19px 22px;cursor:pointer;font-weight:700;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:24px;color:var(--lime);flex-shrink:0;font-weight:300}
-.faq details[open] summary::after{content:"–"}
-.faq .a{padding:0 22px 20px;color:var(--mut);font-size:15px}
-/* ---------- final ---------- */
-.final-card{max-width:780px;margin:0 auto;padding:52px 30px;text-align:center;position:relative;overflow:hidden}
-.final-card::before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 50% 0%,rgba(168,85,247,.22),transparent 60%);pointer-events:none}
-.final-card h2{font-size:clamp(26px,5.5vw,38px);margin:0 0 10px;letter-spacing:-1px;position:relative}
-.final-card .sub{position:relative}
-.lookup{margin-top:36px;padding-top:30px;border-top:1px solid var(--stroke);position:relative}
-.lookup h3{margin:0 0 6px;font-size:19px}
-.lookup p{color:var(--mut);font-size:14px;margin:0 0 16px}
-.field-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-input[type=email],input[type=tel]{background:rgba(7,8,15,.7);border:1px solid var(--stroke);color:var(--txt);border-radius:12px;padding:14px 16px;font-size:16px;width:100%;max-width:320px}
-input:focus{outline:2px solid var(--blue);border-color:var(--blue)}
-#lookupResult{margin-top:16px;font-size:14px;color:var(--mut);text-align:left;max-width:560px;margin-left:auto;margin-right:auto}
-.order{background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-bottom:8px}
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--stroke);padding:40px 0 120px;color:var(--mut);font-size:13px;text-align:center}
-footer .brand{justify-content:center;margin-bottom:14px}
-/* ---------- sticky bar ---------- */
-.sticky{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(7,8,15,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--stroke);padding:10px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between}
-.sticky .t{font-size:13px;font-weight:700}
-.sticky .t small{display:block;color:var(--mut);font-weight:400;font-size:11px}
-/* ---------- modal ---------- */
-.modal-bg{position:fixed;inset:0;background:rgba(4,5,10,.82);backdrop-filter:blur(8px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-bg.open{display:flex}
-.modal{background:rgba(17,19,33,.92);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid var(--stroke);border-radius:22px;max-width:440px;width:100%;padding:32px 28px;position:relative;max-height:92svh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.modal h3{margin:0 0 4px;font-size:22px}
-.modal .m-sub{color:var(--mut);font-size:14px;margin:0 0 20px}
-.modal label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
-.modal input{max-width:none}
-.modal .btn{width:100%;margin-top:20px}
-.modal .close{position:absolute;top:12px;right:16px;background:none;border:0;color:var(--mut);font-size:28px;cursor:pointer;line-height:1}
-.m-err{display:none;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.4);color:#ff9a9a;border-radius:10px;padding:10px 14px;font-size:13.5px;margin-top:14px}
-.m-ok{display:none;text-align:center;padding:20px 0;color:var(--mut);font-size:14px}
-.spinner{display:none;text-align:center;margin-top:16px;color:var(--mut);font-size:14px}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+/* ---------- NAV ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:28px;padding:14px 4%;background:linear-gradient(180deg,rgba(0,0,0,.75),transparent);transition:background .3s}
+.nav.scrolled{background:#141414}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;letter-spacing:2px;font-size:17px}
+.brand img{width:38px;height:38px;border-radius:50%}
+.nav-links{display:flex;gap:20px;font-size:14px}
+.nav-links a{text-decoration:none;color:#e5e5e5}
+.nav-links a:hover{color:#fff}
+.nav-wa{margin-left:auto;background:var(--red);color:#fff;text-decoration:none;font-weight:700;font-size:14px;padding:9px 18px;border-radius:6px;white-space:nowrap}
+/* ---------- BILLBOARD ---------- */
+.billboard{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:url("assets/muse-card-bg.jpg") center/cover no-repeat}
+.billboard::before{content:"";position:absolute;inset:0;background:linear-gradient(77deg,rgba(0,0,0,.9) 25%,rgba(0,0,0,.4) 55%,transparent 78%)}
+.billboard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,20,.3) 0%,transparent 30%,transparent 55%,var(--bg) 100%)}
+.bb-content{position:relative;z-index:2;padding:0 4% 10vh;max-width:660px}
+.eyebrow{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:3px;font-size:14px;margin-bottom:16px}
+.eyebrow .n{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--red);border-radius:4px;font-size:18px;letter-spacing:0}
+.bb-logo{width:min(320px,58vw);filter:drop-shadow(0 8px 24px rgba(0,0,0,.75));margin-bottom:16px}
+.bb-tag{font-size:clamp(16px,2.4vw,22px);color:#f2f2f2;margin-bottom:12px;line-height:1.45;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.bb-meta{display:flex;gap:14px;align-items:center;font-size:14px;color:#d8d8d8;margin-bottom:24px;flex-wrap:wrap;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.bb-meta .top10{color:#ff6b6b;font-weight:800}
+.bb-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font-weight:800;font-size:16px;padding:13px 30px;border-radius:6px;text-decoration:none;color:#fff}
+.btn-red{background:var(--red)}
+.btn-red:hover{background:#f6121d}
+.btn-gray{background:rgba(109,109,110,.7)}
+.btn-gray:hover{background:rgba(109,109,110,.45)}
+.btn-wa{background:#25d366}
+/* ---------- ROWS ---------- */
+.row{position:relative;margin:30px 0}
+.row>h2{font-size:clamp(17px,2.4vw,22px);font-weight:700;margin:0 4% 4px}
+.track{display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;padding:16px 4%;margin:0;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.card{position:relative;flex:0 0 clamp(230px,27vw,330px);aspect-ratio:16/9;border-radius:8px;overflow:hidden;cursor:pointer;background:#222;transition:transform .25s}
+.card>img.bg{width:100%;height:100%;object-fit:cover}
+.card-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20%}
+.card-logo img{max-height:72%;filter:drop-shadow(0 6px 18px rgba(0,0,0,.85))}
+.card-hover{position:absolute;left:0;right:0;bottom:0;padding:34px 12px 10px;background:linear-gradient(transparent,rgba(0,0,0,.94));opacity:0;transition:opacity .25s}
+.card:hover{transform:scale(1.07);z-index:5}
+.card:hover .card-hover{opacity:1}
+.ch-actions{display:flex;gap:8px;margin-bottom:8px}
+.ch-btn{width:36px;height:36px;border-radius:50%;border:2px solid #fff;background:#fff;color:#000;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ch-btn.ghost{background:rgba(0,0,0,.4);color:#fff}
+.ch-meta b{display:block;font-size:14px}
+.ch-meta span{font-size:12px;color:var(--mut)}
+.play-big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.play-big span{width:64px;height:64px;border-radius:50%;background:rgba(229,9,20,.92);display:flex;align-items:center;justify-content:center;font-size:24px;padding-left:4px}
+.row-arrow{position:absolute;top:34px;bottom:16px;width:4%;min-width:34px;z-index:6;border:0;background:rgba(20,20,20,.55);color:#fff;font-size:34px;cursor:pointer;opacity:0;transition:opacity .2s;padding:0}
+.row:hover .row-arrow{opacity:1}
+.row-arrow.left{left:0;border-radius:0 8px 8px 0}
+.row-arrow.right{right:0;border-radius:8px 0 0 8px}
+/* ---------- PROOFS ---------- */
+.pcard{flex:0 0 188px;border-radius:8px;overflow:hidden;background:var(--bg2)}
+.pcard img{width:100%;aspect-ratio:9/12;object-fit:cover;object-position:top}
+.pcard p{font-size:12px;color:var(--mut);padding:10px;min-height:54px;line-height:1.4}
+/* ---------- FAQ ---------- */
+.faq{padding:44px 4%;max-width:900px;margin:0 auto}
+.faq h2{text-align:center;margin-bottom:24px;font-size:clamp(22px,4vw,32px)}
+.faq-item{background:#2d2d2d;margin-bottom:8px;border-radius:6px;overflow:hidden}
+.faq-q{width:100%;text-align:left;background:none;border:0;color:#fff;font-size:17px;padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q .pm{font-size:26px;color:var(--mut);flex:0 0 auto}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a p{padding:0 24px 20px;color:#d8d8d8;font-size:15px;line-height:1.6}
+.faq-item.open .faq-a{max-height:260px}
+/* ---------- FINAL ---------- */
+.final{text-align:center;padding:70px 4%;border-top:8px solid #222}
+.final h2{font-size:clamp(24px,5vw,40px);margin-bottom:12px}
+.final>p{color:var(--mut);margin-bottom:26px}
+.final .bb-actions{justify-content:center}
+.lookup{max-width:520px;margin:36px auto 0;background:var(--bg2);padding:26px;border-radius:8px;text-align:left}
+.lookup h3{margin-bottom:6px}
+.lookup>p{color:var(--mut);font-size:14px;margin-bottom:14px}
+.lookup input{width:100%;padding:13px;border-radius:6px;border:1px solid #444;background:#0f0f0f;color:#fff;font-size:15px;margin-bottom:12px}
+.lookup .btn{width:100%;justify-content:center}
+#lookupResult{font-size:14px;color:#d8d8d8;margin-top:6px}
+/* ---------- FOOTER ---------- */
+footer{padding:30px 4%;color:#757575;font-size:13px;line-height:1.7}
+/* ---------- MODALS ---------- */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:4vh 12px;overflow-y:auto}
+.mbg.open{display:flex}
+.modal{background:var(--bg2);border-radius:10px;max-width:860px;width:100%;overflow:hidden;position:relative;animation:pop .25s}
+@keyframes pop{from{transform:scale(.96);opacity:0}}
+.m-hero{position:relative;aspect-ratio:16/8;background-size:cover;background-position:center;min-height:280px}
+.m-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,var(--bg2))}
+.m-hero img.mlogo{position:absolute;left:5%;bottom:10%;z-index:2;width:min(300px,52%);filter:drop-shadow(0 8px 22px rgba(0,0,0,.8))}
+.m-close{position:absolute;top:14px;right:14px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:#181818;color:#fff;font-size:18px;cursor:pointer}
+.m-body{padding:6px 5% 34px}
+.m-body h3{font-size:26px;margin-bottom:6px}
+.m-tag{color:#d5d5d5;margin-bottom:6px;line-height:1.5}
+.m-price{display:flex;align-items:baseline;gap:10px;margin:14px 0 4px}
+.m-price b{font-size:30px}
+.m-price span{color:var(--mut);font-size:14px}
+.m-bens{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:18px 0;list-style:none}
+.m-bens li{font-size:14px;color:#e8e8e8;padding-left:22px;position:relative;line-height:1.45}
+.m-bens li::before{content:"✔";position:absolute;left:0;color:var(--red);font-weight:800}
+.m-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.m-tut{color:var(--mut);font-size:13px;margin-top:16px;line-height:1.6}
+.m-tut a{color:#fff}
+/* checkout */
+.co{max-width:460px;padding:34px 30px}
+.co h3{font-size:22px;margin-bottom:6px}
+.co .sub{color:var(--mut);font-size:14px;margin-bottom:8px}
+.co label{display:block;font-size:13px;color:var(--mut);margin:14px 0 6px}
+.co input{width:100%;padding:13px;border-radius:6px;border:1px solid #444;background:#0f0f0f;color:#fff;font-size:15px}
+.co .btn{width:100%;justify-content:center;margin-top:22px}
+.err{display:none;background:#5c1114;color:#ffb4a9;padding:10px 14px;border-radius:6px;font-size:14px;margin-top:14px}
+.spin{display:none;text-align:center;color:var(--mut);margin-top:14px;font-size:14px}
+.okmsg{display:none;text-align:center;padding:20px 0;font-size:15px}
 .secure{margin-top:14px;font-size:12px;color:var(--mut);text-align:center}
+.order{background:#0f0f0f;border:1px solid #333;border-radius:6px;padding:10px 14px;margin-top:8px;font-size:14px}
+/* video modal */
+.vmodal{max-width:920px;background:#000}
+.vmodal video{width:100%;aspect-ratio:16/9;display:block;background:#000}
+@media(max-width:700px){
+  .nav-links{display:none}
+  .m-bens{grid-template-columns:1fr}
+  .row-arrow{display:none}
+  .billboard{min-height:80vh}
+  .brand{font-size:14px}
+}
 </style>
 </head>
 <body>
-<div class="bg-fx" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<!-- ══════════════ CONFIG — edite aqui ══════════════ -->
-<script>
-const CONFIG = {
-  BACKEND_URL: (window.location.origin && window.location.origin.startsWith("http") && !window.location.origin.includes("localhost")) ? window.location.origin : "https://www.orvexaprime.com.br", // URL do backend
-  WHATSAPP_NUMBER: "5521992936790",                 // só dígitos, com DDI+DDD
-  WHATSAPP_DISPLAY: "(21) 99293-6790"
-};
-const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
-</script>
+<nav class="nav" id="nav">
+  <a class="brand" href="#topo"><img src="assets/logo-prime.png" alt="Prime Digital">PRIME DIGITAL</a>
+  <div class="nav-links">
+    <a href="#topo">Início</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#provas">Prova social</a>
+    <a href="#duvidas">Dúvidas</a>
+  </div>
+  <a class="nav-wa" id="navWa" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+</nav>
 
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="#topo">
-      <img src="assets/logo-prime.png" alt="Prime Digital" width="400" height="487">
-      <span>PRIME DIGITAL<small>CONHECIMENTO QUE TRANSFORMA</small></span>
-    </a>
-    <nav class="nav">
-      <a href="#ofertas">Ofertas</a>
-      <a href="#provas">Provas</a>
-      <a href="#faq">Dúvidas</a>
-    </nav>
-    <a class="btn btn-lime btn-sm" href="#ofertas">Ver ofertas</a>
+<header class="billboard" id="topo">
+  <div class="bb-content">
+    <div class="eyebrow"><span class="n">P</span>ORIGINAL PRIME DIGITAL</div>
+    <img class="bb-logo" src="assets/logo-muse.png" alt="MUSE IA">
+    <p class="bb-tag">A IA da Meta que chegou para revolucionar. 1 bilhão de tokens para criar imagens, vídeos, textos e muito mais.</p>
+    <div class="bb-meta"><span class="top10">#1 em IAs hoje</span><span>2026</span><span>Pagamento único</span><span>Acesso imediato</span></div>
+    <div class="bb-actions">
+      <button class="btn btn-red" data-checkout="muse-ia" data-name="MUSE IA">▶ Quero agora</button>
+      <button class="btn btn-gray" data-detail="muse-ia">ⓘ Mais informações</button>
+    </div>
   </div>
 </header>
 
-<!-- 1. HERO -->
-<section class="hero" id="topo">
-  <div class="wrap">
-    <span class="pill">⚡ ACESSO IMEDIATO &nbsp;•&nbsp; PAGAMENTO ÚNICO</span>
-    <h1 class="rv in">IA de verdade.<br><span class="grad">Na sua mão</span> hoje.</h1>
-    <p class="lead rv in d1">MUSE IA com 1 bilhão de tokens e Google Flow + AI Pro por 18 meses. Sem mensalidade, sem burocracia: pagou, acessou.</p>
-    <div class="hero-ctas rv in d2">
-      <a class="btn btn-lime" href="#ofertas">🔥 Ver ofertas</a>
-      <a class="btn btn-ghost" id="heroWa" href="#" target="_blank" rel="noopener">💬 Chamar no WhatsApp</a>
-    </div>
-    <div class="cstats rv in d3">
-      <div class="cstat"><b><span class="count" data-count="1000000000" data-final="1 bilhão">0</span></b><span>de tokens na MUSE IA</span></div>
-      <div class="cstat"><b><span class="count" data-count="18">0</span></b><span>meses de Google AI Pro</span></div>
-      <div class="cstat"><b><span class="count" data-count="19">0</span></b><span>recursos de IA</span></div>
-      <div class="cstat"><b><span class="count" data-count="5">0</span></b><span>TB no Google Drive</span></div>
-    </div>
-    <div class="scroll-hint">▼ ROLE PARA EXPLORAR ▼</div>
-  </div>
-</section>
-
-<!-- 2. PRODUTOS -->
-<section id="ofertas">
-  <div class="wrap">
-    <h2 class="sec rv">Escolha seu <span class="grad">acesso</span></h2>
-    <p class="sub rv d1">Pagamento único via Pix ou cartão. Sem mensalidade.</p>
-
-    <!-- MUSE IA -->
-    <article class="pchap rv">
-      <div class="pmedia glass">
-        <span class="badge">🔥 EM DESTAQUE</span>
-        <div class="ph" style="background-image:url('assets/muse-card-bg.jpg')">
-          <img class="plogo" src="assets/logo-muse.png" alt="MUSE IA" width="437" height="408" loading="lazy">
-        </div>
-        <div class="pbody">
-          <h3>MUSE IA</h3>
-          <p class="tag">A IA da Meta que chegou para revolucionar.</p>
-          <div class="price-row"><span class="price">R$ 59,99</span><small>pagamento único</small></div>
-          <button class="btn btn-lime" data-checkout="muse-ia" data-name="MUSE IA">Quero a MUSE IA</button>
-          <p class="tut">Tecnologia Muse, da Meta Superintelligence Labs.</p>
+<main>
+  <!-- CATÁLOGO -->
+  <section class="row" id="catalogo">
+    <h2>Catálogo</h2>
+    <button class="row-arrow left" data-scroll="-1" aria-label="Anterior">‹</button>
+    <div class="track">
+      <div class="card" data-detail="muse-ia">
+        <img class="bg" src="assets/muse-card-bg.jpg" alt="MUSE IA" loading="lazy">
+        <div class="card-logo"><img src="assets/logo-muse.png" alt="MUSE IA" loading="lazy"></div>
+        <div class="card-hover">
+          <div class="ch-actions">
+            <button class="ch-btn" data-checkout="muse-ia" data-name="MUSE IA" title="Quero esse">▶</button>
+            <button class="ch-btn ghost" data-detail="muse-ia" title="Detalhes">ⓘ</button>
+          </div>
+          <div class="ch-meta"><b>MUSE IA</b><span>R$ 59,99 • pagamento único</span></div>
         </div>
       </div>
-      <div class="pcontent">
-        <h4>O QUE VEM INCLUSO</h4>
-        <ul class="benefits">
-          <li><b>Conta pronta</b> com 1 bilhão de tokens inclusos</li>
-          <li>Cria imagens, edita e transforma fotos</li>
-          <li>Gera vídeos com inteligência artificial</li>
-          <li>Cria documentos, textos e conteúdos</li>
-          <li>Pesquisa na internet e raciocínio avançado</li>
-          <li>Agente de IA que executa tarefas sozinho</li>
-          <li>30+ efeitos de IA para Instagram</li>
-          <li>Recarga de tokens disponível com a equipe</li>
-        </ul>
-        <p class="pnote">💬 Entrega com passo a passo de acesso e suporte no WhatsApp.</p>
-      </div>
-    </article>
-
-    <!-- FLOW + AI PRO -->
-    <article class="pchap rev rv">
-      <div class="pmedia glass">
-        <div class="ph" style="background-image:url('assets/muse-card-bg.jpg')">
-          <img class="plogo" src="assets/logo-gemini.png" alt="Google Flow + Google AI Pro" width="376" height="343" loading="lazy">
-        </div>
-        <div class="pbody">
-          <h3>Google Flow + AI Pro</h3>
-          <p class="tag">18 meses de IA do Google na sua própria conta.</p>
-          <div class="price-row"><span class="price">R$ 37,00</span><small>pagamento único</small></div>
-          <button class="btn btn-blue" data-checkout="flow-ai-pro" data-name="Google Flow + AI Pro">Quero o Flow + AI Pro</button>
-          <p class="tut">🎬 <a href="https://www.youtube.com/shorts/6yournVyUWI" target="_blank" rel="noopener">Ver tutorial de ativação</a></p>
+      <div class="card" data-detail="flow-ai-pro">
+        <img class="bg" src="assets/google-card-bg.jpg" alt="Google Flow + AI Pro" loading="lazy">
+        <div class="card-logo"><img src="assets/logo-gemini.png" alt="Google Flow + AI Pro" loading="lazy"></div>
+        <div class="card-hover">
+          <div class="ch-actions">
+            <button class="ch-btn" data-checkout="flow-ai-pro" data-name="Google Flow + AI Pro" title="Quero esse">▶</button>
+            <button class="ch-btn ghost" data-detail="flow-ai-pro" title="Detalhes">ⓘ</button>
+          </div>
+          <div class="ch-meta"><b>Google Flow + AI Pro</b><span>R$ 37,00 • pagamento único</span></div>
         </div>
       </div>
-      <div class="pcontent">
-        <h4>O QUE VEM INCLUSO</h4>
-        <ul class="benefits">
-          <li><b>18 meses</b> de Google AI Pro</li>
-          <li>Modelos Gemini Pro e Flash</li>
-          <li>Google Flow: 1.000 créditos mensais (Veo e Omni)</li>
-          <li>Nano Banana Pro — criar e editar imagens</li>
-          <li>Veo — vídeos com IA</li>
-          <li>NotebookLM, AI Studio e Antigravity</li>
-          <li><b>5 TB</b> de armazenamento no Google Drive</li>
-          <li>Ativação na <b>sua</b> conta Google — sem enviar senha</li>
-        </ul>
-        <p class="pnote">🔒 Você ativa na sua própria conta. Nenhuma senha compartilhada.</p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- 3. TUDO QUE A MUSE IA FAZ -->
-<section id="recursos">
-  <div class="wrap">
-    <h2 class="sec rv">Tudo que a <span class="grad">MUSE IA</span> faz</h2>
-    <p class="sub rv d1">Uma conta, dezenas de possibilidades.</p>
-    <div class="feat-grid rv d2">
-      <div class="feat"><span class="ic">🎨</span>Criação de imagens</div>
-      <div class="feat"><span class="ic">🖼️</span>Edição e transformação de fotos</div>
-      <div class="feat"><span class="ic">🎬</span>Geração de vídeos</div>
-      <div class="feat"><span class="ic">📄</span>Criação de documentos, textos e conteúdos</div>
-      <div class="feat"><span class="ic">🔎</span>Pesquisa na internet</div>
-      <div class="feat"><span class="ic">🧠</span>Análise e raciocínio avançado</div>
-      <div class="feat"><span class="ic">📊</span>Criação de infográficos</div>
-      <div class="feat"><span class="ic">🔳</span>QR Codes</div>
-      <div class="feat"><span class="ic">✨</span>Restauração de fotos</div>
-      <div class="feat"><span class="ic">📸</span>30+ efeitos de IA para Instagram</div>
-      <div class="feat"><span class="ic">🧩</span>Combinação de várias imagens</div>
-      <div class="feat"><span class="ic">🌐</span>Navegação na web</div>
-      <div class="feat"><span class="ic">📝</span>Preenchimento de formulários</div>
-      <div class="feat"><span class="ic">🛒</span>Compras e reservas</div>
-      <div class="feat"><span class="ic">📧</span>Envio de e-mails</div>
-      <div class="feat"><span class="ic">🔗</span>Integração com aplicativos</div>
-      <div class="feat"><span class="ic">⚙️</span>Automação de tarefas</div>
-      <div class="feat"><span class="ic">⏰</span>Lembretes e monitoramento</div>
-      <div class="feat"><span class="ic">🤖</span>Agente de IA que executa tarefas sozinho</div>
     </div>
-    <p class="note-tech rv">Tecnologia Muse, da Meta Superintelligence Labs.</p>
-  </div>
-</section>
+    <button class="row-arrow right" data-scroll="1" aria-label="Próximo">›</button>
+  </section>
 
-<!-- 4. PROVA SOCIAL — MARQUEE -->
-<section id="provas">
-  <div class="wrap">
-    <div class="stars rv">⭐⭐⭐⭐⭐</div>
-    <h2 class="sec rv">Quem comprou, <span class="grad">aprovou</span></h2>
-    <div class="live-row rv d1"><p class="mq-live">VENDAS ACONTECENDO AGORA</p></div>
-    <p class="sub rv d1">Conversas reais com clientes no WhatsApp.</p>
-  </div>
-
-  <!-- fileira 1: rolando para a esquerda -->
-  <div class="marquee rv" aria-label="Depoimentos de clientes">
-    <div class="mq-track">
-      <figure class="mq-card"><img src="assets/prova-whats-2.jpg" alt="Cliente aprovando a ferramenta" width="610" height="540" loading="lazy"><figcaption><b>"Menino!!!! impressionante... ainda estou conhecendo a ferramenta. Outra qualidade"</b> — cliente MUSE IA</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-1.jpg" alt="Cliente confirmando acesso" width="610" height="395" loading="lazy"><figcaption><b>"Entrou, obrigado"</b> — cliente ativado com sucesso ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-3.jpg" alt="Cliente iniciando ativação" width="610" height="68" loading="lazy"><figcaption><b>"Ok, obrigado, vou fazer o procedimento agora"</b> — entrega passo a passo</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-2.jpg" alt="Cliente aprovando a ferramenta" width="610" height="540" loading="lazy"><figcaption><b>"Menino!!!! impressionante... ainda estou conhecendo a ferramenta. Outra qualidade"</b> — cliente MUSE IA</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-1.jpg" alt="Cliente confirmando acesso" width="610" height="395" loading="lazy"><figcaption><b>"Entrou, obrigado"</b> — cliente ativado com sucesso ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-3.jpg" alt="Cliente iniciando ativação" width="610" height="68" loading="lazy"><figcaption><b>"Ok, obrigado, vou fazer o procedimento agora"</b> — entrega passo a passo</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-2.jpg" alt="Cliente aprovando a ferramenta" width="610" height="540" loading="lazy"><figcaption><b>"Menino!!!! impressionante... ainda estou conhecendo a ferramenta. Outra qualidade"</b> — cliente MUSE IA</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-1.jpg" alt="Cliente confirmando acesso" width="610" height="395" loading="lazy"><figcaption><b>"Entrou, obrigado"</b> — cliente ativado com sucesso ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-3.jpg" alt="Cliente iniciando ativação" width="610" height="68" loading="lazy"><figcaption><b>"Ok, obrigado, vou fazer o procedimento agora"</b> — entrega passo a passo</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-2.jpg" alt="Cliente aprovando a ferramenta" width="610" height="540" loading="lazy"><figcaption><b>"Menino!!!! impressionante... ainda estou conhecendo a ferramenta. Outra qualidade"</b> — cliente MUSE IA</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-1.jpg" alt="Cliente confirmando acesso" width="610" height="395" loading="lazy"><figcaption><b>"Entrou, obrigado"</b> — cliente ativado com sucesso ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-whats-3.jpg" alt="Cliente iniciando ativação" width="610" height="68" loading="lazy"><figcaption><b>"Ok, obrigado, vou fazer o procedimento agora"</b> — entrega passo a passo</figcaption></figure>
-    </div>
-  </div>
-
-  <!-- fileira 2: rolando para a direita -->
-  <div class="marquee rv d1" aria-label="Entregas realizadas">
-    <div class="mq-track rev">
-      <figure class="mq-card"><img src="assets/prova-grupo-1.jpg" alt="Grupo VIP de clientes" width="800" height="512" loading="lazy"><figcaption>Comunidade <b>VIP</b> de clientes Prime Digital 💎</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-2.jpg" alt="Entrega realizada" width="800" height="571" loading="lazy"><figcaption>Entrega realizada e cliente satisfeito ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-3.jpg" alt="Entrega realizada" width="800" height="480" loading="lazy"><figcaption>Mais uma ativação concluída 🚀</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-grupo-1.jpg" alt="Grupo VIP de clientes" width="800" height="512" loading="lazy"><figcaption>Comunidade <b>VIP</b> de clientes Prime Digital 💎</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-2.jpg" alt="Entrega realizada" width="800" height="571" loading="lazy"><figcaption>Entrega realizada e cliente satisfeito ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-3.jpg" alt="Entrega realizada" width="800" height="480" loading="lazy"><figcaption>Mais uma ativação concluída 🚀</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-grupo-1.jpg" alt="Grupo VIP de clientes" width="800" height="512" loading="lazy"><figcaption>Comunidade <b>VIP</b> de clientes Prime Digital 💎</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-2.jpg" alt="Entrega realizada" width="800" height="571" loading="lazy"><figcaption>Entrega realizada e cliente satisfeito ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-3.jpg" alt="Entrega realizada" width="800" height="480" loading="lazy"><figcaption>Mais uma ativação concluída 🚀</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-grupo-1.jpg" alt="Grupo VIP de clientes" width="800" height="512" loading="lazy"><figcaption>Comunidade <b>VIP</b> de clientes Prime Digital 💎</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-2.jpg" alt="Entrega realizada" width="800" height="571" loading="lazy"><figcaption>Entrega realizada e cliente satisfeito ✅</figcaption></figure>
-      <figure class="mq-card"><img src="assets/prova-entrega-3.jpg" alt="Entrega realizada" width="800" height="480" loading="lazy"><figcaption>Mais uma ativação concluída 🚀</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- 5. PASSOS -->
-<section id="passos">
-  <div class="wrap">
-    <h2 class="sec rv">Escolha, pague e <span class="grad">acesse</span></h2>
-    <p class="sub rv d1">Do clique ao acesso em minutos.</p>
-    <div class="steps rv d2">
-      <div class="step"><div class="n">1</div><h4>Escolha</h4><p>Selecione MUSE IA ou Flow + AI Pro.</p></div>
-      <div class="step"><div class="n">2</div><h4>Informe</h4><p>Digite seu e-mail e WhatsApp com DDD.</p></div>
-      <div class="step"><div class="n">3</div><h4>Pague</h4><p>Pagamento único via Pix ou cartão na InfinitePay.</p></div>
-      <div class="step"><div class="n">4</div><h4>Acesse</h4><p>Receba as orientações e ative seu acesso.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 6. FAQ -->
-<section id="faq">
-  <div class="wrap">
-    <h2 class="sec rv">Perguntas <span class="grad">frequentes</span></h2>
-    <p class="sub rv d1">Tudo o que você precisa saber antes de garantir o seu.</p>
-    <div class="faq rv d2">
-      <details>
-        <summary>O pagamento é mensal?</summary>
-        <div class="a">Não. O pagamento é <b>único</b>, via InfinitePay (Pix ou cartão). Sem mensalidade e sem renovação automática.</div>
-      </details>
-      <details>
-        <summary>Como funcionam os tokens da MUSE IA?</summary>
-        <div class="a">Sua conta já vem com <b>1 bilhão de tokens</b> inclusos. Quando precisar de mais, a recarga é feita com o nosso suporte pelo WhatsApp.</div>
-      </details>
-      <details>
-        <summary>O que está incluso no Google AI Pro?</summary>
-        <div class="a"><b>5 TB</b> de armazenamento no Google Drive + <b>1.000 créditos mensais</b> do Google Flow, válidos por <b>18 meses</b>.</div>
-      </details>
-      <details>
-        <summary>Preciso enviar minha senha do Google?</summary>
-        <div class="a">Não. A ativação do Flow + AI Pro é feita <b>na sua própria conta Google</b> — você nunca compartilha sua senha.</div>
-      </details>
-      <details>
-        <summary>Como recebo meu acesso?</summary>
-        <div class="a">Após a confirmação do pagamento, você recebe as <b>orientações de ativação</b> passo a passo. Simples e rápido.</div>
-      </details>
-      <details>
-        <summary>Ainda tenho dúvidas. Como falo com vocês?</summary>
-        <div class="a">Chama no WhatsApp <b id="faqWaNum">(21) 99293-6790</b> — <a id="faqWaLink" href="#" target="_blank" rel="noopener">clique aqui para conversar</a>.</div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- 7. CTA FINAL + MEUS ACESSOS -->
-<section id="final">
-  <div class="wrap">
-    <div class="final-card glass rv">
-      <h2>Pronto para usar IA de verdade?</h2>
-      <p class="sub" style="margin-bottom:26px">Pagamento único. Acesso imediato. Suporte no WhatsApp.</p>
-      <div class="hero-ctas" style="margin-bottom:0">
-        <a class="btn btn-lime" href="#ofertas">🔥 Quero meu acesso</a>
-        <a class="btn btn-ghost" id="finalWa" href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
-      </div>
-      <div class="lookup">
-        <h3>🔍 Consultar meus acessos</h3>
-        <p>Já comprou? Digite o e-mail usado na compra para ver seus pedidos.</p>
-        <div class="field-row">
-          <input type="email" id="lookupEmail" placeholder="seu@email.com" autocomplete="email">
-          <button class="btn btn-blue btn-sm" id="lookupBtn" style="padding:14px 26px;font-size:16px">Consultar</button>
+  <!-- VÍDEO -->
+  <section class="row">
+    <h2>🎬 Criado pela MUSE IA</h2>
+    <div class="track">
+      <div class="card" data-video>
+        <img class="bg" src="assets/demo-muse-ia-poster.jpg" alt="Vídeo criado pela MUSE IA" loading="lazy">
+        <div class="play-big"><span>▶</span></div>
+        <div class="card-hover">
+          <div class="ch-meta"><b>Vídeo cinematográfico</b><span>Gerado 100% por inteligência artificial</span></div>
         </div>
-        <div id="lookupResult"></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- PROVA SOCIAL -->
+  <section class="row" id="provas">
+    <h2>⭐ Quem comprou, aprovou</h2>
+    <button class="row-arrow left" data-scroll="-1" aria-label="Anterior">‹</button>
+    <div class="track">
+      <div class="pcard"><img src="assets/prova-grupo-1.jpg" alt="Prova 1" loading="lazy"><p>Grupo CLUBE PRIME — clientes trocando resultados</p></div>
+      <div class="pcard"><img src="assets/prova-entrega-2.jpg" alt="Prova 2" loading="lazy"><p>Entrega feita no WhatsApp, cliente ativado</p></div>
+      <div class="pcard"><img src="assets/prova-entrega-3.jpg" alt="Prova 3" loading="lazy"><p>Acesso liberado e cliente usando na hora</p></div>
+      <div class="pcard"><img src="assets/prova-whats-1.jpg" alt="Prova 4" loading="lazy"><p>Conversa real: dúvida respondida, venda fechada</p></div>
+      <div class="pcard"><img src="assets/prova-whats-2.jpg" alt="Prova 5" loading="lazy"><p>Atendimento e entrega pelo WhatsApp</p></div>
+      <div class="pcard"><img src="assets/prova-whats-3.jpg" alt="Prova 6" loading="lazy"><p>Suporte pós-venda com a equipe</p></div>
+    </div>
+    <button class="row-arrow right" data-scroll="1" aria-label="Próximo">›</button>
+  </section>
+
+  <!-- DÚVIDAS -->
+  <section class="faq" id="duvidas">
+    <h2>Perguntas frequentes</h2>
+    <div class="faq-item">
+      <button class="faq-q">O pagamento é mensal?<span class="pm">+</span></button>
+      <div class="faq-a"><p>Não. O pagamento é <b>único</b>, via InfinitePay (Pix ou cartão). Sem mensalidade e sem renovação automática.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Como funcionam os tokens da MUSE IA?<span class="pm">+</span></button>
+      <div class="faq-a"><p>Sua conta já vem com <b>1 bilhão de tokens</b> inclusos. Quando precisar de mais, a recarga é feita com o nosso suporte pelo WhatsApp.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">O que está incluso no Google AI Pro?<span class="pm">+</span></button>
+      <div class="faq-a"><p><b>5 TB</b> de armazenamento no Google Drive + <b>1.000 créditos mensais</b> do Google Flow, válidos por <b>18 meses</b>.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Preciso enviar minha senha do Google?<span class="pm">+</span></button>
+      <div class="faq-a"><p>Não. A ativação do Flow + AI Pro é feita <b>na sua própria conta Google</b> — você nunca compartilha sua senha.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Como recebo meu acesso?<span class="pm">+</span></button>
+      <div class="faq-a"><p>Assim que o pagamento é confirmado, você recebe o <b>passo a passo de ativação</b> + suporte no WhatsApp <b id="faqWaNum">(21) 99293-6790</b>.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final">
+    <h2>Pronto para maratonar o futuro?</h2>
+    <p>Pagamento único. Sem mensalidade. Suporte no WhatsApp.</p>
+    <div class="bb-actions">
+      <button class="btn btn-red" data-checkout="muse-ia" data-name="MUSE IA">🔥 Quero a MUSE IA — R$ 59,99</button>
+      <a class="btn btn-wa" id="finalWa" href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
+    </div>
+    <div class="lookup">
+      <h3>🔍 Meus acessos</h3>
+      <p>Já comprou? Digite o e-mail usado na compra para ver seus pedidos.</p>
+      <input id="lookupEmail" type="email" placeholder="Seu e-mail" autocomplete="email">
+      <button class="btn btn-gray" id="lookupBtn">Consultar</button>
+      <div id="lookupResult"></div>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <div class="wrap">
-    <a class="brand" href="#topo">
-      <img src="assets/logo-prime.png" alt="Prime Digital" width="400" height="487" loading="lazy">
-      <span>PRIME DIGITAL<small>CONHECIMENTO QUE TRANSFORMA</small></span>
-    </a>
-    <p>Oferta independente. Google, Gemini e Muse são marcas de seus respectivos titulares.</p>
-    <p>© 2026 Prime Digital — Todos os direitos reservados.</p>
-  </div>
+  <p><b style="color:#b3b3b3">PRIME DIGITAL</b> — CONHECIMENTO QUE TRANSFORMA</p>
+  <p>Oferta independente. Google, Gemini e Muse são marcas de seus respectivos titulares.</p>
+  <p>© 2026 Prime Digital — Todos os direitos reservados.</p>
 </footer>
 
-<div class="sticky">
-  <div class="t">🔥 MUSE IA — R$ 59,99<small>pagamento único • acesso imediato</small></div>
-  <button class="btn btn-lime btn-sm" data-checkout="muse-ia" data-name="MUSE IA">Quero esse</button>
+<!-- MODAL DETALHE -->
+<div class="mbg" id="detailBg" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="m-close" data-close="detailBg">✕</button>
+    <div class="m-hero" id="dHero"><img class="mlogo" id="dLogo" src="" alt=""></div>
+    <div class="m-body">
+      <h3 id="dName"></h3>
+      <p class="m-tag" id="dTag"></p>
+      <div class="m-price" id="dPrice"></div>
+      <ul class="m-bens" id="dBens"></ul>
+      <div class="m-actions">
+        <button class="btn btn-red" id="dCta">🔥 Quero esse</button>
+      </div>
+      <p class="m-tut" id="dTut"></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VÍDEO -->
+<div class="mbg" id="videoBg" role="dialog" aria-modal="true">
+  <div class="modal vmodal">
+    <button class="m-close" data-close="videoBg">✕</button>
+    <video id="dVideo" controls playsinline preload="metadata" poster="assets/demo-muse-ia-poster.jpg">
+      <source src="assets/demo-muse-ia.mp4" type="video/mp4">
+      Seu navegador não suporta a reprodução deste vídeo.
+    </video>
+  </div>
 </div>
 
 <!-- MODAL CHECKOUT -->
-<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <button class="close" id="modalClose" aria-label="Fechar">×</button>
-    <h3 id="modalTitle">Finalizar pedido</h3>
-    <p class="m-sub" id="modalSub">MUSE IA — R$ 59,99 (pagamento único)</p>
+<div class="mbg" id="modalBg" role="dialog" aria-modal="true">
+  <div class="modal co">
+    <button class="m-close" data-close="modalBg">✕</button>
     <div id="modalForm">
+      <h3>Finalizar pedido</h3>
+      <p class="sub" id="modalSub"></p>
       <label for="fEmail">Seu e-mail</label>
-      <input type="email" id="fEmail" placeholder="seu@email.com" autocomplete="email">
+      <input id="fEmail" type="email" placeholder="voce@email.com" autocomplete="email">
       <label for="fPhone">Seu WhatsApp (com DDD)</label>
-      <input type="tel" id="fPhone" placeholder="(21) 99999-9999" inputmode="tel" autocomplete="tel">
-      <div class="m-err" id="mErr"></div>
-      <button class="btn btn-lime" id="payBtn">Continuar para o pagamento →</button>
-      <div class="spinner" id="mSpin">Gerando seu link de pagamento seguro…</div>
+      <input id="fPhone" type="tel" placeholder="(21) 99999-9999" autocomplete="tel">
+      <button class="btn btn-red" id="payBtn">Continuar para o pagamento →</button>
+      <div class="err" id="mErr"></div>
+      <div class="spin" id="mSpin">Gerando seu link de pagamento seguro…</div>
       <p class="secure">🔒 Pagamento processado pela InfinitePay (Pix ou cartão).</p>
     </div>
-    <div class="m-ok" id="mOk">Redirecionando para o pagamento…</div>
+    <div class="okmsg" id="mOk">✅ Pedido criado!<br>Redirecionando para o pagamento…</div>
   </div>
 </div>
-
 <script>
+const CONFIG = {
+  BACKEND_URL: (window.location.origin && window.location.origin.startsWith("http") && !window.location.origin.includes("localhost")) ? window.location.origin : "https://www.orvexaprime.com.br",
+  WHATSAPP_NUMBER: "5521992936790",
+  WHATSAPP_DISPLAY: "(21) 99293-6790"
+};
+const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
+
+var PRODUCTS = {
+  "muse-ia": {
+    nome: "MUSE IA",
+    tag: "A IA da Meta que chegou para revolucionar.",
+    preco: "R$ 59,99",
+    bg: "assets/muse-card-bg.jpg",
+    logo: "assets/logo-muse.png",
+    beneficios: [
+      "Conta pronta com 1 bilhão de tokens inclusos",
+      "Cria imagens, edita e transforma fotos",
+      "Gera vídeos com inteligência artificial",
+      "Cria documentos, textos e conteúdos",
+      "Pesquisa na internet e raciocínio avançado",
+      "Agente de IA que executa tarefas sozinho",
+      "30+ efeitos de IA para Instagram",
+      "Recarga de tokens disponível com a equipe"
+    ],
+    entrega: "💬 Entrega com passo a passo de acesso e suporte no WhatsApp."
+  },
+  "flow-ai-pro": {
+    nome: "Google Flow + AI Pro",
+    tag: "18 meses de IA do Google na sua própria conta.",
+    preco: "R$ 37,00",
+    bg: "assets/google-card-bg.jpg",
+    logo: "assets/logo-gemini.png",
+    beneficios: [
+      "18 meses de Google AI Pro",
+      "Modelos Gemini Pro e Flash",
+      "Google Flow: 1.000 créditos mensais (Veo e Omni)",
+      "Nano Banana Pro — criar e editar imagens",
+      "Veo — vídeos com IA",
+      "NotebookLM, AI Studio e Antigravity",
+      "5 TB de armazenamento no Google Drive",
+      "Ativação na sua conta Google — sem enviar senha"
+    ],
+    entrega: "🔒 Você ativa na sua própria conta. Nenhuma senha compartilhada.",
+    tutorial: "https://www.youtube.com/shorts/6yournVyUWI"
+  }
+};
+
 (function(){
-  // Links de WhatsApp a partir do CONFIG
-  ["heroWa","finalWa","faqWaLink"].forEach(function(id){
+  // WhatsApp links
+  ["navWa","finalWa"].forEach(function(id){
     var el = document.getElementById(id);
     if (el) el.href = WHATSAPP_URL;
   });
   var fn = document.getElementById("faqWaNum");
   if (fn) fn.textContent = CONFIG.WHATSAPP_DISPLAY;
 
-  // ---------- Reveal on scroll ----------
-  var rvEls = document.querySelectorAll(".rv:not(.in)");
-  if ("IntersectionObserver" in window && rvEls.length) {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    rvEls.forEach(function(el){ io.observe(el); });
-  } else {
-    rvEls.forEach(function(el){ el.classList.add("in"); });
-  }
+  // Nav solid on scroll
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.classList.toggle("scrolled", window.scrollY > 40); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
-  // ---------- Animated counters ----------
-  function fmt(n){ return n.toLocaleString("pt-BR"); }
-  var counted = false;
-  function runCounters(){
-    if (counted) return; counted = true;
-    document.querySelectorAll(".count").forEach(function(el){
-      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
-      var final = el.getAttribute("data-final");
-      var t0 = null, dur = 1500;
-      function step(ts){
-        if (!t0) t0 = ts;
-        var p = Math.min((ts - t0) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        if (p < 1) {
-          el.textContent = fmt(Math.round(target * eased));
-          requestAnimationFrame(step);
-        } else {
-          el.textContent = final || fmt(target);
-        }
-      }
-      requestAnimationFrame(step);
+  // Row arrows
+  document.querySelectorAll(".row-arrow").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var track = btn.parentElement.querySelector(".track");
+      var dir = parseInt(btn.getAttribute("data-scroll"), 10) || 1;
+      track.scrollBy({ left: dir * track.clientWidth * 0.8, behavior: "smooth" });
     });
-  }
-  var cstats = document.querySelector(".cstats");
-  if (cstats && "IntersectionObserver" in window) {
-    var cio = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if (e.isIntersecting) { runCounters(); cio.disconnect(); } });
-    }, { threshold: 0.3 });
-    cio.observe(cstats);
-  } else { runCounters(); }
-
-  // ---------- Marquee: pause on touch ----------
-  document.querySelectorAll(".marquee").forEach(function(m){
-    var t = null;
-    m.addEventListener("touchstart", function(){
-      m.classList.add("touch-paused");
-      if (t) clearTimeout(t);
-    }, { passive: true });
-    m.addEventListener("touchend", function(){
-      if (t) clearTimeout(t);
-      t = setTimeout(function(){ m.classList.remove("touch-paused"); }, 1500);
-    }, { passive: true });
   });
 
-  // ---------- Modal de checkout ----------
+  // ---------- Modals ----------
+  function openModal(id){
+    document.getElementById(id).classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal(id){
+    document.getElementById(id).classList.remove("open");
+    document.body.style.overflow = "";
+    if (id === "videoBg") { var v = document.getElementById("dVideo"); v.pause(); }
+  }
+  document.querySelectorAll(".mbg").forEach(function(bg){
+    bg.addEventListener("click", function(e){ if (e.target === bg) closeModal(bg.id); });
+  });
+  document.querySelectorAll("[data-close]").forEach(function(b){
+    b.addEventListener("click", function(){ closeModal(b.getAttribute("data-close")); });
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape") document.querySelectorAll(".mbg.open").forEach(function(m){ closeModal(m.id); });
+  });
+
+  // ---------- Detail modal ----------
+  var dHero = document.getElementById("dHero"), dLogo = document.getElementById("dLogo"),
+      dName = document.getElementById("dName"), dTag = document.getElementById("dTag"),
+      dPrice = document.getElementById("dPrice"), dBens = document.getElementById("dBens"),
+      dCta = document.getElementById("dCta"), dTut = document.getElementById("dTut");
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","&lt;":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+  function openDetail(id){
+    var p = PRODUCTS[id];
+    if (!p) return;
+    dHero.style.backgroundImage = "url('" + p.bg + "')";
+    dLogo.src = p.logo; dLogo.alt = p.nome;
+    dName.textContent = p.nome;
+    dTag.textContent = p.tag;
+    dPrice.innerHTML = "<b>" + esc(p.preco) + "</b><span>pagamento único</span>";
+    dBens.innerHTML = p.beneficios.map(function(b){ return "<li>" + esc(b) + "</li>"; }).join("");
+    dCta.setAttribute("data-checkout", id);
+    dCta.setAttribute("data-name", p.nome);
+    dTut.innerHTML = p.tutorial
+      ? '🎬 <a href="' + p.tutorial + '" target="_blank" rel="noopener">Ver tutorial de ativação</a><br>' + esc(p.entrega)
+      : esc(p.entrega);
+    openModal("detailBg");
+  }
+
+  // ---------- Checkout modal ----------
   var modalBg = document.getElementById("modalBg"),
-      modalClose = document.getElementById("modalClose"),
       modalSub = document.getElementById("modalSub"),
       fEmail = document.getElementById("fEmail"),
       fPhone = document.getElementById("fPhone"),
@@ -560,34 +449,19 @@ const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
       mOk = document.getElementById("mOk"),
       modalForm = document.getElementById("modalForm"),
       currentProduct = null, currentName = "", currentPrice = "";
-
   var PRICES = { "muse-ia": "R$ 59,99", "flow-ai-pro": "R$ 37,00" };
 
-  function openModal(produto, nome){
+  function openCheckout(produto, nome){
     currentProduct = produto; currentName = nome; currentPrice = PRICES[produto] || "";
-    document.getElementById("modalTitle").textContent = "Finalizar pedido";
     modalSub.textContent = nome + " — " + currentPrice + " (pagamento único)";
     mErr.style.display = "none"; mSpin.style.display = "none";
     mOk.style.display = "none"; modalForm.style.display = "block";
-    modalBg.classList.add("open");
-    document.body.style.overflow = "hidden";
-    setTimeout(function(){ fEmail.focus(); }, 100);
+    openModal("modalBg");
+    setTimeout(function(){ fEmail.focus(); }, 150);
   }
-  function closeModal(){
-    modalBg.classList.remove("open");
-    document.body.style.overflow = "";
-  }
-  document.querySelectorAll("[data-checkout]").forEach(function(btn){
-    btn.addEventListener("click", function(){ openModal(btn.getAttribute("data-checkout"), btn.getAttribute("data-name")); });
-  });
-  modalClose.addEventListener("click", closeModal);
-  modalBg.addEventListener("click", function(e){ if (e.target === modalBg) closeModal(); });
-  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeModal(); });
-
   function showErr(msg){ mErr.textContent = msg; mErr.style.display = "block"; }
   function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
 
-  // Máscara simples do telefone
   fPhone.addEventListener("input", function(){
     var d = fPhone.value.replace(/\D/g,"").slice(0,11);
     if (d.length > 6) fPhone.value = "("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
@@ -623,13 +497,37 @@ const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
     });
   });
 
-  // ---------- Consultar meus acessos ----------
+  // ---------- Global click delegation ----------
+  document.addEventListener("click", function(e){
+    var co = e.target.closest("[data-checkout]");
+    if (co) { e.stopPropagation(); openCheckout(co.getAttribute("data-checkout"), co.getAttribute("data-name")); return; }
+    if (e.target.closest("[data-video]")) {
+      openModal("videoBg");
+      var v = document.getElementById("dVideo");
+      if (v.paused) v.play().catch(function(){});
+      return;
+    }
+    var dt = e.target.closest("[data-detail]");
+    if (dt) { openDetail(dt.getAttribute("data-detail")); }
+  });
+
+  // ---------- FAQ ----------
+  document.querySelectorAll(".faq-q").forEach(function(q){
+    q.addEventListener("click", function(){
+      var item = q.parentElement;
+      var wasOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item.open").forEach(function(o){
+        o.classList.remove("open");
+        o.querySelector(".pm").textContent = "+";
+      });
+      if (!wasOpen) { item.classList.add("open"); q.querySelector(".pm").textContent = "−"; }
+    });
+  });
+
+  // ---------- Meus acessos ----------
   var lookupBtn = document.getElementById("lookupBtn"),
       lookupEmail = document.getElementById("lookupEmail"),
       lookupResult = document.getElementById("lookupResult");
-
-  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
-
   lookupBtn.addEventListener("click", function(){
     var email = lookupEmail.value.trim();
     lookupResult.innerHTML = "";
@@ -638,13 +536,14 @@ const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
     fetch(CONFIG.BACKEND_URL + "/api/meus-pedidos?email=" + encodeURIComponent(email))
       .then(function(r){ return r.json(); })
       .then(function(j){
-        var list = j.pedidos || j.orders || j.data || (Array.isArray(j) ? j : null);
+        var list = j.compras || j.pedidos || j.orders || j.data || (Array.isArray(j) ? j : null);
         if (list && list.length) {
           lookupResult.innerHTML = list.map(function(o){
-            var prod = esc(o.produto || o.product || o.item || "Pedido");
-            var status = esc(o.status || o.situacao || "");
-            var data = esc(o.data || o.created_at || o.date || "");
-            return '<div class="order"><b>' + prod + "</b>" + (status ? " — " + status : "") + (data ? '<br><small style="color:var(--mut)">' + data + "</small>" : "") + "</div>";
+            var prod = esc(o.produto_nome || o.produto || o.product || o.item || "Pedido");
+            var status = esc(o.status || o.situacao || "Aprovado");
+            var data = o.data ? new Date(o.data).toLocaleDateString("pt-BR") : "";
+            var linkAtivo = o.conta_entregue && o.conta_entregue.startsWith("http") ? '<a href="' + esc(o.conta_entregue) + '" target="_blank" style="color:#e50914;font-weight:bold;text-decoration:underline;">👉 Abrir Link de Ativação</a>' : (o.conta_entregue ? '<code style="color:#e50914;font-size:13px;">' + esc(o.conta_entregue) + '</code>' : '');
+            return '<div class="order"><b>' + prod + "</b> — <span style='color:#e50914;font-weight:bold;'>" + status + "</span>" + (data ? '<br><small style="color:#757575">Data: ' + data + "</small>" : "") + (linkAtivo ? '<div style="margin-top:8px;padding:8px;background:rgba(229,9,20,0.08);border:1px solid rgba(229,9,20,0.25);border-radius:6px;">' + linkAtivo + '</div>' : "") + "</div>";
           }).join("");
         } else {
           lookupResult.innerHTML = "<p>Nenhum pedido encontrado para este e-mail. Se você já comprou, chame no WhatsApp " + esc(CONFIG.WHATSAPP_DISPLAY) + " que a gente resolve. 💬</p>";
