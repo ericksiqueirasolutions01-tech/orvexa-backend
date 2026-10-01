@@ -53,12 +53,21 @@ module.exports = async function handler(req, res) {
       // Dispara envio de e-mail complementar apenas se ainda NÃO foi enviado (pelo webhook ou outra requisição)
       if (buyerEmail && deliveredItem && !deliveredItem.startsWith("⚠️") && !delivery.emailSent) {
         try {
+          const shortOrder = orderNsu.length > 8 ? orderNsu.slice(-8).toUpperCase() : orderNsu;
           if (produtoKey === "muse-ia" && deliveredItem.includes(";")) {
             const [l, s] = deliveredItem.split(";");
-            sendEmail(buyerEmail, "🚀 Seu acesso à MUSE IA foi liberado!", emailMuseIa({ login: l, senha: s })).catch(() => {});
+            await sendEmail(
+              buyerEmail,
+              `🚀 Seu Acesso à MUSE IA Foi Liberado! [Pedido #${shortOrder}]`,
+              emailMuseIa({ login: l, senha: s, orderNsu })
+            );
             await markEmailSent(orderNsu);
           } else if (produtoKey === "flow-ai-pro") {
-            sendEmail(buyerEmail, "⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!", emailFlowAiPro({ link: deliveredItem })).catch(() => {});
+            await sendEmail(
+              buyerEmail,
+              `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto! [Pedido #${shortOrder}]`,
+              emailFlowAiPro({ link: deliveredItem, orderNsu })
+            );
             await markEmailSent(orderNsu);
           }
         } catch (errM) {

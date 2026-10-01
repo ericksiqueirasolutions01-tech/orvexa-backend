@@ -69,26 +69,27 @@ module.exports = async function handler(req, res) {
     // Dispara envio de e-mail APENAS se ainda não tiver sido enviado
     if (hasItem && !delivery.emailSent && isValidEmail(buyerEmail)) {
       try {
+        const shortOrder = order_nsu.length > 8 ? order_nsu.slice(-8).toUpperCase() : order_nsu;
         if (produtoKey === "muse-ia" && deliveredText.includes(";")) {
           const [l, s] = deliveredText.split(";");
           await sendEmail(
             buyerEmail,
-            `🚀 Seu acesso à ${produto.short} foi liberado!`,
-            emailMuseIa({ login: l, senha: s })
+            `🚀 Seu Acesso à ${produto.short} Foi Liberado! [Pedido #${shortOrder}]`,
+            emailMuseIa({ login: l, senha: s, orderNsu: order_nsu })
           );
           await markEmailSent(order_nsu);
         } else if (produtoKey === "flow-ai-pro") {
           await sendEmail(
             buyerEmail,
-            `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto!`,
-            emailFlowAiPro({ link: deliveredText })
+            `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto! [Pedido #${shortOrder}]`,
+            emailFlowAiPro({ link: deliveredText, orderNsu: order_nsu })
           );
           await markEmailSent(order_nsu);
         } else if (produtoKey === "super-duolingo") {
           await sendEmail(
             buyerEmail,
-            `🦉 Seu Super Duolingo (1 Ano) Está Liberado!`,
-            emailSuperDuolingo({ link: deliveredText })
+            `🦉 Seu Super Duolingo (1 Ano) Está Liberado! [Pedido #${shortOrder}]`,
+            emailSuperDuolingo({ link: deliveredText, orderNsu: order_nsu })
           );
           await markEmailSent(order_nsu);
         }
