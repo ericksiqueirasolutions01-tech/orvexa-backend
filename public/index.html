@@ -187,7 +187,7 @@ footer .brand{justify-content:center;margin-bottom:14px}
 <!-- ══════════════ CONFIG — edite aqui ══════════════ -->
 <script>
 const CONFIG = {
-  BACKEND_URL: (window.location.origin && window.location.origin.startsWith("http") && !window.location.origin.includes("localhost")) ? window.location.origin : "https://orvexa-backend.vercel.app", // URL do backend
+  BACKEND_URL: (window.location.origin && window.location.origin.startsWith("http") && !window.location.origin.includes("localhost")) ? window.location.origin : "https://www.orvexaprime.com.br", // URL do backend
   WHATSAPP_NUMBER: "5521992936790",                 // só dígitos, com DDI+DDD
   WHATSAPP_DISPLAY: "(21) 99293-6790"
 };
@@ -638,14 +638,13 @@ const WHATSAPP_URL = "https://wa.me/" + CONFIG.WHATSAPP_NUMBER;
     fetch(CONFIG.BACKEND_URL + "/api/meus-pedidos?email=" + encodeURIComponent(email))
       .then(function(r){ return r.json(); })
       .then(function(j){
-        var list = j.compras || j.pedidos || j.orders || j.data || (Array.isArray(j) ? j : null);
+        var list = j.pedidos || j.orders || j.data || (Array.isArray(j) ? j : null);
         if (list && list.length) {
           lookupResult.innerHTML = list.map(function(o){
-            var prod = esc(o.produto_nome || o.produto || o.product || o.item || "Pedido");
-            var status = esc(o.status || o.situacao || "Aprovado");
-            var data = o.data ? new Date(o.data).toLocaleDateString("pt-BR") : "";
-            var linkAtivo = o.conta_entregue && o.conta_entregue.startsWith("http") ? '<a href="' + esc(o.conta_entregue) + '" target="_blank" style="color:var(--lime);font-weight:bold;text-decoration:underline;">👉 Abrir Link de Ativação</a>' : (o.conta_entregue ? '<code style="color:var(--blue);font-size:13px;">' + esc(o.conta_entregue) + '</code>' : '');
-            return '<div class="order"><b>' + prod + "</b> — <span style='color:var(--lime);font-weight:bold;'>" + status + "</span>" + (data ? '<br><small style="color:var(--mut)">Data: ' + data + "</small>" : "") + (linkAtivo ? '<div style="margin-top:8px;padding:8px;background:rgba(184,255,41,0.08);border:1px solid rgba(184,255,41,0.25);border-radius:8px;">' + linkAtivo + '</div>' : "") + "</div>";
+            var prod = esc(o.produto || o.product || o.item || "Pedido");
+            var status = esc(o.status || o.situacao || "");
+            var data = esc(o.data || o.created_at || o.date || "");
+            return '<div class="order"><b>' + prod + "</b>" + (status ? " — " + status : "") + (data ? '<br><small style="color:var(--mut)">' + data + "</small>" : "") + "</div>";
           }).join("");
         } else {
           lookupResult.innerHTML = "<p>Nenhum pedido encontrado para este e-mail. Se você já comprou, chame no WhatsApp " + esc(CONFIG.WHATSAPP_DISPLAY) + " que a gente resolve. 💬</p>";
