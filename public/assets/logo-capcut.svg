@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect width="128" height="128" rx="28" fill="#0A0B10"/>
+  <defs>
+    <filter id="cc-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#00F2FE" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g filter="url(#cc-shadow)">
+    <!-- Top Bow / Chevron -->
+    <path d="M26 30L64 54L102 30L84 30L64 43L44 30L26 30Z" fill="#FFFFFF"/>
+    <path d="M26 44L64 68L102 44L84 44L64 57L44 44L26 44Z" fill="#FFFFFF" opacity="0.95"/>
+    <!-- Bottom Inverted Bow / Chevron -->
+    <path d="M26 98L64 74L102 98L84 98L64 85L44 98L26 98Z" fill="#FFFFFF"/>
+    <path d="M26 84L64 60L102 84L84 84L64 71L44 84L26 84Z" fill="#FFFFFF" opacity="0.95"/>
+  </g>
+</svg>

@@ -2,7 +2,7 @@
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
 const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
 const { getOrder, deliverOrder, markEmailSent } = require("../lib/store");
-const { sendEmail, emailMuseIa, emailFlowAiPro } = require("../lib/email");
+const { sendEmail, emailMuseIa, emailFlowAiPro, emailSupportDelivery } = require("../lib/email");
 
 module.exports = async function handler(req, res) {
   const status = req.query.pagamento || "aprovado";
@@ -67,6 +67,14 @@ module.exports = async function handler(req, res) {
               buyerEmail,
               `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto! [Pedido #${shortOrder}]`,
               emailFlowAiPro({ link: deliveredItem, orderNsu })
+            );
+            await markEmailSent(orderNsu);
+          } else {
+            const prodObj = PRODUCTS[produtoKey] || { title: "Produto Digital", short: "Produto" };
+            await sendEmail(
+              buyerEmail,
+              `🎉 Pagamento Confirmado: ${prodObj.title} [Pedido #${shortOrder}]`,
+              emailSupportDelivery({ produtoTitle: prodObj.title, orderNsu, email: buyerEmail, phone: buyerPhone })
             );
             await markEmailSent(orderNsu);
           }
@@ -279,49 +287,52 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
     `;
   }
 
-  // 3. Super Duolingo
-  else if (produtoKey === "super-duolingo") {
-    const duoUrl = deliveredItem && deliveredItem.startsWith("http") ? deliveredItem : "";
+  // 3. Produtos Entregues via Suporte WhatsApp (Lovable, Duolingo, CapCut, Manus, etc.)
+  else {
+    const zapMsg = `Olá Erick! Acabei de efetuar o pagamento do pedido ${orderNsu} para o produto ${produtoInfo.title}. Meu e-mail: ${buyerEmail}. Gostaria de solicitar a entrega do meu acesso!`;
+    const zapUrl = `https://wa.me/5521992936790?text=${encodeURIComponent(zapMsg)}`;
+    const productLogo = produtoInfo.logo || "assets/logo-prime-digital.png";
+    const shortOrderTag = orderNsu ? (orderNsu.length > 8 ? orderNsu.slice(-8).toUpperCase() : orderNsu) : "OK";
 
     deliveryContentHtml = `
-      ${duoUrl ? `
-      <div style="background:#090a10;border:1px solid #3b4263;border-radius:12px;padding:24px;margin:20px 0;text-align:center;">
-        <span style="display:inline-block;background:#58cc02;color:#fff;font-size:11px;font-weight:bold;padding:3px 8px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;">SEU CONVITE SUPER DUOLINGO</span>
-        
-        <div style="margin:12px 0;">
-          <a href="${duoUrl}" target="_blank" style="display:inline-block;background:#58cc02;color:#fff;font-weight:bold;padding:16px 28px;border-radius:10px;text-decoration:none;font-size:16px;box-shadow:0 8px 24px rgba(88,204,2,0.4);">
-            👉 ACEITAR CONVITE SUPER DUOLINGO (1 ANO)
+      <div style="background:linear-gradient(135deg,rgba(6,78,59,0.35),rgba(2,44,34,0.6));border:2px solid #10b981;border-radius:16px;padding:28px 22px;margin:20px 0;text-align:center;box-shadow:0 12px 32px rgba(16,185,129,0.15);">
+        <span style="display:inline-block;background:#10b981;color:#000;font-size:11px;font-weight:900;padding:4px 12px;border-radius:4px;letter-spacing:1.5px;margin-bottom:14px;text-transform:uppercase;">
+          PAGAMENTO CONFIRMADO • ENTREGA VIA SUPORTE
+        </span>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:14px;">
+          <div style="width:58px;height:58px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="${productLogo}" alt="${produtoInfo.title}" style="width:75%;height:75%;object-fit:contain;">
+          </div>
+          <div style="text-align:left;">
+            <h2 style="color:#fff;font-size:20px;margin:0 0 2px;font-weight:800;">${produtoInfo.title}</h2>
+            <span style="font-size:13px;color:#38bdf8;font-weight:600;">Status: Aprovado • Pedido #${shortOrderTag}</span>
+          </div>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(16,185,129,0.35);border-radius:12px;padding:18px;margin:18px 0;text-align:left;">
+          <h3 style="color:#10b981;font-size:16px;margin:0 0 8px;font-weight:800;display:flex;align-items:center;gap:8px;">
+            <span>ℹ️</span> Este produto será entregue pelo nosso suporte.
+          </h3>
+          <p style="color:#e2e8f0;font-size:14.5px;line-height:1.65;margin:0 0 12px;">
+            O cliente deverá clicar no botão de contato ou acessar o WhatsApp do suporte para solicitar a entrega. Após o contato, nosso suporte realizará a entrega do produto adquirido em até <b>10 minutos</b>.
+          </p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#94a3b8;border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;">
+            <span>📌 <b>Pedido:</b> <code style="color:#38bdf8;background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;">${orderNsu}</code></span>
+            <span>👤 <b>E-mail:</b> <span style="color:#fff;">${buyerEmail || 'Confirmado'}</span></span>
+          </div>
+        </div>
+
+        <div style="margin:20px 0 10px;">
+          <a href="${zapUrl}"
+             target="_blank"
+             style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25d366;color:#062b16;font-weight:900;padding:18px 32px;border-radius:12px;text-decoration:none;font-size:16px;box-shadow:0 8px 24px rgba(37,211,102,0.45);width:100%;max-width:440px;transition:transform 0.2s;">
+            <span style="font-size:22px;">💬</span> SOLICITAR ENTREGA NO WHATSAPP AGORA
           </a>
         </div>
-        
-        <p style="color:#94a3b8;font-size:12px;word-break:break-all;margin-top:12px;">Link: <a href="${duoUrl}" target="_blank" style="color:#38bdf8;">${duoUrl}</a></p>
-      </div>
-      ` : `
-      <div style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);border-radius:14px;padding:24px 20px;margin:20px 0;text-align:center;">
-        <span style="display:inline-block;background:#eab308;color:#000;font-size:11px;font-weight:900;padding:3px 10px;border-radius:4px;letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;">
-          PAGAMENTO CONFIRMADO • ATIVAÇÃO IMEDIATA
-        </span>
-        <h2 style="color:#fff;font-size:18px;margin:0 0 10px;font-weight:800;">Seu Convite Está Pronto!</h2>
-        <p style="color:#cbd5e1;font-size:14px;line-height:1.6;margin:0 0 16px;">
-          Confirmamos seu pagamento do Super Duolingo 1 ano.<br>
-          Toque no botão abaixo para receber seu link de ativação imediata no WhatsApp:
+        <p style="color:#94a3b8;font-size:12.5px;margin:10px 0 0;">
+          ⚡ Atendimento ágil • Envio do seu produto em até <b>10 minutos</b> após seu contato
         </p>
-        <a href="https://wa.me/5521992936790?text=${encodeURIComponent(`Olá Erick! Acabei de pagar pelo Super Duolingo (Pedido: ${orderNsu || 'Confirmado'}, E-mail: ${buyerEmail}) e quero receber meu convite agora!`)}"
-           target="_blank"
-           style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;font-weight:bold;padding:16px 24px;border-radius:10px;text-decoration:none;font-size:15px;box-shadow:0 8px 24px rgba(37,211,102,0.4);width:100%;max-width:390px;">
-          <span>💬</span> RECEBER CONVITE NO WHATSAPP AGORA
-        </a>
-      </div>
-      `}
-
-      <div style="text-align:left;background:#121422;border:1px solid #1f233b;border-radius:12px;padding:20px;margin-top:16px;">
-        <h3 style="color:#fff;font-size:16px;margin:0 0 12px;">📋 Como Entrar no Plano Super:</h3>
-        <ol style="color:#cbd5e1;font-size:14px;line-height:1.9;padding-left:20px;margin:0;">
-          <li>Abra o link de convite no navegador ou no celular.</li>
-          <li>Faça login na sua conta existente do Duolingo.</li>
-          <li>Aceite a entrada na turma / família do plano Super.</li>
-          <li>Pronto! Você agora tem vidas infinitas e sem anúncios por 1 ano!</li>
-        </ol>
       </div>
     `;
   }
@@ -333,7 +344,7 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
   };
 
   res.setHeader("Content-Type", "text/html; charset=utf-8");
-  res.send(`<!DOCTYPE html>
+  const finalHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -414,5 +425,10 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
     }
   </script>
 </body>
-</html>`);
+</html>`;
+
+  if (typeof res.send === "function") {
+    return res.status(200).send(finalHtml);
+  }
+  return res.end(finalHtml);
 };

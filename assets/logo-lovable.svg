@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <rect width="128" height="128" rx="28" fill="#0C0D14"/>
+  <defs>
+    <linearGradient id="lovable-grad1" x1="16" y1="16" x2="112" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF4B72"/>
+      <stop offset="50%" stop-color="#FF2E93"/>
+      <stop offset="100%" stop-color="#8017F0"/>
+    </linearGradient>
+    <linearGradient id="lovable-grad2" x1="30" y1="30" x2="90" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFA8BD"/>
+      <stop offset="100%" stop-color="#FF2E93"/>
+    </linearGradient>
+    <filter id="lovable-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#FF2E93" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <!-- Heart Shapes -->
+  <g filter="url(#lovable-glow)">
+    <path d="M64 104C64 104 22 76 22 46C22 30.5 34.5 18 50 18C56.5 18 61.5 21 64 25.5C66.5 21 71.5 18 78 18C93.5 18 106 30.5 106 46C106 76 64 104 64 104Z" fill="url(#lovable-grad1)"/>
+    <path d="M64 36C56 22 42 24 34 32C24 42 26 58 38 72L64 96L88 74C82 66 74 54 64 36Z" fill="url(#lovable-grad2)" opacity="0.6"/>
+    <path d="M64 28L60 34L64 42L68 34L64 28Z" fill="#FFF" opacity="0.9"/>
+  </g>
+</svg>

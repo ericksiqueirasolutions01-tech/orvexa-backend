@@ -760,6 +760,73 @@
       line-height: 1.5;
     }
 
+    .support-delivery-notice {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .support-delivery-notice .notice-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .support-delivery-notice .notice-text b {
+      display: block;
+      font-size: 13px;
+      color: var(--success);
+      margin-bottom: 2px;
+    }
+
+    .support-delivery-notice .notice-text span {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .digital-products-divider {
+      margin: 64px 0 32px;
+      text-align: center;
+    }
+
+    .digital-products-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+
+    .digital-products-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 10px;
+    }
+
+    .digital-products-desc {
+      font-size: 15px;
+      color: var(--text-body);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
     .product-pricing-box {
       background: rgba(7, 9, 13, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.05);
@@ -2515,7 +2582,7 @@
 
             <div class="product-pricing-box">
               <div class="pricing-current">
-                <span class="pricing-val">R$ 29,99</span>
+                <span class="pricing-val">R$ 24,99</span>
                 <span class="pricing-type">Pagamento único</span>
               </div>
             </div>
@@ -2535,6 +2602,227 @@
               <span>→</span>
             </button>
             <p class="product-guarantee-note">🔒 Link de ativação oficial com tutorial incluso</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           NOVOS PRODUTOS DIGITAIS — ENTREGA RÁPIDA VIA SUPORTE WHATSAPP
+           ==================================================================== -->
+      <div class="digital-products-divider">
+        <span class="digital-products-tag">CATÁLOGO DE SOFTWARES E IAs</span>
+        <h3 class="digital-products-title">Ferramentas Digitais Essenciais</h3>
+        <p class="digital-products-desc">
+          Adquira as melhores ferramentas de produtividade, desenvolvimento, idiomas e edição com suporte humanizado e ativação garantida em até 10 minutos.
+        </p>
+      </div>
+
+      <div class="products-grid">
+        <!-- 1. Lovable Pro Mensal -->
+        <div class="product-card">
+          <div>
+            <span class="product-badge" style="color: #FF2E93; background: rgba(255, 46, 147, 0.1); border-color: rgba(255, 46, 147, 0.25);">
+              CRIAÇÃO DE APPS FULL-STACK • 100 CRÉDITOS
+            </span>
+
+            <div class="product-header-brand">
+              <img src="assets/logo-lovable.svg" alt="Lovable Pro">
+              <div>
+                <h3 class="product-title">Lovable Pro Mensal</h3>
+                <span style="font-size: 13px; color: #FF2E93; font-weight: 600;">100 Créditos Inclusos</span>
+              </div>
+            </div>
+
+            <p class="product-tagline">
+              Crie e publique aplicações web completas em minutos com prompts em linguagem natural. Acesso mensal com 100 créditos para criar, iterar e publicar.
+            </p>
+
+            <div class="support-delivery-notice">
+              <span class="notice-icon">💬</span>
+              <div class="notice-text">
+                <b>Este produto será entregue pelo nosso suporte.</b>
+                <span>Após o contato no WhatsApp, nosso suporte realizará a entrega do produto adquirido em até <b>10 minutos</b>.</span>
+              </div>
+            </div>
+
+            <div class="product-pricing-box">
+              <div class="pricing-current">
+                <span class="pricing-val">R$ 49,99</span>
+                <span class="pricing-type">Pagamento único</span>
+              </div>
+            </div>
+
+            <ul class="product-features">
+              <li><span class="feature-check">✔</span> <span><b>100 créditos</b> para criação de aplicações web</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Geração completa de código</b> frontend, backend e BD</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Deploy instantâneo</b> e sincronização com GitHub</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Aviso de entrega:</b> envio pelo suporte em até 10 minutos</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Pagamento único</b> sem renovação ou cobrança oculta</span></li>
+            </ul>
+          </div>
+
+          <div class="product-action">
+            <button class="btn btn-primary" data-checkout="lovable-pro" data-name="Lovable Pro Mensal — 100 Créditos">
+              <span>Quero o Lovable Pro</span>
+              <span>→</span>
+            </button>
+            <p class="product-guarantee-note">🔒 Entrega via suporte WhatsApp em até 10 minutos</p>
+          </div>
+        </div>
+
+        <!-- 2. Duolingo Super — 12 meses -->
+        <div class="product-card">
+          <div>
+            <span class="product-badge" style="color: #58CC02; background: rgba(88, 204, 2, 0.1); border-color: rgba(88, 204, 2, 0.25);">
+              IDIOMAS & FLUÊNCIA • 12 MESES
+            </span>
+
+            <div class="product-header-brand">
+              <img src="assets/logo-duolingo.png" alt="Duolingo Super — 12 meses">
+              <div>
+                <h3 class="product-title">Duolingo Super — 12 meses</h3>
+                <span style="font-size: 13px; color: #58CC02; font-weight: 600;">Plano Premium por 12 Meses</span>
+              </div>
+            </div>
+
+            <p class="product-tagline">
+              Aprenda qualquer idioma no seu ritmo sem interrupções. 1 ano completo com vidas ilimitadas, sem anúncios e com reforço personalizado de erros.
+            </p>
+
+            <div class="support-delivery-notice">
+              <span class="notice-icon">💬</span>
+              <div class="notice-text">
+                <b>Este produto será entregue pelo nosso suporte.</b>
+                <span>Após o contato no WhatsApp, nosso suporte realizará a entrega do produto adquirido em até <b>10 minutos</b>.</span>
+              </div>
+            </div>
+
+            <div class="product-pricing-box">
+              <div class="pricing-current">
+                <span class="pricing-val">R$ 24,99</span>
+                <span class="pricing-type">Pagamento único</span>
+              </div>
+            </div>
+
+            <ul class="product-features">
+              <li><span class="feature-check">✔</span> <span><b>12 meses de acesso</b> garantidos e contínuos</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Vidas infinitas</b> para praticar à vontade</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Zero anúncios</b> para foco total no aprendizado</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Revisão inteligente de erros</b> e testes de proficiência</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Aviso de entrega:</b> envio pelo suporte em até 10 minutos</span></li>
+            </ul>
+          </div>
+
+          <div class="product-action">
+            <button class="btn btn-secondary" data-checkout="duolingo-super" data-name="Duolingo Super — 12 meses">
+              <span>Quero o Duolingo Super</span>
+              <span>→</span>
+            </button>
+            <p class="product-guarantee-note">🔒 Entrega via suporte WhatsApp em até 10 minutos</p>
+          </div>
+        </div>
+
+        <!-- 3. CapCut — 1 mês + 1.200 créditos de IA -->
+        <div class="product-card">
+          <div>
+            <span class="product-badge" style="color: #38BDF8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.25);">
+              EDIÇÃO PROFISSIONAL & IA • 1.200 CRÉDITOS
+            </span>
+
+            <div class="product-header-brand">
+              <img src="assets/logo-capcut.svg" alt="CapCut Pro">
+              <div>
+                <h3 class="product-title">CapCut — 1 mês + 1.200 IA</h3>
+                <span style="font-size: 13px; color: #38BDF8; font-weight: 600;">1 Mês + 1.200 Créditos de IA</span>
+              </div>
+            </div>
+
+            <p class="product-tagline">
+              O editor de vídeos preferido dos criadores de conteúdo com recursos Pro liberados e 1.200 créditos para geração automática de scripts, legendas e avatares.
+            </p>
+
+            <div class="support-delivery-notice">
+              <span class="notice-icon">💬</span>
+              <div class="notice-text">
+                <b>Este produto será entregue pelo nosso suporte.</b>
+                <span>Após o contato no WhatsApp, nosso suporte realizará a entrega do produto adquirido em até <b>10 minutos</b>.</span>
+              </div>
+            </div>
+
+            <div class="product-pricing-box">
+              <div class="pricing-current">
+                <span class="pricing-val">R$ 24,99</span>
+                <span class="pricing-type">Pagamento único</span>
+              </div>
+            </div>
+
+            <ul class="product-features">
+              <li><span class="feature-check">✔</span> <span><b>1 mês de plano</b> com recursos premium liberados</span></li>
+              <li><span class="feature-check">✔</span> <span><b>1.200 créditos de IA</b> para geração de efeitos e voz</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Remoção de fundo com 1 clique</b> e rastreamento inteligente</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Exportação em 4K e 60 FPS</b> com qualidade de estúdio</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Aviso de entrega:</b> envio pelo suporte em até 10 minutos</span></li>
+            </ul>
+          </div>
+
+          <div class="product-action">
+            <button class="btn btn-secondary" data-checkout="capcut-pro" data-name="CapCut — 1 mês + 1.200 créditos de IA">
+              <span>Quero o CapCut Pro</span>
+              <span>→</span>
+            </button>
+            <p class="product-guarantee-note">🔒 Entrega via suporte WhatsApp em até 10 minutos</p>
+          </div>
+        </div>
+
+        <!-- 4. Manus Mensal — 1 mês -->
+        <div class="product-card">
+          <div>
+            <span class="product-badge" style="color: #A855F7; background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.25);">
+              AGENTE AUTÔNOMO DE IA • 1 MÊS
+            </span>
+
+            <div class="product-header-brand">
+              <img src="assets/logo-manus.svg" alt="Manus Mensal">
+              <div>
+                <h3 class="product-title">Manus Mensal — 1 mês</h3>
+                <span style="font-size: 13px; color: #A855F7; font-weight: 600;">1 Mês de Acesso Completo</span>
+              </div>
+            </div>
+
+            <p class="product-tagline">
+              A primeira IA em formato de agente autônomo que executa projetos e tarefas complexas de ponta a ponta no seu navegador do início ao fim sem intervenção humana.
+            </p>
+
+            <div class="support-delivery-notice">
+              <span class="notice-icon">💬</span>
+              <div class="notice-text">
+                <b>Este produto será entregue pelo nosso suporte.</b>
+                <span>Após o contato no WhatsApp, nosso suporte realizará a entrega do produto adquirido em até <b>10 minutos</b>.</span>
+              </div>
+            </div>
+
+            <div class="product-pricing-box">
+              <div class="pricing-current">
+                <span class="pricing-val">R$ 49,99</span>
+                <span class="pricing-type">Pagamento único</span>
+              </div>
+            </div>
+
+            <ul class="product-features">
+              <li><span class="feature-check">✔</span> <span><b>1 mês de acesso</b> ao agente oficial de IA Manus</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Execução autônoma de tarefas</b> completas no navegador</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Automação de pesquisas</b>, planilhas e relatórios</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Aviso de entrega:</b> envio pelo suporte em até 10 minutos</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Pagamento único</b> sem renovação ou cobrança oculta</span></li>
+            </ul>
+          </div>
+
+          <div class="product-action">
+            <button class="btn btn-primary" data-checkout="manus-mensal" data-name="Manus Mensal — 1 mês">
+              <span>Quero o Manus Mensal</span>
+              <span>→</span>
+            </button>
+            <p class="product-guarantee-note">🔒 Entrega via suporte WhatsApp em até 10 minutos</p>
           </div>
         </div>
       </div>
@@ -2781,7 +3069,7 @@
             <tr>
               <td class="col-feature">Modelo de Pagamento</td>
               <td class="col-muse"><b>R$ 59,99</b> (Pagamento único)</td>
-              <td class="col-flow"><b>R$ 29,99</b> (Pagamento único)</td>
+              <td class="col-flow"><b>R$ 24,99</b> (Pagamento único)</td>
             </tr>
           </tbody>
         </table>
@@ -3131,7 +3419,7 @@
   <div class="mobile-sticky-bar" id="mobileStickyBar">
     <div class="mobile-sticky-info">
       <b>IAs Profissionais</b>
-      <span>A partir de R$ 29,99 (único)</span>
+      <span>A partir de R$ 24,99 (único)</span>
     </div>
     <a href="#produtos" class="btn btn-primary btn-sm">
       <span>Garantir minha IA</span>
@@ -3227,8 +3515,28 @@
         },
         "flow-ai-pro": {
           title: "Google Flow + Google AI Pro — 18 meses",
-          priceStr: "R$ 29,99",
+          priceStr: "R$ 24,99",
           desc: "Link de ativação oficial com 18 meses de acesso completo à suíte Gemini 3.1 Pro, Veo 3.1, Antigravity 2.0, Flow e tutorial em vídeo."
+        },
+        "lovable-pro": {
+          title: "Lovable Pro Mensal — 100 Créditos",
+          priceStr: "R$ 49,99",
+          desc: "Acesso mensal com 100 créditos para criar web apps com IA. Este produto será entregue pelo nosso suporte via WhatsApp em até 10 minutos."
+        },
+        "duolingo-super": {
+          title: "Duolingo Super — 12 meses",
+          priceStr: "R$ 24,99",
+          desc: "12 meses completos com vidas infinitas e sem anúncios. Este produto será entregue pelo nosso suporte via WhatsApp em até 10 minutos."
+        },
+        "capcut-pro": {
+          title: "CapCut — 1 mês + 1.200 créditos de IA",
+          priceStr: "R$ 24,99",
+          desc: "1 mês com recursos premium e 1.200 créditos de IA. Este produto será entregue pelo nosso suporte via WhatsApp em até 10 minutos."
+        },
+        "manus-mensal": {
+          title: "Manus Mensal — 1 mês",
+          priceStr: "R$ 49,99",
+          desc: "Acesso mensal à IA agente autônoma. Este produto será entregue pelo nosso suporte via WhatsApp em até 10 minutos."
         }
       };
 

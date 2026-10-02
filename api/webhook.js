@@ -7,7 +7,7 @@ const {
   markEmailSent,
   stockCount,
 } = require("../lib/store");
-const { sendEmail, emailMuseIa, emailFlowAiPro, emailSuperDuolingo } = require("../lib/email");
+const { sendEmail, emailMuseIa, emailFlowAiPro, emailSuperDuolingo, emailSupportDelivery } = require("../lib/email");
 
 async function notifyAdmin(subject, html) {
   const admin = process.env.ADMIN_EMAIL;
@@ -85,11 +85,11 @@ module.exports = async function handler(req, res) {
             emailFlowAiPro({ link: deliveredText, orderNsu: order_nsu })
           );
           await markEmailSent(order_nsu);
-        } else if (produtoKey === "super-duolingo") {
+        } else {
           await sendEmail(
             buyerEmail,
-            `🦉 Seu Super Duolingo (1 Ano) Está Liberado! [Pedido #${shortOrder}]`,
-            emailSuperDuolingo({ link: deliveredText, orderNsu: order_nsu })
+            `🎉 Pagamento Confirmado: ${produto.title} [Pedido #${shortOrder}]`,
+            emailSupportDelivery({ produtoTitle: produto.title, orderNsu: order_nsu, email: buyerEmail, phone: buyerPhone })
           );
           await markEmailSent(order_nsu);
         }
