@@ -994,31 +994,68 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.3);
-      opacity: 0.9;
-      transition: opacity 0.2s;
-    }
-
-    .demo-card:hover .demo-play-btn {
-      opacity: 1;
+      z-index: 2;
+      pointer-events: none;
     }
 
     .demo-play-btn span {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      background: rgba(99, 102, 241, 0.9);
-      color: #fff;
+      background: rgba(10, 15, 29, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #FFF;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-      transition: transform 0.2s;
+      font-size: 19px;
+      padding-left: 3px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65), 0 0 20px rgba(99, 102, 241, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .demo-card:hover .demo-play-btn span {
-      transform: scale(1.1);
+      transform: scale(1.14);
+      background: rgba(99, 102, 241, 0.95);
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 35px rgba(99, 102, 241, 0.6), 0 0 30px rgba(129, 140, 248, 0.5);
+    }
+
+    .demo-zoom-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.9);
+      background: rgba(0, 0, 0, 0.2);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .demo-zoom-btn span {
+      padding: 9px 18px;
+      border-radius: 9999px;
+      background: rgba(10, 15, 29, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #FFF;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .demo-card:hover .demo-zoom-btn {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .demo-info {
@@ -2314,7 +2351,7 @@
         <div class="demo-card" data-video-trigger="assets/demo-muse-ia.mp4">
           <div class="demo-media">
             <span class="demo-category-tag">Vídeos cinematográficos</span>
-            <img src="assets/demo-muse-ia-poster.jpg" alt="Vídeos cinematográficos">
+            <img src="assets/demo-muse-ia-poster.jpg" alt="Vídeos cinematográficos" loading="lazy">
             <div class="demo-play-btn"><span>▶</span></div>
           </div>
           <div class="demo-info">
@@ -2324,41 +2361,41 @@
         </div>
 
         <!-- 2. Criativos para Anúncios -->
-        <div class="demo-card" data-image-trigger="assets/muse-banner.jpg">
+        <div class="demo-card" data-image-trigger="assets/demo-ad-creative.jpg">
           <div class="demo-media">
             <span class="demo-category-tag">Criativos para anúncios</span>
-            <img src="assets/muse-banner.jpg" alt="Criativos para anúncios">
-            <div class="demo-play-btn"><span>🔍</span></div>
+            <img src="assets/demo-ad-creative.jpg" alt="Criativos para anúncios de alta conversão" loading="lazy">
+            <div class="demo-zoom-btn"><span>🔍 Ampliar</span></div>
           </div>
           <div class="demo-info">
             <h4 class="demo-title">Peças Publicitárias de Alta Conversão</h4>
-            <p class="demo-desc">Banners e criativos magnéticos concebidos para reduzir o CPA no Meta Ads e Google Ads.</p>
+            <p class="demo-desc">Banners e criativos conceituais magnéticos concebidos para reter atenção e maximizar conversão no Meta e Google Ads.</p>
           </div>
         </div>
 
-        <!-- 3. Conteúdo para Redes Sociais -->
+        <!-- 3. Modelos & Redes Sociais -->
         <div class="demo-card" data-video-trigger="assets/muse-short.mp4">
           <div class="demo-media">
-            <span class="demo-category-tag">Redes sociais</span>
-            <img src="assets/hero-bg.jpg" alt="Conteúdo para redes sociais">
+            <span class="demo-category-tag">Redes sociais & Reels</span>
+            <img src="assets/thumb_muse_short.jpg" alt="Conteúdo para redes sociais e modelos hiper-realistas" loading="lazy">
             <div class="demo-play-btn"><span>▶</span></div>
           </div>
           <div class="demo-info">
-            <h4 class="demo-title">Postagens e Narrativas Visuais</h4>
-            <p class="demo-desc">Estratégias completas de feed e carrosséis com estética moderna para capturar a atenção imediata.</p>
+            <h4 class="demo-title">Modelos Virtuais & Conteúdo Viral</h4>
+            <p class="demo-desc">Vídeos verticais e modelos com realismo fotográfico impecável para alta retenção em Reels e TikTok.</p>
           </div>
         </div>
 
-        <!-- 4. Imagens de Produtos -->
-        <div class="demo-card" data-image-trigger="assets/muse-card-bg.jpg">
+        <!-- 4. Animação 3D -->
+        <div class="demo-card" data-video-trigger="assets/muse-demo.mp4">
           <div class="demo-media">
-            <span class="demo-category-tag">Imagens de produtos</span>
-            <img src="assets/muse-card-bg.jpg" alt="Imagens de produtos">
-            <div class="demo-play-btn"><span>🔍</span></div>
+            <span class="demo-category-tag">Animação & CGI 3D</span>
+            <img src="assets/thumb_muse_demo.jpg" alt="Animação 3D de alta fidelidade" loading="lazy">
+            <div class="demo-play-btn"><span>▶</span></div>
           </div>
           <div class="demo-info">
-            <h4 class="demo-title">Fotografia Comercial de Estúdio</h4>
-            <p class="demo-desc">Insira qualquer produto em cenários de luxo, sem câmeras profissionais ou aluguel de locações.</p>
+            <h4 class="demo-title">Animação 3D & Personagens</h4>
+            <p class="demo-desc">Modelagem volumétrica estilo cinema com iluminação dinâmica, portais de energia e renderização de ponta.</p>
           </div>
         </div>
 
@@ -2366,8 +2403,8 @@
         <div class="demo-card" data-image-trigger="assets/rick-3d.jpg">
           <div class="demo-media">
             <span class="demo-category-tag">Avatares 3D</span>
-            <img src="assets/rick-3d.jpg" alt="Avatares">
-            <div class="demo-play-btn"><span>🔍</span></div>
+            <img src="assets/rick-3d.jpg" alt="Avatares" loading="lazy">
+            <div class="demo-zoom-btn"><span>🔍 Ampliar</span></div>
           </div>
           <div class="demo-info">
             <h4 class="demo-title">Renderização de Personagens</h4>
@@ -2375,16 +2412,16 @@
           </div>
         </div>
 
-        <!-- 6. Reels e Shorts -->
+        <!-- 6. Cenas de Ação e Combate -->
         <div class="demo-card" data-video-trigger="assets/muse-video.mp4">
           <div class="demo-media">
-            <span class="demo-category-tag">Reels & Shorts</span>
-            <img src="assets/morty-3d.jpg" alt="Reels">
+            <span class="demo-category-tag">Cenas de Ação</span>
+            <img src="assets/thumb_muse_video.jpg" alt="Cenas de combate e dinâmica fluida" loading="lazy">
             <div class="demo-play-btn"><span>▶</span></div>
           </div>
           <div class="demo-info">
-            <h4 class="demo-title">Vídeos Verticais Dinâmicos</h4>
-            <p class="demo-desc">Vídeos envolventes para TikTok e Reels com transições perfeitas e retenção de público elevada.</p>
+            <h4 class="demo-title">Física e Transições Fluidas</h4>
+            <p class="demo-desc">Sequências cinematográficas em alta velocidade com efeitos dinâmicos de luz, chuva e combate.</p>
           </div>
         </div>
       </div>
