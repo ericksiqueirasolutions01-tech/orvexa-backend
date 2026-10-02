@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/gemini", "destination": "/gemini.html" },
-    { "source": "/muse", "destination": "/muse.html" }
+    { "source": "/muse", "destination": "/muse.html" },
+    { "source": "/inauguracao", "destination": "/inauguracao.html" }
   ]
 }
