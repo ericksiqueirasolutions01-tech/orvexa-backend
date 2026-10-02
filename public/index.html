@@ -323,6 +323,8 @@
       font-size: 19px;
       letter-spacing: -0.01em;
       color: var(--text-white);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .brand-logo img {
@@ -330,18 +332,7 @@
       height: 38px;
       border-radius: var(--radius-sm);
       filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
-    }
-
-    .brand-badge {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      color: var(--accent-cyan);
-      font-weight: 700;
+      flex-shrink: 0;
     }
 
     .nav-links {
@@ -848,6 +839,87 @@
       color: var(--text-muted);
       text-align: center;
       margin-top: 12px;
+    }
+
+    /* Google Flow / Gemini Suite Box & Chips */
+    .gemini-suite-box {
+      background: rgba(147, 51, 234, 0.05);
+      border: 1px solid rgba(167, 139, 250, 0.2);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .gemini-suite-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .gemini-suite-badge {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #C084FC;
+    }
+
+    .gemini-suite-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .gemini-chips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .gemini-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 6px;
+      padding: 6px 9px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #E2E8F0;
+      transition: all 0.2s ease;
+      line-height: 1.3;
+    }
+
+    .gemini-chip:hover {
+      background: rgba(147, 51, 234, 0.14);
+      border-color: rgba(167, 139, 250, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .gemini-chip .chip-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .gemini-chip.highlight {
+      background: rgba(147, 51, 234, 0.15);
+      border-color: rgba(167, 139, 250, 0.4);
+      color: #F3E8FF;
+      font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      .gemini-chips-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ==========================================================================
@@ -1802,6 +1874,24 @@
       }
     }
 
+    @media (max-width: 1220px) {
+      .nav-btn-vip {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 1040px) {
+      .nav-links {
+        display: none !important;
+      }
+      .nav-actions [href="#meus-acessos"] {
+        display: none !important;
+      }
+      .mobile-menu-btn {
+        display: block !important;
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 0 16px;
@@ -1919,7 +2009,6 @@
         <a href="#topo" class="brand-logo" title="ORVEXA PRIME — Home">
           <img src="assets/logo-prime.png" alt="ORVEXA PRIME Logo">
           <span>ORVEXA PRIME</span>
-          <span class="brand-badge">SaaS</span>
         </a>
 
         <ul class="nav-links">
@@ -1932,7 +2021,7 @@
         </ul>
 
         <div class="nav-actions">
-          <a href="https://chat.whatsapp.com/JOa3vbDonk53LvxiIBD8Uw?s=sw&p=a&mlu=4" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" title="Grupo VIP com mais de 450 clientes" style="border-color: rgba(37, 211, 102, 0.35); color: #86EFAC;">
+          <a href="https://chat.whatsapp.com/JOa3vbDonk53LvxiIBD8Uw?s=sw&p=a&mlu=4" target="_blank" rel="noopener" class="btn btn-secondary btn-sm nav-btn-vip" title="Grupo VIP com mais de 450 clientes" style="border-color: rgba(37, 211, 102, 0.35); color: #86EFAC;">
             <span>👥 Grupo VIP (+450)</span>
           </a>
           <a href="#meus-acessos" class="btn btn-secondary btn-sm" title="Consultar pedidos anteriores">Meus Acessos</a>
@@ -2154,8 +2243,31 @@
             </div>
 
             <p class="product-tagline">
-              Potência máxima do Gemini 1.5 Pro com janela estendida de contexto, integração de dados e análise avançada de arquivos.
+              Potência máxima do ecossistema Google AI Pro com 18 meses de acesso contínuo. Raciocínio de ponta, geração de vídeos, análise avançada de arquivos e ferramentas oficiais para desenvolvedores e criadores.
             </p>
+
+            <div class="gemini-suite-box">
+              <div class="gemini-suite-header">
+                <span class="gemini-suite-badge">ECOSSISTEMA COMPLETO INCLUSO</span>
+                <span class="gemini-suite-count">14 Ferramentas Oficiais</span>
+              </div>
+              <div class="gemini-chips-grid">
+                <div class="gemini-chip"><span class="chip-icon">🤖</span><span>Gemini 3.1 Pro</span></div>
+                <div class="gemini-chip"><span class="chip-icon">⚡</span><span>Gemini 3.8 Flash</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🎬</span><span>Flow — 1.000 créditos</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🎨</span><span>Google AI Studio</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🚀</span><span>Google Antigravity 2.0</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🍌</span><span>Nano Banana Pro</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🎥</span><span>Veo 3.1</span></div>
+                <div class="gemini-chip"><span class="chip-icon">💻</span><span>Assistente Código + CLI Gemini</span></div>
+                <div class="gemini-chip"><span class="chip-icon">☁️</span><span>Até 5 TB no Google Drive</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🎨</span><span>Flow + Whisk</span></div>
+                <div class="gemini-chip"><span class="chip-icon">📚</span><span>Jules + NotebookLM</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🔎</span><span>Pesquisa Profunda Modo IA</span></div>
+                <div class="gemini-chip"><span class="chip-icon">🤖</span><span>ProducerAI</span></div>
+                <div class="gemini-chip highlight"><span class="chip-icon">✨</span><span>E muito mais!</span></div>
+              </div>
+            </div>
 
             <div class="product-pricing-box">
               <div class="pricing-old">De R$ 149,00 por</div>
@@ -2167,11 +2279,10 @@
 
             <ul class="product-features">
               <li><span class="feature-check">✔</span> <span><b>18 meses de acesso</b> garantido e contínuo</span></li>
-              <li><span class="feature-check">✔</span> <span><b>Gemini 1.5 Pro</b> com raciocínio de alta precisão</span></li>
-              <li><span class="feature-check">✔</span> <span><b>Integração completa</b> para análise de documentos</span></li>
-              <li><span class="feature-check">✔</span> <span><b>Tutorial em vídeo</b> exclusivo passo a passo</span></li>
-              <li><span class="feature-check">✔</span> <span><b>Suporte prioritário</b> para ativação rápida</span></li>
-              <li><span class="feature-check">✔</span> <span><b>Pagamento único</b> sem renovações automáticas</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Ativação 100% oficial</b> vinculada à sua Conta Google</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Tutorial em vídeo exclusivo</b> com passo a passo simples</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Suporte prioritário</b> para ativação rápida no WhatsApp</span></li>
+              <li><span class="feature-check">✔</span> <span><b>Pagamento único</b> sem renovação ou mensalidade</span></li>
             </ul>
           </div>
 
@@ -2402,27 +2513,27 @@
             <tr>
               <td class="col-feature">Foco Principal</td>
               <td class="col-muse">Criação de imagens & vídeos de alta resolução</td>
-              <td class="col-flow">Raciocínio lógico, textos longos e pesquisa</td>
+              <td class="col-flow">Suíte completa: Gemini 3.1 Pro, Flow, Veo 3.1 & Antigravity</td>
             </tr>
             <tr>
               <td class="col-feature">Volume / Duração</td>
               <td class="col-muse">1 bilhão de tokens inclusos</td>
-              <td class="col-flow">18 meses de acesso contínuo</td>
+              <td class="col-flow">18 meses contínuos + 1.000 créditos Flow + até 5 TB Drive</td>
             </tr>
             <tr>
               <td class="col-feature">Geração de Vídeos</td>
-              <td class="col-muse"><span class="compare-badge" style="color: var(--success);">✔ Sim, nativo em alta qualidade</span></td>
-              <td class="col-flow"><span class="compare-badge">Via integrações de prompt</span></td>
+              <td class="col-muse"><span class="compare-badge" style="color: var(--success);">✔ Sim, nativo ultra-rápido</span></td>
+              <td class="col-flow"><span class="compare-badge" style="color: var(--success);">✔ Veo 3.1 + Flow inclusos</span></td>
             </tr>
             <tr>
               <td class="col-feature">Criação de Imagens</td>
               <td class="col-muse"><span class="compare-badge" style="color: var(--success);">✔ Hiper-realismo avançado</span></td>
-              <td class="col-flow"><span class="compare-badge">✔ Suportado via ecossistema</span></td>
+              <td class="col-flow"><span class="compare-badge" style="color: var(--success);">✔ Whisk, Nano Banana & AI Studio</span></td>
             </tr>
             <tr>
               <td class="col-feature">Perfil Recomendado</td>
               <td class="col-muse"><b>Designers, Criadores e Gestores de Tráfego</b></td>
-              <td class="col-flow"><b>Empresários, Redatores e Desenvolvedores</b></td>
+              <td class="col-flow"><b>Empresários, Devs, Pesquisadores e Criadores</b></td>
             </tr>
             <tr>
               <td class="col-feature">Modelo de Pagamento</td>
@@ -2643,7 +2754,7 @@
           </button>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              Você recebe um link de ativação oficial com validade de 18 meses para o ecossistema Gemini AI Pro, acompanhado de um vídeo tutorial explicativo. Você poderá desfrutar de janelas estendidas de contexto e análise de documentos longos diretamente na nuvem do Google.
+              Você recebe um link de ativação oficial com validade de 18 meses para o ecossistema completo do Google AI Pro, incluindo Gemini 3.1 Pro, Gemini 3.8 Flash, Flow (1.000 créditos), Google AI Studio, Antigravity 2.0, Veo 3.1, até 5 TB no Google Drive, Jules + NotebookLM e muito mais. Acompanha vídeo tutorial explicativo e ativação 100% oficial no Google One.
             </div>
           </div>
         </div>
@@ -2874,7 +2985,7 @@
         "flow-ai-pro": {
           title: "Google Flow + Google AI Pro — 18 meses",
           priceStr: "R$ 37,00",
-          desc: "Link de ativação oficial com 18 meses de acesso completo ao Gemini AI Pro e tutorial em vídeo."
+          desc: "Link de ativação oficial com 18 meses de acesso completo à suíte Gemini 3.1 Pro, Veo 3.1, Antigravity 2.0, Flow e tutorial em vídeo."
         }
       };
 

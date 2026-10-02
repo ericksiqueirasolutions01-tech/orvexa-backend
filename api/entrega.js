@@ -192,12 +192,14 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
 
     const zapGeminiMsg = `⭐ *SEU GOOGLE AI PRO + FLOW (18 MESES) ESTÁ PRONTO!*
 
-Olá Erick! Acabei de garantir o *Gemini Pro (18 Meses)* pelo site!
+Olá Erick! Acabei de garantir o *Google Flow + AI Pro (18 Meses)* pelo site!
 📌 *Pedido:* ${orderNsu}
 👤 *E-mail:* ${buyerEmail}
 
 👉 *Meu Link de Ativação:*
 ${linkUrl}
+
+✨ *Suíte Inclusa:* Gemini 3.1 Pro, Flow (1.000 créditos), Antigravity 2.0, Veo 3.1, AI Studio, 5TB Drive e mais!
 
 📋 *Passo a Passo de Ativação:*
 1. Conectar na sua conta Google / Gmail pessoal.
@@ -220,6 +222,13 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
         </div>
         
         <p style="color:#94a3b8;font-size:12px;word-break:break-all;margin-top:12px;">Link: <a href="${linkUrl}" target="_blank" style="color:#38bdf8;">${linkUrl}</a></p>
+      </div>
+
+      <div style="background:#121422;border:1px solid #232742;border-radius:12px;padding:16px;margin:16px 0;text-align:left;">
+        <p style="margin:0 0 8px;font-size:12px;color:#c084fc;font-weight:bold;text-transform:uppercase;">✨ Suíte Google AI Pro Inclusa (18 Meses):</p>
+        <p style="margin:0;font-size:13px;color:#cbd5e1;line-height:1.8;">
+          🤖 <b>Gemini 3.1 Pro</b> • ⚡ <b>Gemini 3.8 Flash</b> • 🎬 <b>Flow (1.000 créditos)</b> • 🎨 <b>Google AI Studio</b> • 🚀 <b>Antigravity 2.0</b> • 🍌 <b>Nano Banana Pro</b> • 🎥 <b>Veo 3.1</b> • 💻 <b>Assistente de Código + CLI</b> • ☁️ <b>Até 5 TB Drive</b> • 🎨 <b>Whisk</b> • 📚 <b>Jules + NotebookLM</b> • 🔎 <b>Pesquisa Profunda IA</b> • 🤖 <b>ProducerAI</b> • ✨ <b>E muito mais!</b>
+        </p>
       </div>
 
       <div style="background:linear-gradient(135deg,#064e3b,#022c22);border:1px solid #059669;border-radius:12px;padding:18px 16px;margin:18px 0;text-align:center;">
