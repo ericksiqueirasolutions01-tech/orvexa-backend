@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bem-vindo à Orvexa Prime Digital — Grande Inauguração</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden;background:#04060f;color:#fff;
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+  #stage{position:fixed;inset:0;overflow:hidden}
+  canvas#stars{position:absolute;inset:0}
+
+  /* ---------- LETTERS INTRO ---------- */
+  #intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20}
+  #intro-letters{display:flex;gap:.4vmin}
+  #intro-letters span{font-size:13vmin;font-weight:900;letter-spacing:.5vmin;
+    background:linear-gradient(180deg,#fff,#7dd3fc 60%,#2563eb);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(56,189,248,.0);
+    opacity:0;transform:translate(var(--tx),var(--ty)) rotate(var(--rr)) scale(.3);
+    filter:blur(8px);animation:letterIn 1s cubic-bezier(.2,.9,.25,1.2) forwards}
+  @keyframes letterIn{to{opacity:1;transform:translate(0,0) rotate(0) scale(1);filter:blur(0)}}
+  #intro-sub{margin-top:2vmin;font-size:3.4vmin;letter-spacing:1.6vmin;color:#b8f135;opacity:0;animation:fadeUp 1s ease 2.2s forwards}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(2vmin)}to{opacity:1;transform:translateY(0)}}
+  #intro.fadeout{animation:introOut .8s ease forwards}
+  @keyframes introOut{to{opacity:0;transform:scale(1.15);filter:blur(6px)}}
+
+  /* ---------- PLANET ---------- */
+  #planet-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(.6);transition:opacity 1.2s ease,transform 1.2s ease;z-index:5}
+  #planet-wrap.show{opacity:1;transform:scale(1)}
+  #planet{position:relative;width:36vmin;height:36vmin;border-radius:50%;z-index:6;
+    background:radial-gradient(circle at 32% 28%,#7dd3fc 0%,#2563eb 28%,#1e1b4b 62%,#04060f 100%);
+    box-shadow:0 0 8vmin rgba(37,99,235,.55),0 0 18vmin rgba(56,189,248,.25),inset -3vmin -4vmin 8vmin rgba(0,0,0,.55)}
+  .planet-surface{position:absolute;inset:0;border-radius:50%;opacity:.5;
+    background:
+      radial-gradient(ellipse 30% 18% at 65% 60%,rgba(184,241,53,.35),transparent 70%),
+      radial-gradient(ellipse 22% 14% at 30% 70%,rgba(168,85,247,.4),transparent 70%),
+      radial-gradient(ellipse 18% 12% at 55% 30%,rgba(255,255,255,.25),transparent 70%);
+    animation:surfSpin 30s linear infinite}
+  @keyframes surfSpin{to{transform:rotate(360deg)}}
+  #planet-logo{position:absolute;top:50%;left:50%;width:62%;height:62%;object-fit:contain;
+    transform:translate(-50%,-50%);border-radius:50%;
+    filter:drop-shadow(0 0 1.5vmin rgba(184,241,53,.6));z-index:7}
+  .planet-ring{position:absolute;top:50%;left:50%;width:150%;height:44%;z-index:4;
+    transform:translate(-50%,-50%) rotateX(72deg);
+    border:1vmin solid transparent;border-radius:50%;
+    border-top-color:rgba(184,241,53,.55);border-bottom-color:rgba(56,189,248,.35);
+    filter:blur(.4vmin)}
+  .planet-atmo{position:absolute;inset:-6vmin;border-radius:50%;z-index:3;
+    background:radial-gradient(circle,transparent 55%,rgba(56,189,248,.18) 72%,transparent 85%);
+    animation:atmoPulse 4s ease-in-out infinite}
+  @keyframes atmoPulse{50%{transform:scale(1.06);opacity:.7}}
+
+  /* ---------- ORBITS ---------- */
+  .orbit{position:absolute;top:50%;left:50%;width:var(--d);height:var(--d);z-index:4;
+    transform:translate(-50%,-50%);border-radius:50%;
+    border:1px dashed rgba(125,211,252,.22);
+    animation:spin var(--t) linear infinite}
+  .orbit.rev{animation-direction:reverse}
+  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+  .sat{position:absolute;top:50%;left:50%;width:0;height:0;
+    transform:rotate(var(--a)) translateX(calc(var(--d)/2)) rotate(calc(var(--a)*-1))}
+  .sat-inner{transform:translate(-50%,-50%);animation:spinRev var(--t) linear infinite;
+    display:flex;flex-direction:column;align-items:center;gap:1vmin;
+    opacity:0;transition:opacity .8s ease}
+  .sat-inner.on{opacity:1}
+  .orbit.rev .sat-inner{animation-direction:reverse}
+  @keyframes spinRev{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+  .sat-chip{width:var(--s);height:var(--s);border-radius:50%;overflow:hidden;
+    background:rgba(10,16,32,.85);border:2px solid rgba(184,241,53,.5);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 3vmin rgba(56,189,248,.5)}
+  .sat-chip img{width:72%;height:72%;object-fit:contain}
+  .sat-chip.manus{background:linear-gradient(135deg,#1e1b4b,#4c1d95);font-weight:900;color:#fff;font-size:2.6vmin}
+  .sat label{font-size:1.9vmin;letter-spacing:.2vmin;color:#bae6fd;text-shadow:0 0 1vmin rgba(56,189,248,.8);white-space:nowrap}
+
+  /* ---------- TEXTS ---------- */
+  #caption{position:absolute;top:9%;left:0;right:0;text-align:center;z-index:15;pointer-events:none;padding:0 4vmin}
+  #caption .kicker{font-size:2.6vmin;letter-spacing:.8vmin;color:#7dd3fc;opacity:0}
+  #caption h1{font-size:6.4vmin;font-weight:900;margin:1vmin 0;opacity:0;
+    background:linear-gradient(180deg,#fff,#b8f135);-webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 4vmin rgba(184,241,53,.25)}
+  #caption .sub{font-size:3vmin;color:#cbd5e1;opacity:0}
+  #caption.show .kicker{animation:fadeUp .9s ease forwards}
+  #caption.show h1{animation:fadeUp .9s ease .25s forwards}
+  #caption.show .sub{animation:fadeUp .9s ease .5s forwards}
+  #caption.hide .kicker,#caption.hide h1,#caption.hide .sub{animation:capOut .6s ease forwards}
+  @keyframes capOut{to{opacity:0;transform:translateY(-2vmin)}}
+
+  #final{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    z-index:18;text-align:center;padding:0 5vmin;opacity:0;pointer-events:none;transition:opacity 1.2s ease}
+  #final.show{opacity:1;pointer-events:auto}
+  #final .big{font-size:7.5vmin;font-weight:900;line-height:1.15;
+    background:linear-gradient(180deg,#fff,#7dd3fc 55%,#b8f135);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 3vmin rgba(56,189,248,.35))}
+  #final .line{font-size:3.4vmin;color:#e2e8f0;margin-top:2.5vmin;letter-spacing:.3vmin}
+  #enter{margin-top:5vmin;padding:2.2vmin 7vmin;font-size:3vmin;font-weight:800;letter-spacing:.2vmin;
+    color:#0a0f1e;background:linear-gradient(135deg,#b8f135,#7dd3fc);border:none;border-radius:99px;cursor:pointer;
+    box-shadow:0 0 4vmin rgba(184,241,53,.55);transition:transform .25s}
+  #enter:hover{transform:scale(1.06)}
+
+  /* ---------- UI ---------- */
+  #progress{position:absolute;bottom:0;left:0;height:.8vmin;width:0%;z-index:30;
+    background:linear-gradient(90deg,#2563eb,#7dd3fc,#b8f135);box-shadow:0 0 2vmin rgba(125,211,252,.8)}
+  #skip{position:absolute;top:3vmin;right:4vmin;z-index:30;background:rgba(255,255,255,.08);
+    color:#cbd5e1;border:1px solid rgba(255,255,255,.25);border-radius:99px;
+    padding:1.4vmin 3.4vmin;font-size:2.2vmin;cursor:pointer;backdrop-filter:blur(6px)}
+  #skip:hover{background:rgba(255,255,255,.18)}
+  @media(max-width:700px){
+    #intro-letters span{font-size:17vmin}
+    #planet{width:52vmin;height:52vmin}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="stars"></canvas>
+
+  <div id="intro">
+    <div id="intro-letters"></div>
+    <div id="intro-sub">PRIME DIGITAL</div>
+  </div>
+
+  <div id="planet-wrap">
+    <div class="orbit" style="--d:62vmin;--t:26s">
+      <div class="sat" style="--a:0deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-chatgpt.png" alt="ChatGPT"></div><label>ChatGPT</label></div></div>
+      <div class="sat" style="--a:90deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-muse-intro.png" alt="Muse AI"></div><label>Muse AI</label></div></div>
+      <div class="sat" style="--a:180deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-duolingo.png" alt="Duolingo"></div><label>Duolingo</label></div></div>
+      <div class="sat" style="--a:270deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-grok.png" alt="Super Grok"></div><label>Super Grok</label></div></div>
+    </div>
+    <div class="orbit rev" style="--d:86vmin;--t:44s">
+      <div class="sat" style="--a:30deg"><div class="sat-inner"><div class="sat-chip" style="--s:8vmin"><img src="assets/logo-claude.png" alt="Claude"></div><label>Claude</label></div></div>
+      <div class="sat" style="--a:150deg"><div class="sat-inner"><div class="sat-chip" style="--s:8vmin"><img src="assets/logo-gemini-intro.png" alt="Gemini"></div><label>Gemini</label></div></div>
+      <div class="sat" style="--a:270deg"><div class="sat-inner"><div class="sat-chip manus" style="--s:8vmin">M</div><label>Manus</label></div></div>
+    </div>
+    <div id="planet">
+      <div class="planet-atmo"></div>
+      <div class="planet-surface"></div>
+      <img id="planet-logo" src="assets/logo-prime-digital.png" alt="Orvexa Prime Digital">
+      <div class="planet-ring"></div>
+    </div>
+  </div>
+
+  <div id="caption">
+    <div class="kicker">BEM-VINDO À</div>
+    <h1>ORVEXA PRIME DIGITAL</h1>
+    <div class="sub">Grande inauguração do nosso site</div>
+  </div>
+
+  <div id="final">
+    <div class="big">Tudo em um só lugar.</div>
+    <div class="line">Confiança e credibilidade é aqui.</div>
+    <button id="enter" onclick="location.href='/?skip_splash=1'">🚀 ENTRAR NO SITE</button>
+  </div>
+
+  <button id="skip">Pular →</button>
+  <div id="progress"></div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id)};
+
+  /* stars */
+  var cv = $('stars'), ctx = cv.getContext('2d'), stars = [];
+  function sizeCv(){cv.width = innerWidth; cv.height = innerHeight}
+  sizeCv(); addEventListener('resize', sizeCv);
+  for(var i=0;i<180;i++) stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.3,s:Math.random()*.6+.15,p:Math.random()*6.28});
+  (function draw(t){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    for(var i=0;i<stars.length;i++){var s=stars[i];
+      ctx.globalAlpha = .35 + .65*Math.abs(Math.sin(t*.0004*s.s*3+s.p));
+      ctx.fillStyle = '#cfeaff'; ctx.beginPath();
+      ctx.arc(s.x*cv.width, s.y*cv.height, s.r, 0, 6.283); ctx.fill();}
+    ctx.globalAlpha = 1; requestAnimationFrame(draw);
+  })(0);
+
+  /* letters */
+  var word = 'ORVEXA', box = $('intro-letters');
+  for(var i=0;i<word.length;i++){
+    var sp = document.createElement('span'); sp.textContent = word[i];
+    sp.style.setProperty('--tx', (Math.random()*70-35)+'vmin');
+    sp.style.setProperty('--ty', (Math.random()*50-25)+'vmin');
+    sp.style.setProperty('--rr', (Math.random()*260-130)+'deg');
+    sp.style.animationDelay = (i*.22)+'s';
+    box.appendChild(sp);
+  }
+
+  /* progress */
+  var prog = $('progress'), t0 = Date.now(), TOTAL = 15000;
+  var pi = setInterval(function(){
+    var p = Math.min(100,(Date.now()-t0)/TOTAL*100);
+    prog.style.width = p+'%'; if(p>=100) clearInterval(pi);
+  },100);
+
+  var finished = false;
+  function orbitIn(){
+    var items = document.querySelectorAll('.sat-inner');
+    items.forEach(function(el,i){ setTimeout(function(){el.classList.add('on')}, 600+i*450); });
+  }
+  function finale(){
+    if(finished) return; finished = true;
+    $('intro').style.display='none';
+    $('caption').classList.remove('show'); $('caption').classList.add('hide');
+    $('skip').style.display='none'; prog.style.width='100%';
+    setTimeout(function(){$('final').classList.add('show')}, 500);
+  }
+
+  /* timeline */
+  setTimeout(function(){
+    $('intro').classList.add('fadeout');
+    setTimeout(function(){
+      $('intro').style.display='none';
+      $('planet-wrap').classList.add('show');
+      $('caption').classList.add('show');
+      setTimeout(orbitIn, 1200);
+    }, 850);
+  }, 3600);
+
+  setTimeout(function(){
+    $('caption').classList.remove('show'); $('caption').classList.add('hide');
+  }, 10500);
+
+  setTimeout(finale, 15000);
+  $('skip').addEventListener('click', finale);
+})();
+</script>
+</body>
+</html>

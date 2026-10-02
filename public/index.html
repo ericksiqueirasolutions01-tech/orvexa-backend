@@ -2016,9 +2016,217 @@
         padding: 32px 0 50px;
       }
     }
+
+    /* ==========================================================================
+       ORVEXA PRIME — INAUGURAÇÃO SPLASH SCREEN OVERLAY
+       ========================================================================== */
+    body.splash-active {
+      overflow: hidden !important;
+      height: 100vh !important;
+    }
+    #splash-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      overflow: hidden;
+      background: #04060f;
+      color: #fff;
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    #splash-stage.splash-fadeout {
+      opacity: 0 !important;
+      transform: scale(1.05) !important;
+      pointer-events: none !important;
+    }
+    #splash-stage canvas#stars { position: absolute; inset: 0; }
+
+    /* ---------- LETTERS INTRO ---------- */
+    #splash-stage #intro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; }
+    #splash-stage #intro-letters { display: flex; gap: .4vmin; }
+    #splash-stage #intro-letters span {
+      font-size: 13vmin; font-weight: 900; letter-spacing: .5vmin;
+      background: linear-gradient(180deg,#fff,#7dd3fc 60%,#2563eb);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 60px rgba(56,189,248,.0);
+      opacity: 0; transform: translate(var(--tx),var(--ty)) rotate(var(--rr)) scale(.3);
+      filter: blur(8px); animation: splashLetterIn 1s cubic-bezier(.2,.9,.25,1.2) forwards;
+    }
+    @keyframes splashLetterIn { to { opacity: 1; transform: translate(0,0) rotate(0) scale(1); filter: blur(0); } }
+    #splash-stage #intro-sub { margin-top: 2vmin; font-size: 3.4vmin; letter-spacing: 1.6vmin; color: #b8f135; opacity: 0; animation: splashFadeUp 1s ease 2.2s forwards; }
+    @keyframes splashFadeUp { from { opacity: 0; transform: translateY(2vmin); } to { opacity: 1; transform: translateY(0); } }
+    #splash-stage #intro.fadeout { animation: splashIntroOut .8s ease forwards; }
+    @keyframes splashIntroOut { to { opacity: 0; transform: scale(1.15); filter: blur(6px); } }
+
+    /* ---------- PLANET ---------- */
+    #splash-stage #planet-wrap {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(.6); transition: opacity 1.2s ease, transform 1.2s ease; z-index: 5;
+    }
+    #splash-stage #planet-wrap.show { opacity: 1; transform: scale(1); }
+    #splash-stage #planet {
+      position: relative; width: 36vmin; height: 36vmin; border-radius: 50%; z-index: 6;
+      background: radial-gradient(circle at 32% 28%,#7dd3fc 0%,#2563eb 28%,#1e1b4b 62%,#04060f 100%);
+      box-shadow: 0 0 8vmin rgba(37,99,235,.55), 0 0 18vmin rgba(56,189,248,.25), inset -3vmin -4vmin 8vmin rgba(0,0,0,.55);
+    }
+    #splash-stage .planet-surface {
+      position: absolute; inset: 0; border-radius: 50%; opacity: .5;
+      background:
+        radial-gradient(ellipse 30% 18% at 65% 60%,rgba(184,241,53,.35),transparent 70%),
+        radial-gradient(ellipse 22% 14% at 30% 70%,rgba(168,85,247,.4),transparent 70%),
+        radial-gradient(ellipse 18% 12% at 55% 30%,rgba(255,255,255,.25),transparent 70%);
+      animation: splashSurfSpin 30s linear infinite;
+    }
+    @keyframes splashSurfSpin { to { transform: rotate(360deg); } }
+    #splash-stage #planet-logo {
+      position: absolute; top: 50%; left: 50%; width: 62%; height: 62%; object-fit: contain;
+      transform: translate(-50%,-50%); border-radius: 50%;
+      filter: drop-shadow(0 0 1.5vmin rgba(184,241,53,.6)); z-index: 7;
+    }
+    #splash-stage .planet-ring {
+      position: absolute; top: 50%; left: 50%; width: 150%; height: 44%; z-index: 4;
+      transform: translate(-50%,-50%) rotateX(72deg);
+      border: 1vmin solid transparent; border-radius: 50%;
+      border-top-color: rgba(184,241,53,.55); border-bottom-color: rgba(56,189,248,.35);
+      filter: blur(.4vmin);
+    }
+    #splash-stage .planet-atmo {
+      position: absolute; inset: -6vmin; border-radius: 50%; z-index: 3;
+      background: radial-gradient(circle,transparent 55%,rgba(56,189,248,.18) 72%,transparent 85%);
+      animation: splashAtmoPulse 4s ease-in-out infinite;
+    }
+    @keyframes splashAtmoPulse { 50% { transform: scale(1.06); opacity: .7; } }
+
+    /* ---------- ORBITS ---------- */
+    #splash-stage .orbit {
+      position: absolute; top: 50%; left: 50%; width: var(--d); height: var(--d); z-index: 4;
+      transform: translate(-50%,-50%); border-radius: 50%;
+      border: 1px dashed rgba(125,211,252,.22);
+      animation: splashSpin var(--t) linear infinite;
+    }
+    #splash-stage .orbit.rev { animation-direction: reverse; }
+    @keyframes splashSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+    #splash-stage .sat {
+      position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+      transform: rotate(var(--a)) translateX(calc(var(--d)/2)) rotate(calc(var(--a)*-1));
+    }
+    #splash-stage .sat-inner {
+      transform: translate(-50%,-50%); animation: splashSpinRev var(--t) linear infinite;
+      display: flex; flex-direction: column; align-items: center; gap: 1vmin;
+      opacity: 0; transition: opacity .8s ease;
+    }
+    #splash-stage .sat-inner.on { opacity: 1; }
+    #splash-stage .orbit.rev .sat-inner { animation-direction: reverse; }
+    @keyframes splashSpinRev { to { transform: translate(-50%,-50%) rotate(-360deg); } }
+    #splash-stage .sat-chip {
+      width: var(--s); height: var(--s); border-radius: 50%; overflow: hidden;
+      background: rgba(10,16,32,.85); border: 2px solid rgba(184,241,53,.5);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 3vmin rgba(56,189,248,.5);
+    }
+    #splash-stage .sat-chip img { width: 72%; height: 72%; object-fit: contain; }
+    #splash-stage .sat-chip.manus { background: linear-gradient(135deg,#1e1b4b,#4c1d95); font-weight: 900; color: #fff; font-size: 2.6vmin; }
+    #splash-stage .sat label { font-size: 1.9vmin; letter-spacing: .2vmin; color: #bae6fd; text-shadow: 0 0 1vmin rgba(56,189,248,.8); white-space: nowrap; }
+
+    /* ---------- TEXTS ---------- */
+    #splash-stage #caption { position: absolute; top: 9%; left: 0; right: 0; text-align: center; z-index: 15; pointer-events: none; padding: 0 4vmin; }
+    #splash-stage #caption .kicker { font-size: 2.6vmin; letter-spacing: .8vmin; color: #7dd3fc; opacity: 0; }
+    #splash-stage #caption h1 {
+      font-size: 6.4vmin; font-weight: 900; margin: 1vmin 0; opacity: 0;
+      background: linear-gradient(180deg,#fff,#b8f135); -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 4vmin rgba(184,241,53,.25);
+    }
+    #splash-stage #caption .sub { font-size: 3vmin; color: #cbd5e1; opacity: 0; }
+    #splash-stage #caption.show .kicker { animation: splashFadeUp .9s ease forwards; }
+    #splash-stage #caption.show h1 { animation: splashFadeUp .9s ease .25s forwards; }
+    #splash-stage #caption.show .sub { animation: splashFadeUp .9s ease .5s forwards; }
+    #splash-stage #caption.hide .kicker, #splash-stage #caption.hide h1, #splash-stage #caption.hide .sub { animation: splashCapOut .6s ease forwards; }
+    @keyframes splashCapOut { to { opacity: 0; transform: translateY(-2vmin); } }
+
+    #splash-stage #final {
+      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 18; text-align: center; padding: 0 5vmin; opacity: 0; pointer-events: none; transition: opacity 1.2s ease;
+    }
+    #splash-stage #final.show { opacity: 1; pointer-events: auto; }
+    #splash-stage #final .big {
+      font-size: 7.5vmin; font-weight: 900; line-height: 1.15;
+      background: linear-gradient(180deg,#fff,#7dd3fc 55%,#b8f135);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 0 3vmin rgba(56,189,248,.35));
+    }
+    #splash-stage #final .line { font-size: 3.4vmin; color: #e2e8f0; margin-top: 2.5vmin; letter-spacing: .3vmin; }
+    #splash-stage #enter {
+      margin-top: 5vmin; padding: 2.2vmin 7vmin; font-size: 3vmin; font-weight: 800; letter-spacing: .2vmin;
+      color: #0a0f1e; background: linear-gradient(135deg,#b8f135,#7dd3fc); border: none; border-radius: 99px; cursor: pointer;
+      box-shadow: 0 0 4vmin rgba(184,241,53,.55); transition: transform .25s;
+    }
+    #splash-stage #enter:hover { transform: scale(1.06); }
+
+    /* ---------- UI ---------- */
+    #splash-stage #progress {
+      position: absolute; bottom: 0; left: 0; height: .8vmin; width: 0%; z-index: 30;
+      background: linear-gradient(90deg,#2563eb,#7dd3fc,#b8f135); box-shadow: 0 0 2vmin rgba(125,211,252,.8);
+    }
+    #splash-stage #skip {
+      position: absolute; top: 3vmin; right: 4vmin; z-index: 30; background: rgba(255,255,255,.08);
+      color: #cbd5e1; border: 1px solid rgba(255,255,255,.25); border-radius: 99px;
+      padding: 1.4vmin 3.4vmin; font-size: 2.2vmin; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    #splash-stage #skip:hover { background: rgba(255,255,255,.18); }
+    @media(max-width:700px){
+      #splash-stage #intro-letters span{font-size:17vmin}
+      #splash-stage #planet{width:52vmin;height:52vmin}
+    }
   </style>
 </head>
-<body id="topo">
+<body id="topo" class="splash-active">
+
+  <!-- ========================================================================
+       ORVEXA PRIME — SPLASH SCREEN / GRANDE INAUGURAÇÃO
+       ======================================================================== -->
+  <div id="splash-stage">
+    <canvas id="stars"></canvas>
+
+    <div id="intro">
+      <div id="intro-letters"></div>
+      <div id="intro-sub">PRIME DIGITAL</div>
+    </div>
+
+    <div id="planet-wrap">
+      <div class="orbit" style="--d:62vmin;--t:26s">
+        <div class="sat" style="--a:0deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-chatgpt.png" alt="ChatGPT"></div><label>ChatGPT</label></div></div>
+        <div class="sat" style="--a:90deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-muse-intro.png" alt="Muse AI"></div><label>Muse AI</label></div></div>
+        <div class="sat" style="--a:180deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-duolingo.png" alt="Duolingo"></div><label>Duolingo</label></div></div>
+        <div class="sat" style="--a:270deg"><div class="sat-inner"><div class="sat-chip" style="--s:9vmin"><img src="assets/logo-grok.png" alt="Super Grok"></div><label>Super Grok</label></div></div>
+      </div>
+      <div class="orbit rev" style="--d:86vmin;--t:44s">
+        <div class="sat" style="--a:30deg"><div class="sat-inner"><div class="sat-chip" style="--s:8vmin"><img src="assets/logo-claude.png" alt="Claude"></div><label>Claude</label></div></div>
+        <div class="sat" style="--a:150deg"><div class="sat-inner"><div class="sat-chip" style="--s:8vmin"><img src="assets/logo-gemini-intro.png" alt="Gemini"></div><label>Gemini</label></div></div>
+        <div class="sat" style="--a:270deg"><div class="sat-inner"><div class="sat-chip manus" style="--s:8vmin">M</div><label>Manus</label></div></div>
+      </div>
+      <div id="planet">
+        <div class="planet-atmo"></div>
+        <div class="planet-surface"></div>
+        <img id="planet-logo" src="assets/logo-prime-digital.png" alt="Orvexa Prime Digital">
+        <div class="planet-ring"></div>
+      </div>
+    </div>
+
+    <div id="caption">
+      <div class="kicker">BEM-VINDO À</div>
+      <h1>ORVEXA PRIME DIGITAL</h1>
+      <div class="sub">Grande inauguração do nosso site</div>
+    </div>
+
+    <div id="final">
+      <div class="big">Tudo em um só lugar.</div>
+      <div class="line">Confiança e credibilidade é aqui.</div>
+      <button id="enter">🚀 ENTRAR NO SITE</button>
+    </div>
+
+    <button id="skip">Pular →</button>
+    <div id="progress"></div>
+  </div>
 
   <!-- ========================================================================
        1. TOPBAR
@@ -3358,6 +3566,142 @@
         }
 
         openModal("legalModal");
+      }
+    })();
+  </script>
+
+  <!-- ========================================================================
+       ORVEXA PRIME — SPLASH CONTROLLER SCRIPT
+       ======================================================================== -->
+  <script>
+    (function(){
+      var splashStage = document.getElementById('splash-stage');
+      if (!splashStage) return;
+
+      var animId = null;
+
+      function dismissSplash(immediate) {
+        if (immediate) {
+          splashStage.style.display = 'none';
+          document.body.classList.remove('splash-active');
+          return;
+        }
+        splashStage.classList.add('splash-fadeout');
+        document.body.classList.remove('splash-active');
+        setTimeout(function(){
+          splashStage.style.display = 'none';
+        }, 850);
+        try { sessionStorage.setItem('orvexa_splash_seen', '1'); } catch(e){}
+        if (animId) cancelAnimationFrame(animId);
+      }
+
+      // Se URL tiver ?skip_splash=1, pula direto sem animação
+      if (window.location.search.indexOf('skip_splash=1') !== -1) {
+        dismissSplash(true);
+        return;
+      }
+
+      /* stars canvas */
+      var cv = document.getElementById('stars'), ctx = cv ? cv.getContext('2d') : null, stars = [];
+      function sizeCv(){ if(cv){ cv.width = window.innerWidth; cv.height = window.innerHeight; } }
+      sizeCv(); window.addEventListener('resize', sizeCv);
+      for(var i=0;i<180;i++) stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.6+.3,s:Math.random()*.6+.15,p:Math.random()*6.28});
+      (function draw(t){
+        if (splashStage.style.display === 'none') return;
+        if (ctx) {
+          ctx.clearRect(0,0,cv.width,cv.height);
+          for(var i=0;i<stars.length;i++){
+            var s = stars[i];
+            ctx.globalAlpha = .35 + .65*Math.abs(Math.sin(t*.0004*s.s*3+s.p));
+            ctx.fillStyle = '#cfeaff'; ctx.beginPath();
+            ctx.arc(s.x*cv.width, s.y*cv.height, s.r, 0, 6.283); ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+        }
+        animId = requestAnimationFrame(draw);
+      })(0);
+
+      /* letters */
+      var word = 'ORVEXA', box = document.getElementById('intro-letters');
+      if (box) {
+        for(var i=0;i<word.length;i++){
+          var sp = document.createElement('span'); sp.textContent = word[i];
+          sp.style.setProperty('--tx', (Math.random()*70-35)+'vmin');
+          sp.style.setProperty('--ty', (Math.random()*50-25)+'vmin');
+          sp.style.setProperty('--rr', (Math.random()*260-130)+'deg');
+          sp.style.animationDelay = (i*.22)+'s';
+          box.appendChild(sp);
+        }
+      }
+
+      /* progress */
+      var prog = document.getElementById('progress'), t0 = Date.now(), TOTAL = 15000;
+      var pi = setInterval(function(){
+        var p = Math.min(100,(Date.now()-t0)/TOTAL*100);
+        if(prog) prog.style.width = p+'%';
+        if(p>=100) clearInterval(pi);
+      },100);
+
+      var finished = false;
+      function orbitIn(){
+        var items = splashStage.querySelectorAll('.sat-inner');
+        items.forEach(function(el,idx){
+          setTimeout(function(){ el.classList.add('on'); }, 600 + idx*450);
+        });
+      }
+
+      function finale(){
+        if(finished) return; finished = true;
+        var introEl = document.getElementById('intro');
+        if (introEl) introEl.style.display = 'none';
+        var capEl = document.getElementById('caption');
+        if (capEl) { capEl.classList.remove('show'); capEl.classList.add('hide'); }
+        var skipBtn = document.getElementById('skip');
+        if (skipBtn) skipBtn.style.display = 'none';
+        if (prog) prog.style.width = '100%';
+        setTimeout(function(){
+          var finEl = document.getElementById('final');
+          if (finEl) finEl.classList.add('show');
+        }, 500);
+      }
+
+      /* timeline */
+      setTimeout(function(){
+        var introEl = document.getElementById('intro');
+        if (introEl) {
+          introEl.classList.add('fadeout');
+          setTimeout(function(){
+            introEl.style.display = 'none';
+            var pw = document.getElementById('planet-wrap');
+            if (pw) pw.classList.add('show');
+            var capEl = document.getElementById('caption');
+            if (capEl) capEl.classList.add('show');
+            setTimeout(orbitIn, 1200);
+          }, 850);
+        }
+      }, 3600);
+
+      setTimeout(function(){
+        var capEl = document.getElementById('caption');
+        if (capEl) { capEl.classList.remove('show'); capEl.classList.add('hide'); }
+      }, 10500);
+
+      setTimeout(finale, 15000);
+
+      var skipBtn = document.getElementById('skip');
+      if (skipBtn) {
+        skipBtn.addEventListener('click', function(e){
+          e.stopPropagation();
+          dismissSplash(false);
+        });
+      }
+
+      var enterBtn = document.getElementById('enter');
+      if (enterBtn) {
+        enterBtn.addEventListener('click', function(e){
+          e.stopPropagation();
+          dismissSplash(false);
+        });
       }
     })();
   </script>
