@@ -387,6 +387,17 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
     pendente: "⏳ Pagamento em análise",
   };
 
+  const PRODUCT_EXACT_PRICES = {
+    "muse-ia": 59.99,
+    "flow-ai-pro": 24.99,
+    "lovable-pro": 49.99,
+    "duolingo-super": 24.99,
+    "capcut-pro": 24.99,
+    "manus-mensal": 49.99,
+    "super-duolingo": 24.99,
+  };
+  const productPrice = PRODUCT_EXACT_PRICES[produtoKey] || Number(produtoInfo.priceBRL) || 24.99;
+
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   const finalHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -404,13 +415,31 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
   fbq('init', '1601167151505859');
   fbq('track', 'PageView');
   ${status === "aprovado" ? `
-  fbq('track', 'Purchase', {
-    content_name: ${JSON.stringify(produtoInfo.title)},
-    content_ids: [${JSON.stringify(produtoKey)}],
-    content_type: 'product',
-    value: ${Number(produtoInfo.priceBRL) || 24.99},
-    currency: 'BRL'
-  });` : ""}
+  (function() {
+    try {
+      var purchaseKey = 'fb_purchase_' + ${JSON.stringify(orderNsu || 'default')};
+      if (!localStorage.getItem(purchaseKey)) {
+        fbq('track', 'Purchase', {
+          value: ${productPrice},
+          currency: 'BRL',
+          content_name: ${JSON.stringify(produtoInfo.title)},
+          content_ids: [${JSON.stringify(produtoKey)}],
+          content_type: 'product'
+        }, { eventID: ${JSON.stringify(orderNsu || undefined)} });
+        if (${JSON.stringify(orderNsu)}) {
+          localStorage.setItem(purchaseKey, '1');
+        }
+      }
+    } catch (e) {
+      fbq('track', 'Purchase', {
+        value: ${productPrice},
+        currency: 'BRL',
+        content_name: ${JSON.stringify(produtoInfo.title)},
+        content_ids: [${JSON.stringify(produtoKey)}],
+        content_type: 'product'
+      });
+    }
+  })();` : ""}
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1601167151505859&ev=PageView&noscript=1"
