@@ -1,8 +1,14 @@
 // GET /api/entrega?pagamento=aprovado&produto=flow-ai-pro&order_nsu=...&email=...&phone=...
 // Tela de entrega instantânea exibida para o cliente após aprovação do pagamento.
-const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW } = require("../lib/products");
+const { PRODUCTS, SITE_URL, WHATSAPP_URL, YOUTUBE_TUTORIAL_FLOW, ADMIN_EMAIL, isValidEmail } = require("../lib/products");
 const { getOrder, deliverOrder, markEmailSent } = require("../lib/store");
-const { sendEmail, emailMuseIa, emailFlowAiPro, emailSupportDelivery } = require("../lib/email");
+const {
+  sendEmail,
+  emailMuseIa,
+  emailFlowAiPro,
+  emailBuyerManualDelivery,
+  emailAdminManualDelivery,
+} = require("../lib/email");
 
 module.exports = async function handler(req, res) {
   const status = req.query.pagamento || "aprovado";
@@ -29,15 +35,20 @@ module.exports = async function handler(req, res) {
   if (!produtoKey || !PRODUCTS[produtoKey]) {
     if (orderNsu.startsWith("muse-ia")) produtoKey = "muse-ia";
     else if (orderNsu.startsWith("flow-ai-pro")) produtoKey = "flow-ai-pro";
+    else if (orderNsu.startsWith("lovable-pro")) produtoKey = "lovable-pro";
+    else if (orderNsu.startsWith("duolingo-super")) produtoKey = "duolingo-super";
+    else if (orderNsu.startsWith("capcut-pro")) produtoKey = "capcut-pro";
+    else if (orderNsu.startsWith("manus-mensal")) produtoKey = "manus-mensal";
     else produtoKey = "muse-ia";
   }
 
   let deliveredItem = (order && order.delivered_item) || "";
+  let deliveryResult = null;
 
   // Se o pagamento foi aprovado, realiza entrega atômica e idempotente
   if (status === "aprovado" && orderNsu) {
     try {
-      const delivery = await deliverOrder({
+      deliveryResult = await deliverOrder({
         orderNsu,
         transactionNsu: (order && order.transaction_nsu) || "",
         produto: produtoKey,
@@ -45,20 +56,61 @@ module.exports = async function handler(req, res) {
         phone: buyerPhone,
       });
 
-      deliveredItem = delivery.deliveredItem;
-      if (delivery.produto) produtoKey = delivery.produto;
-      if (delivery.email && !buyerEmail) buyerEmail = delivery.email;
-      if (delivery.phone && !buyerPhone) buyerPhone = delivery.phone;
+      deliveredItem = deliveryResult.deliveredItem;
+      if (deliveryResult.produto) produtoKey = deliveryResult.produto;
+      if (deliveryResult.email && !buyerEmail) buyerEmail = deliveryResult.email;
+      if (deliveryResult.phone && !buyerPhone) buyerPhone = deliveryResult.phone;
 
       // Dispara envio de e-mail complementar apenas se ainda NÃO foi enviado (pelo webhook ou outra requisição)
-      if (buyerEmail && deliveredItem && !deliveredItem.startsWith("⚠️") && !delivery.emailSent) {
-        try {
-          const shortOrder = orderNsu.length > 8 ? orderNsu.slice(-8).toUpperCase() : orderNsu;
+      if (!deliveryResult.emailSent) {
+        const prodObj = PRODUCTS[produtoKey] || { title: "Produto Digital", short: "Produto" };
+        const shortOrder = orderNsu.length > 8 ? orderNsu.slice(-8).toUpperCase() : orderNsu;
+
+        if (deliveryResult.isManualDelivery) {
+          // 1. E-mail para o comprador
+          if (buyerEmail && isValidEmail(buyerEmail)) {
+            try {
+              await sendEmail(
+                buyerEmail,
+                `⏳ ${prodObj.title} — entrega pelo nosso suporte`,
+                emailBuyerManualDelivery({
+                  produtoTitle: prodObj.title,
+                  orderNsu,
+                  email: buyerEmail,
+                  phone: buyerPhone,
+                })
+              );
+            } catch (errM) {
+              console.warn("Aviso envio de e-mail comprador em api/entrega:", errM.message);
+            }
+          }
+
+          // 2. E-mail para o ADMIN com formato estrito
+          const adminRecipient = process.env.ADMIN_EMAIL || ADMIN_EMAIL || "erick.siqueira.solutions01@gmail.com";
+          try {
+            await sendEmail(
+              adminRecipient,
+              `🛠️ ENTREGA MANUAL — ${prodObj.title} — pedido ${orderNsu}`,
+              emailAdminManualDelivery({
+                produtoTitle: prodObj.title,
+                orderNsu,
+                buyerEmail,
+                buyerPhone,
+                transactionNsu: (order && order.transaction_nsu) || "",
+              })
+            );
+          } catch (errAdm) {
+            console.warn("Aviso envio de e-mail admin em api/entrega:", errAdm.message);
+          }
+
+          await markEmailSent(orderNsu);
+        } else if (buyerEmail && isValidEmail(buyerEmail) && deliveredItem && !deliveredItem.startsWith("⚠️")) {
+          // Produtos de estoque automático (quando estoque disponível)
           if (produtoKey === "muse-ia" && deliveredItem.includes(";")) {
             const [l, s] = deliveredItem.split(";");
             await sendEmail(
               buyerEmail,
-              `🚀 Seu Acesso à MUSE IA Foi Liberado! [Pedido #${shortOrder}]`,
+              `🚀 Seu Acesso à ${prodObj.short} Foi Liberado! [Pedido #${shortOrder}]`,
               emailMuseIa({ login: l, senha: s, orderNsu })
             );
             await markEmailSent(orderNsu);
@@ -69,17 +121,7 @@ module.exports = async function handler(req, res) {
               emailFlowAiPro({ link: deliveredItem, orderNsu })
             );
             await markEmailSent(orderNsu);
-          } else {
-            const prodObj = PRODUCTS[produtoKey] || { title: "Produto Digital", short: "Produto" };
-            await sendEmail(
-              buyerEmail,
-              `🎉 Pagamento Confirmado: ${prodObj.title} [Pedido #${shortOrder}]`,
-              emailSupportDelivery({ produtoTitle: prodObj.title, orderNsu, email: buyerEmail, phone: buyerPhone })
-            );
-            await markEmailSent(orderNsu);
           }
-        } catch (errM) {
-          console.warn("Aviso envio de e-mail em api/entrega:", errM.message);
         }
       }
     } catch (ePop) {
@@ -88,10 +130,11 @@ module.exports = async function handler(req, res) {
   }
 
   const produtoInfo = PRODUCTS[produtoKey] || { title: "Seu Acesso", short: "Acesso", priceBRL: 59.99 };
+  const isManualFlow = Boolean((deliveryResult && deliveryResult.isManualDelivery) || (produtoInfo.delivery === "support" || produtoInfo.itemType === "support"));
   let deliveryContentHtml = "";
 
-  // 1. MUSE IA (Conta com 1 Bilhão de Tokens)
-  if (produtoKey === "muse-ia") {
+  // 1. MUSE IA (Conta com 1 Bilhão de Tokens) — apenas se tiver estoque automático
+  if (produtoKey === "muse-ia" && !isManualFlow) {
     let loginStr = "";
     let senhaStr = "";
     if (deliveredItem && deliveredItem.includes(";")) {
@@ -194,8 +237,8 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
     `;
   }
 
-  // 2. Gemini Pro (Google Flow + AI Pro 18 meses)
-  else if (produtoKey === "flow-ai-pro") {
+  // 2. Gemini Pro (Google Flow + AI Pro 18 meses) — apenas se tiver estoque automático
+  else if (produtoKey === "flow-ai-pro" && !isManualFlow) {
     const linkUrl = deliveredItem && deliveredItem.startsWith("http") ? deliveredItem : "";
 
     const zapGeminiMsg = `⭐ *SEU GOOGLE AI PRO + FLOW (18 MESES) ESTÁ PRONTO!*
@@ -310,11 +353,12 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
           </div>
         </div>
 
-        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(16,185,129,0.35);border-radius:12px;padding:18px;margin:18px 0;text-align:left;">
-          <h3 style="color:#10b981;font-size:16px;margin:0 0 8px;font-weight:800;display:flex;align-items:center;gap:8px;">
-            <span>ℹ️</span> Este produto será entregue pelo nosso suporte.
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(16,185,129,0.35);border-radius:12px;padding:20px;margin:18px 0;text-align:left;">
+          <h3 style="color:#10b981;font-size:17px;margin:0 0 10px;font-weight:800;display:flex;align-items:center;gap:8px;">
+            <span>✅</span> Pagamento confirmado! Sua entrega será feita pelo nosso suporte.
           </h3>
-          <p style="color:#e2e8f0;font-size:14.5px;line-height:1.65;margin:0 0 12px;">
+          <p style="color:#e2e8f0;font-size:15px;line-height:1.65;margin:0 0 14px;">
+            <b>Este produto será entregue pelo nosso suporte.</b><br>
             O cliente deverá clicar no botão de contato ou acessar o WhatsApp do suporte para solicitar a entrega. Após o contato, nosso suporte realizará a entrega do produto adquirido em até <b>10 minutos</b>.
           </p>
           <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#94a3b8;border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;">
@@ -427,8 +471,11 @@ Gostaria de manter o procedimento e o suporte salvo aqui no meu WhatsApp!`;
 </body>
 </html>`;
 
+  if (typeof res.status === "function") {
+    res.status(200);
+  }
   if (typeof res.send === "function") {
-    return res.status(200).send(finalHtml);
+    return res.send(finalHtml);
   }
   return res.end(finalHtml);
 };

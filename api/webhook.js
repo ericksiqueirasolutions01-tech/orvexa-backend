@@ -7,7 +7,15 @@ const {
   markEmailSent,
   stockCount,
 } = require("../lib/store");
-const { sendEmail, emailMuseIa, emailFlowAiPro, emailSuperDuolingo, emailSupportDelivery } = require("../lib/email");
+const {
+  sendEmail,
+  emailMuseIa,
+  emailFlowAiPro,
+  emailSuperDuolingo,
+  emailSupportDelivery,
+  emailBuyerManualDelivery,
+  emailAdminManualDelivery,
+} = require("../lib/email");
 
 async function notifyAdmin(subject, html) {
   const admin = process.env.ADMIN_EMAIL;
@@ -67,56 +75,86 @@ module.exports = async function handler(req, res) {
     const hasItem = deliveredText && !deliveredText.startsWith("⚠️");
 
     // Dispara envio de e-mail APENAS se ainda não tiver sido enviado
-    if (hasItem && !delivery.emailSent && isValidEmail(buyerEmail)) {
-      try {
-        const shortOrder = order_nsu.length > 8 ? order_nsu.slice(-8).toUpperCase() : order_nsu;
-        if (produtoKey === "muse-ia" && deliveredText.includes(";")) {
-          const [l, s] = deliveredText.split(";");
-          await sendEmail(
-            buyerEmail,
-            `🚀 Seu Acesso à ${produto.short} Foi Liberado! [Pedido #${shortOrder}]`,
-            emailMuseIa({ login: l, senha: s, orderNsu: order_nsu })
-          );
-          await markEmailSent(order_nsu);
-        } else if (produtoKey === "flow-ai-pro") {
-          await sendEmail(
-            buyerEmail,
-            `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto! [Pedido #${shortOrder}]`,
-            emailFlowAiPro({ link: deliveredText, orderNsu: order_nsu })
-          );
-          await markEmailSent(order_nsu);
-        } else {
-          await sendEmail(
-            buyerEmail,
-            `🎉 Pagamento Confirmado: ${produto.title} [Pedido #${shortOrder}]`,
-            emailSupportDelivery({ produtoTitle: produto.title, orderNsu: order_nsu, email: buyerEmail, phone: buyerPhone })
-          );
-          await markEmailSent(order_nsu);
+    if (!delivery.emailSent) {
+      const shortOrder = order_nsu.length > 8 ? order_nsu.slice(-8).toUpperCase() : order_nsu;
+
+      if (delivery.isManualDelivery) {
+        // 1. Envio de e-mail ao COMPRADOR
+        if (isValidEmail(buyerEmail)) {
+          try {
+            await sendEmail(
+              buyerEmail,
+              `⏳ ${produto.title} — entrega pelo nosso suporte`,
+              emailBuyerManualDelivery({
+                produtoTitle: produto.title,
+                orderNsu: order_nsu,
+                email: buyerEmail,
+                phone: buyerPhone,
+              })
+            );
+          } catch (errBuyer) {
+            console.warn("Aviso envio e-mail comprador (manual):", errBuyer.message);
+          }
         }
-      } catch (errEmail) {
-        console.warn("Aviso envio de e-mail (webhook):", errEmail.message);
+
+        // 2. Envio de e-mail ao ADMIN com assunto estrito exigido pela automação externa:
+        // 🛠️ ENTREGA MANUAL — {nome do produto} — pedido {order_nsu}
+        const adminRecipient = process.env.ADMIN_EMAIL || "erick.siqueira.solutions01@gmail.com";
+        try {
+          await sendEmail(
+            adminRecipient,
+            `🛠️ ENTREGA MANUAL — ${produto.title} — pedido ${order_nsu}`,
+            emailAdminManualDelivery({
+              produtoTitle: produto.title,
+              orderNsu: order_nsu,
+              buyerEmail,
+              buyerPhone,
+              transactionNsu: transaction_nsu,
+            })
+          );
+        } catch (errAdmin) {
+          console.warn("Aviso envio e-mail admin (manual):", errAdmin.message);
+        }
+
+        await markEmailSent(order_nsu);
+      } else {
+        // 3. Produtos de estoque automático (quando estoque disponível)
+        if (isValidEmail(buyerEmail)) {
+          try {
+            if (produtoKey === "muse-ia" && deliveredText.includes(";")) {
+              const [l, s] = deliveredText.split(";");
+              await sendEmail(
+                buyerEmail,
+                `🚀 Seu Acesso à ${produto.short} Foi Liberado! [Pedido #${shortOrder}]`,
+                emailMuseIa({ login: l, senha: s, orderNsu: order_nsu })
+              );
+              await markEmailSent(order_nsu);
+            } else if (produtoKey === "flow-ai-pro") {
+              await sendEmail(
+                buyerEmail,
+                `⭐ Seu Google AI Pro + Flow (18 Meses) Está Pronto! [Pedido #${shortOrder}]`,
+                emailFlowAiPro({ link: deliveredText, orderNsu: order_nsu })
+              );
+              await markEmailSent(order_nsu);
+            }
+          } catch (errAuto) {
+            console.warn("Aviso envio e-mail estoque auto:", errAuto.message);
+          }
+        }
+
+        // Alerta de estoque baixo se houve retirada do estoque automático
+        if (delivery.isNewDelivery) {
+          try {
+            const remaining = await stockCount(produtoKey);
+            if (remaining <= 2) {
+              await notifyAdmin(
+                `⚠️ Estoque baixo: ${produto.short} (${remaining} restantes)`,
+                `<p>Restam apenas <b>${remaining}</b> itens de <b>${produto.title}</b> no estoque. Cadastre mais pelo painel admin.</p>`
+              );
+            }
+          } catch (eCnt) {}
+        }
       }
-    }
-
-    // Se estoque acabou e era uma entrega nova, avisa admin
-    if (delivery.isStockEmpty && delivery.isNewDelivery) {
-      await notifyAdmin(
-        `⚠️ Estoque esgotado: ${produto.short}`,
-        `<p>Pagamento aprovado para <b>${buyerEmail}</b> (${produto.title}, pedido ${order_nsu}), mas <b>não havia itens no estoque</b>.</p>`
-      );
-    }
-
-    // Alerta de estoque baixo se houve retirada
-    if (delivery.isNewDelivery && !delivery.isStockEmpty) {
-      try {
-        const remaining = await stockCount(produtoKey);
-        if (remaining <= 2) {
-          await notifyAdmin(
-            `⚠️ Estoque baixo: ${produto.short} (${remaining} restantes)`,
-            `<p>Restam apenas <b>${remaining}</b> itens de <b>${produto.title}</b> no estoque. Cadastre mais pelo painel admin.</p>`
-          );
-        }
-      } catch (eCnt) {}
     }
 
     console.log(`✅ [WEBHOOK SUCESSO] ${produto.title} para ${buyerEmail} (pedido ${order_nsu})`);
