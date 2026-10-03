@@ -1115,6 +1115,25 @@
         </div>
       </div>
 
+      <!-- Pedidos Pendentes / Aguardando Pix -->
+      <div class="card" id="card-pedidos-pendentes" style="border:1px solid rgba(245, 158, 11, 0.4);background:linear-gradient(180deg,#14120a,#0f111d);display:none;">
+        <div class="card-head">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h2 class="card-title" style="color:#fbbf24;">
+              <span>⏳</span> Pedidos Aguardando Pix
+            </h2>
+            <span class="stock-chip-badge badge-amber" id="pending-orders-count">0 pendentes</span>
+          </div>
+          <span style="font-size:11px;color:var(--muted);">Se o cliente pagou, libere com 1 clique</span>
+        </div>
+        <p style="font-size:12px;color:#cbd5e1;margin:-6px 0 14px;">
+          Estes clientes geraram o Pix. Se o cliente avisou no WhatsApp que já pagou, clique em <b>"Liberar Acesso Agora"</b> para entregar imediatamente por e-mail e obter o link/conta.
+        </p>
+        <div id="pending-orders-list">
+          <!-- Renderizado via JS -->
+        </div>
+      </div>
+
       <!-- Feed Rápido de Últimas Vendas -->
       <div class="card">
         <div class="card-head">
@@ -1734,11 +1753,93 @@
         // Atualizar opções do dropdown de produtos com contadores atuais
         atualizarDropdownProdutos(allSales);
 
+        // Renderizar pedidos pendentes aguardando Pix
+        renderizarPedidosPendentes(data.pedidos_pendentes || []);
+
         // Aplicar filtros ativos e renderizar telas, métricas e gráficos
         aplicarFiltrosEAtualizarUI();
 
       } catch (e) {
         console.error("Erro ao carregar dados:", e);
+      }
+    }
+
+    function renderizarPedidosPendentes(pendentes) {
+      const card = document.getElementById("card-pedidos-pendentes");
+      const list = document.getElementById("pending-orders-list");
+      const countBadge = document.getElementById("pending-orders-count");
+      if (!card || !list) return;
+
+      if (!pendentes || !pendentes.length) {
+        card.style.display = "none";
+        return;
+      }
+
+      card.style.display = "block";
+      if (countBadge) countBadge.textContent = `${pendentes.length} ${pendentes.length === 1 ? 'pendente' : 'pendentes'}`;
+
+      list.innerHTML = pendentes.map(o => {
+        const meta = getProductInfo(o.produto);
+        const dataCriacao = o.created_at ? new Date(o.created_at).toLocaleString("pt-BR") : "";
+        const cleanPhone = String(o.phone || "").replace(/\D/g, "");
+        const destPhone = cleanPhone ? (cleanPhone.startsWith("55") ? cleanPhone : `55${cleanPhone}`) : "";
+        const valorFmt = meta.priceBRL ? Number(meta.priceBRL).toFixed(2) : (o.produto === "muse-ia" ? "59,99" : "24,99");
+
+        return `
+          <div class="sale-item" style="border-left: 4px solid #f59e0b;margin-bottom:12px;background:#0d0e19;">
+            <div class="sale-row-top">
+              <div>
+                <span class="stock-chip-badge badge-amber" style="margin-right:6px;font-size:11px;">${meta.icon} ${meta.name}</span>
+                <span style="font-size:11px;color:var(--muted);">${dataCriacao}</span>
+              </div>
+              <span class="sale-price" style="color:#fbbf24;font-size:14px;">R$ ${valorFmt}</span>
+            </div>
+
+            <div class="sale-email" style="margin-top:6px;">
+              👤 <b>Cliente:</b> ${o.email}
+              ${o.phone ? ` &bull; 📱 <b>WhatsApp:</b> <a href="https://wa.me/${destPhone}" target="_blank" style="color:#22c55e;text-decoration:none;font-weight:bold;">${o.phone}</a>` : ""}
+            </div>
+
+            <div style="font-size:11px;color:#94a3b8;margin-top:4px;">
+              🆔 <b>Pedido NSU:</b> <code>${o.order_nsu}</code>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+              <button class="btn btn-green" style="flex:1;min-width:200px;font-size:12px;padding:8px 14px;" onclick="liberarPedidoPendenteManual('${o.order_nsu}')">
+                ⚡ Liberar & Entregar Acesso Agora
+              </button>
+              ${destPhone ? `
+                <a href="https://wa.me/${destPhone}" target="_blank" class="btn-wa" style="font-size:12px;padding:8px 12px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                  💬 WhatsApp
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function liberarPedidoPendenteManual(orderNsu) {
+      if (!confirm(`Deseja liberar o acesso do pedido ${orderNsu} agora?\n\nIsso irá retirar a conta/link do estoque, atualizar o pedido e disparar o e-mail de entrega para o cliente imediatamente.`)) return;
+
+      const token = getToken();
+      try {
+        const res = await fetch(`${BASE_URL}/api/admin`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, action: "deliver_order", order_nsu: orderNsu })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          playKachingSound();
+          alert(`✅ Pedido ${orderNsu} LIBERADO com sucesso!\n\n🔑 Item entregue: ${data.deliveredItem}\n\nO e-mail oficial já foi disparado para o cliente.`);
+          carregarDados();
+        } else {
+          alert("Erro ao liberar pedido: " + (data.error || "Tente novamente"));
+        }
+      } catch (e) {
+        alert("Erro na conexão: " + e.message);
       }
     }
 

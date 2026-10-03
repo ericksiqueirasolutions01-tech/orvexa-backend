@@ -32,35 +32,49 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
 
   try {
-    const { order_nsu, transaction_nsu, paid_amount, amount } = req.body || {};
-    if (!order_nsu || !transaction_nsu) return res.status(200).end();
+    const body = req.body || {};
+    const data = body.data || body.transaction || body.payment || {};
+    const metadata = body.metadata || data.metadata || {};
+
+    const order_nsu = body.order_nsu || data.order_nsu || metadata.order_nsu || body.orderId || data.orderId || "";
+    const transaction_nsu = body.transaction_nsu || data.transaction_nsu || body.transaction_id || data.transaction_id || body.id || data.id || body.nsu || data.nsu || `tx-${Date.now()}`;
+
+    if (!order_nsu) {
+      console.warn("Webhook recebido sem order_nsu:", JSON.stringify(body).slice(0, 200));
+      return res.status(200).end();
+    }
 
     const order = await getOrder(order_nsu);
-    let produtoKey = order && order.produto;
+    let produtoKey = (order && order.produto) || metadata.produto || "";
     if (!produtoKey) {
       if (order_nsu.startsWith("muse-ia")) produtoKey = "muse-ia";
       else if (order_nsu.startsWith("flow-ai-pro")) produtoKey = "flow-ai-pro";
-      else if (order_nsu.startsWith("super-duolingo")) produtoKey = "super-duolingo";
+      else if (order_nsu.startsWith("lovable-pro")) produtoKey = "lovable-pro";
+      else if (order_nsu.startsWith("duolingo-super")) produtoKey = "duolingo-super";
+      else if (order_nsu.startsWith("capcut-pro")) produtoKey = "capcut-pro";
+      else if (order_nsu.startsWith("manus-mensal")) produtoKey = "manus-mensal";
+      else if (order_nsu.startsWith("super-duolingo")) produtoKey = "duolingo-super";
       else produtoKey = "muse-ia";
     }
 
     const produto = PRODUCTS[produtoKey];
     if (!produto) {
-      console.error(`Webhook: produto desconhecido (${produtoKey}).`);
+      console.error(`Webhook: produto desconhecido (${produtoKey}) para pedido ${order_nsu}.`);
       return res.status(200).end();
     }
 
-    // Valida valor pago (se fornecido pela InfinitePay)
-    const paidValue = Number(paid_amount || amount || 0);
-    if (paidValue > 0 && paidValue < produto.priceCents) {
+    // Valida valor pago (normaliza para centavos se enviado em Reais decimais)
+    const rawPaid = Number(body.paid_amount || body.amount || data.paid_amount || data.amount || 0);
+    const paidCents = rawPaid > 0 && rawPaid < 1000 ? Math.round(rawPaid * 100) : rawPaid;
+    if (paidCents > 0 && paidCents < (produto.priceCents * 0.9)) {
       console.error(
-        `Webhook: valor divergente no pedido ${order_nsu} (paid=${paidValue}, esperado=${produto.priceCents}).`
+        `Webhook: valor divergente no pedido ${order_nsu} (paid=${paidCents}, esperado=${produto.priceCents}).`
       );
       return res.status(200).end();
     }
 
-    const buyerEmail = (order && order.email) || (req.body.customer && req.body.customer.email) || (req.body.metadata && req.body.metadata.email) || "";
-    const buyerPhone = (order && order.phone) || (req.body.customer && (req.body.customer.phone || req.body.customer.phone_number)) || (req.body.metadata && req.body.metadata.phone) || "";
+    const buyerEmail = (order && order.email) || body.email || data.email || metadata.email || (body.customer && body.customer.email) || (data.customer && data.customer.email) || "";
+    const buyerPhone = (order && order.phone) || body.phone || data.phone || metadata.phone || (body.customer && (body.customer.phone || body.customer.phone_number)) || (data.customer && (data.customer.phone || data.customer.phone_number)) || "";
 
     // Executa entrega atômica e idempotente (evita qualquer retirada duplicada do estoque)
     const delivery = await deliverOrder({
