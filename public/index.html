@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1601167151505859');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1601167151505859&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ORVEXA PRIME — Ferramentas Profissionais de Inteligência Artificial</title>
@@ -3670,12 +3687,70 @@
         });
       }
 
+      var PRODUCT_PRICES = {
+        "muse-ia": 59.99,
+        "flow-ai-pro": 24.99,
+        "lovable-pro": 49.99,
+        "duolingo-super": 24.99,
+        "capcut-pro": 24.99,
+        "manus-mensal": 49.99,
+        "super-duolingo": 24.99
+      };
+
+      // Rastreia ViewContent nos cards da home
+      if ('IntersectionObserver' in window) {
+        var cardObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var btn = entry.target.querySelector('[data-checkout]');
+              if (btn) {
+                var pid = btn.getAttribute('data-checkout');
+                var pinfo = PRODUCTS_INFO[pid];
+                if (pinfo && typeof fbq === 'function') {
+                  fbq('track', 'ViewContent', {
+                    content_name: pinfo.title,
+                    content_ids: [pid],
+                    content_type: 'product',
+                    value: PRODUCT_PRICES[pid] || 24.99,
+                    currency: 'BRL'
+                  });
+                }
+              }
+              cardObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.4 });
+
+        document.querySelectorAll('.product-card').forEach(function(card) {
+          cardObserver.observe(card);
+        });
+      }
+
       function openCheckout(productId, productName) {
         currentProduct = productId || "muse-ia";
         var info = PRODUCTS_INFO[currentProduct] || {
           title: productName || "Produto Orvexa Prime",
           priceStr: "Pagamento Único"
         };
+        var prodPrice = PRODUCT_PRICES[currentProduct] || 24.99;
+
+        // Disparo Meta Pixel ao abrir modal de checkout
+        if (typeof fbq === 'function') {
+          fbq('track', 'ViewContent', {
+            content_name: info.title,
+            content_ids: [currentProduct],
+            content_type: 'product',
+            value: prodPrice,
+            currency: 'BRL'
+          });
+          fbq('track', 'InitiateCheckout', {
+            content_name: info.title,
+            content_ids: [currentProduct],
+            content_type: 'product',
+            value: prodPrice,
+            currency: 'BRL'
+          });
+        }
 
         checkoutTitle.textContent = info.title;
         checkoutSub.textContent = info.priceStr + " — Pagamento único com liberação imediata";
@@ -3758,6 +3833,17 @@
 
           submitCheckoutBtn.disabled = true;
           checkoutSpinner.style.display = "block";
+
+          if (typeof fbq === 'function') {
+            var infoP = PRODUCTS_INFO[currentProduct] || {};
+            fbq('track', 'InitiateCheckout', {
+              content_name: infoP.title || currentProduct,
+              content_ids: [currentProduct],
+              content_type: 'product',
+              value: PRODUCT_PRICES[currentProduct] || 24.99,
+              currency: 'BRL'
+            });
+          }
 
           fetch(CONFIG.BACKEND_URL + "/api/checkout", {
             method: "POST",
